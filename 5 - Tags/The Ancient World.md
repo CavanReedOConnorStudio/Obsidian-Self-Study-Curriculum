@@ -143,9 +143,9 @@ Understanding how Greece and Rome became the foundation of Western education.
 
 # Month 1
 
-# [[1 - Study/Year 1/Ancient World through the Northern Renaissance/1- The Ancient World/Egypt and the Ancient Near East/Egypt and the Ancient Near East]]
+# [[Contents - Egypt and the Ancient Near East]]
 
-## Week 1 — [[The World of Egypt]]
+## Week 1 — [[Contents - The World of Egypt]]
 
 ### Read:
 
@@ -210,7 +210,7 @@ Why was distortion useful?
 
 ---
 
-# Week 2 — [[Egyptian Religion, Architecture and Image]]
+# Week 2 — [[Contents - Egyptian Religion, Architecture and Image]]
 
 Read:
 

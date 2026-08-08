@@ -13,9 +13,11 @@ A Personal Curriculum & Study Handbook
 
 ## Contents
 
+
+
 # Preface — The Philosophy
 
-Every subject in this handbook exists to answer one question: why did [[artists]] make the work they made?
+Every subject in this handbook exists to answer one question: why did [[5 - Tags/artists]] make the work they made?
 
 This handbook is not a study plan in the ordinary sense. It is the outline of a private liberal arts education — your own [[School of Painting]] — in which every subject is chosen because it changes how you see, and therefore how you paint. A study plan lists tasks to complete. An education changes the mind doing the looking.
 
@@ -75,7 +77,7 @@ Before working through the chronology, it is worth fixing a method for looking, 
 
 Return to this list throughout Part I. Applied consistently, it turns the difference between periods into a set of specific, comparable answers rather than a vague sense of 'style.'
 
-## 1. [[The Ancient World]]
+## 1. [[5 - Tags/The Ancient World]]
 
 c. 3000 BCE – 400 CE — [[Egypt]], [[Greece]], [[Rome]]
 
@@ -616,7 +618,7 @@ Read these alongside the corresponding period in Part I, not as a separate track
 |                              |                                                                                                                       |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | Period                       | Anchor Works to See in Person, in Order of Priority                                                                   |
-| [[The Ancient World]]        | [[Egyptian Book of the Dead]] papyri (British Museum); [[Parthenon Marbles]]; [[Pompeii frescoes]], Naples            |
+| [[5 - Tags/The Ancient World]]        | [[Egyptian Book of the Dead]] papyri (British Museum); [[Parthenon Marbles]]; [[Pompeii frescoes]], Naples            |
 | [[Medieval]] / [[Byzantine]] | [[Hagia Sophia mosaics]], [[Istanbul]]; [[the Book of Kells]], [[Dublin]]; [[Chartres Cathedral]] glass and sculpture |
 | [[The Early Renaissance]]    | [[Giotto]], [[Arena Chapel]], [[Padua]]; [[Masaccio]], [[Brancacci Chapel]], [[Florence]]                             |
 | [[The High Renaissance]]     | [[Michelangelo]], [[Sistine Chapel]]; [[Titian]], major Venetian altarpieces                                          |

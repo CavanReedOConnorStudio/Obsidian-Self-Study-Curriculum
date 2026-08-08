@@ -1,9 +1,9 @@
 
-## Week 1 — [[The World of Egypt]]
+## Week 1 — [[Contents - The World of Egypt]]
 
 
 
-## Week 2 — [[Egyptian Religion, Architecture and Image]]
+## Week 2 — [[Contents - Egyptian Religion, Architecture and Image]]
 
 
 By the end of this month, you should be able to understand:
