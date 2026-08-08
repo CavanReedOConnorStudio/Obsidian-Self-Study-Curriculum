@@ -1,5 +1,5 @@
 
-## [[Minor IX]] — [[Language]]
+## [[Minor IX]] — [[5 - Tags/Language]]
 
 Primarily [[Danish]], [[English]] and [[Gaelic]], but the deeper aim is [[etymology]] — understanding why words mean what they do, since so much art vocabulary ([[fresco]], [[chiaroscuro]], [[Sfumato]], [[ukiyo-e]], [[disegno]]) only fully makes sense in its original tongue.
 

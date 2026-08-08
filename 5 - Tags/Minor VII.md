@@ -1,1 +1,1 @@
-## [[Minor VII]] — [[Theology]]
+## [[Minor VII]] — [[5 - Tags/Theology]]

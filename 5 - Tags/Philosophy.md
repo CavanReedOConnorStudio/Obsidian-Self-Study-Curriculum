@@ -1,4 +1,4 @@
-## [[Minor I]] — [[Philosophy]]
+## [[Minor I]] — [[5 - Tags/Philosophy]]
 
 Philosophy changes how an artist thinks, not just what they know. Aesthetics asks what beauty is and whether it can be defined at all; phenomenology asks what perception itself actually consists of, which matters enormously to anyone trying to paint what they see rather than what they know is there; existentialism gave twentieth-century painters a vocabulary for anxiety, freedom and authenticity that shows up directly in Abstract Expressionism.
 

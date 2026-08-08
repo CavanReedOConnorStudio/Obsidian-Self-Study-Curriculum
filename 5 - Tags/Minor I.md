@@ -1,1 +1,1 @@
-## [[Minor I]] — [[Philosophy]]
+## [[Minor I]] — [[5 - Tags/Philosophy]]

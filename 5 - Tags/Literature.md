@@ -1,5 +1,5 @@
 
-## [[Minor II]] — [[Literature]]
+## [[Minor II]] — [[5 - Tags/Literature]]
 
 This is not literary analysis for its own sake — it is the question 'what books shaped artists?' Painters have always been readers, and entire movements are unreadable without their literary sources: [[Pre-Raphaelite]] painting without Dante and Malory, [[symbolism]] without Baudelaire, Surrealism without the unconscious explored by Joyce and Woolf.
 

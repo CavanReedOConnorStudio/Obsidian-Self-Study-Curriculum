@@ -1,5 +1,5 @@
 
-## [[Minor IV]] — [[Geography]]
+## [[Minor IV]] — [[2 - Structure and Rhythm/Minors/Geography]]
 
 Landscape shapes civilisation, and civilisation shapes what gets painted. Florence sat on a river trade route with wool money to spend; Venice grew rich on maritime trade with the East and painted in a correspondingly luminous, colour-saturated way; Paris centralised [[patronage]], academies and dealers in one city; Edinburgh's stone, light and [[topography]] produced a specific and recognisable visual culture of its own.
 

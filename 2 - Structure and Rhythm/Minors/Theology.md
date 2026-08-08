@@ -1,5 +1,5 @@
 
-## [[Minor VII]] — [[Theology]]
+## [[Minor VII]] — [[2 - Structure and Rhythm/Minors/Theology]]
 
 Possibly the most overlooked subject by artists today, and one of the most necessary. [[Giotto]], [[Fra Angelico]], [[Michelangelo]], [[Raphael]], [[Rembrandt]] and [[El Greco]] cannot be understood without [[Christian doctrine]], and [[Buddhism]], [[Shinto]] and [[Islam]] shaped visual culture just as decisively wherever they took root.
 

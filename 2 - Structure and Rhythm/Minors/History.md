@@ -1,5 +1,5 @@
 
-## [[Minor III]] — [[History]]
+## [[Minor III]] — [[2 - Structure and Rhythm/Minors/History]]
 
 Not dates for their own sake, but the structural forces — [[political change]], [[cities]], [[trade]], [[religion]], [[technology]], [[empire]] — that determined who could [[commission]] art, what subjects were permitted, and which cities became artistic capitals in the first place.
 
