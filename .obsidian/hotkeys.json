@@ -1,0 +1,18 @@
+{
+  "google-drive-sync:push": [
+    {
+      "modifiers": [
+        "Shift"
+      ],
+      "key": "="
+    }
+  ],
+  "google-drive-sync:pull": [
+    {
+      "modifiers": [
+        "Shift"
+      ],
+      "key": "-"
+    }
+  ]
+}
