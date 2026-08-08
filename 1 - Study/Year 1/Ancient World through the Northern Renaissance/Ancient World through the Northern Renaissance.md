@@ -241,7 +241,7 @@ This becomes the bridge into the following period.
 ### **Week 4 — Art**
 
 - [[Artists]]
-- [[Painting]]
+- [[5 - Tags/painting]]
 - [[Looking]]
 - [[Studio exercises]]
 - [[Essay]]

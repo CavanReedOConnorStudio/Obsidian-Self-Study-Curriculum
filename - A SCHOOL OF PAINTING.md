@@ -27,7 +27,7 @@ We do not see with the eye alone, but with the whole apparatus of the mind behin
 
 — after [[E.H. Gombrich]]
 
-A note on scope: this is a Western-centred canon, because that is the tradition most [[European]] and [[American]] painting sits within, and because a coherent education needs a spine before it can grow branches. But the West was never sealed off from the rest of the world.[[ Islamic geometry]] shaped [[Gothic tracery]] and [[Renaissance ornament]]. [[Chinese porcelain]] and [[painting]] shaped [[eighteenth-century]] taste. [[Japanese prints]] reorganised European composition after 1860. Wherever these currents cross the Western story, this handbook marks them, so that the canon is read as it actually happened — as an open, trading, borrowing tradition — rather than as a closed room.
+A note on scope: this is a Western-centred canon, because that is the tradition most [[European]] and [[American]] painting sits within, and because a coherent education needs a spine before it can grow branches. But the West was never sealed off from the rest of the world.[[ Islamic geometry]] shaped [[Gothic tracery]] and [[Renaissance ornament]]. [[Chinese porcelain]] and [[5 - Tags/painting]] shaped [[eighteenth-century]] taste. [[Japanese prints]] reorganised European composition after 1860. Wherever these currents cross the Western story, this handbook marks them, so that the canon is read as it actually happened — as an open, trading, borrowing tradition — rather than as a closed room.
 
 ## How to Use This Handbook
 
@@ -191,7 +191,7 @@ The sublime — beauty mixed with terror or awe — and the new seriousness give
 
 c. 1840 – 1870 — [[France]]
 
-[[Realism]] - Courbet insisted on [[painting]] only what he could see with his own eyes — [[peasants]], labourers, funerals — at the scale and seriousness previously reserved for [[history painting]], a deliberately political act. Millet gave rural labour a monumental dignity; both prepared the ground for Manet's provocations and, eventually, [[Impressionism]].
+[[Realism]] - Courbet insisted on [[5 - Tags/painting]] only what he could see with his own eyes — [[peasants]], labourers, funerals — at the scale and seriousness previously reserved for [[history painting]], a deliberately political act. Millet gave rural labour a monumental dignity; both prepared the ground for Manet's provocations and, eventually, [[Impressionism]].
 
 #### KEY FIGURES
 
