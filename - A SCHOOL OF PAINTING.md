@@ -9,7 +9,7 @@ The History of Art as a Major, with Nine Supporting Minors
 
 A Personal Curriculum & Study Handbook
 
-[[5 - Tags/Philosophy]] · [[5 - Tags/Literature]] · [[5 - Tags/History]] · [[5 - Tags/Geography]] · [[5 - Tags/Ecology]] · [[Biology]] · [[5 - Tags/Theology]] · [[Astrology]] · [[5 - Tags/Language]]
+[[Philosophy]] · [[Literature]] · [[History]] · [[Geography]] · [[Ecology]] · [[Biology]] · [[Theology]] · [[Astrology]] · [[Language]]
 
 ## Contents
 
@@ -21,9 +21,9 @@ Every subject in this handbook exists to answer one question: why did [[5 - Tags
 
 This handbook is not a study plan in the ordinary sense. It is the outline of a private liberal arts education — your own [[School of Painting]] — in which every subject is chosen because it changes how you see, and therefore how you paint. A study plan lists tasks to complete. An education changes the mind doing the looking.
 
-Painting has never existed in isolation. A panel by [[Giotto]] cannot be separated from the [[5 - Tags/Theology]] of [[Assisi]]. A canvas by [[Turner]] cannot be separated from the [[geology]] and [[weather]] of the [[English coast]]. A print by [[Hokusai]] reached [[Paris]] and rearranged the eye of every [[Impressionist]] who saw it. To understand painting is to understand the world that produced it — its beliefs, its books, its politics, its landscapes, its sciences, and its gods.
+Painting has never existed in isolation. A panel by [[Giotto]] cannot be separated from the [[Theology]] of [[Assisi]]. A canvas by [[Turner]] cannot be separated from the [[geology]] and [[weather]] of the [[English coast]]. A print by [[Hokusai]] reached [[Paris]] and rearranged the eye of every [[Impressionist]] who saw it. To understand painting is to understand the world that produced it — its beliefs, its books, its politics, its landscapes, its sciences, and its gods.
 
-This handbook therefore treats [[Art History]] as the spine of the course — the Major, occupying the majority of your attention — and surrounds it with nine Minors: [[5 - Tags/Philosophy]], [[5 - Tags/Literature]], [[5 - Tags/History]], [[5 - Tags/Geography]], [[5 - Tags/Ecology]], [[Biology]] and [[Anatomy]], [[5 - Tags/Theology]] [[Astrology]], and [[5 - Tags/Language]]. None of these is decorative. Each answers a specific question a painter eventually asks.
+This handbook therefore treats [[Art History]] as the spine of the course — the Major, occupying the majority of your attention — and surrounds it with nine Minors: [[Philosophy]], [[Literature]], [[History]], [[Geography]], [[Ecology]], [[Biology]] and [[Anatomy]], [[Theology]] [[Astrology]], and [[Language]]. None of these is decorative. Each answers a specific question a painter eventually asks.
 
 We do not see with the eye alone, but with the whole apparatus of the mind behind it.
 
@@ -51,13 +51,13 @@ A single reading and viewing spine — the books, and a note on the Eastern curr
 
 A suggested weekly rhythm and a four-year plan for working through the whole handbook without losing momentum.
 
-There is no correct order beyond the chronology of the Major itself. Read a period of art history, then read the minor that illuminates it — [[5 - Tags/Theology]] alongside [[Giotto]] [[Astrology]] alongside the [[Renaissance court]], ecology alongside the [[Barbizon painters]], [[Japanese art]] alongside [[Impressionism]]. The subjects are cross-referenced throughout for this reason.
+There is no correct order beyond the chronology of the Major itself. Read a period of art history, then read the minor that illuminates it — [[Theology]] alongside [[Giotto]] [[Astrology]] alongside the [[Renaissance court]], ecology alongside the [[Barbizon painters]], [[Japanese art]] alongside [[Impressionism]]. The subjects are cross-referenced throughout for this reason.
 
 # Part I — The Major: The History of Art
 
 Roughly 60–70% of total study. Everything else in this handbook exists to support this spine.
 
-The Major is arranged chronologically. Each period is treated the same way: the historical situation that produced the work, the artists who defined it, and — most importantly — what to actually look for when standing in front of a painting from that period. Read each chapter alongside the minor subjects flagged within it; art history alone explains what changed, but [[5 - Tags/Philosophy]], [[5 - Tags/Theology]], [[5 - Tags/Geography]] and the rest explain why it changed.
+The Major is arranged chronologically. Each period is treated the same way: the historical situation that produced the work, the artists who defined it, and — most importantly — what to actually look for when standing in front of a painting from that period. Read each chapter alongside the minor subjects flagged within it; art history alone explains what changed, but [[Philosophy]], [[Theology]], [[Geography]] and the rest explain why it changed.
 
 ## On How to Look at a Painting
 
@@ -77,7 +77,7 @@ Before working through the chronology, it is worth fixing a method for looking, 
 
 Return to this list throughout Part I. Applied consistently, it turns the difference between periods into a set of specific, comparable answers rather than a vague sense of 'style.'
 
-## 1. [[5 - Tags/The Ancient World]]
+## 1. [[The Ancient World]]
 
 c. 3000 BCE – 400 CE — [[Egypt]], [[Greece]], [[Rome]]
 
@@ -89,7 +89,7 @@ c. 3000 BCE – 400 CE — [[Egypt]], [[Greece]], [[Rome]]
 
 ##### WHAT TO LOOK FOR
 
-The relationship between a picture's formula and its purpose. Ask what a work was for — [[worship]], [[memory]], [[status]], [[decoration]] — before asking whether it looks 'real'. Read alongside Minor VII, [[5 - Tags/Theology]], and Minor IX, [[Astrology]], for the cosmology behind [[Egyptian]] and [[Greco-Roman]] imagery.
+The relationship between a picture's formula and its purpose. Ask what a work was for — [[worship]], [[memory]], [[status]], [[decoration]] — before asking whether it looks 'real'. Read alongside Minor VII, [[Theology]], and Minor IX, [[Astrology]], for the cosmology behind [[Egyptian]] and [[Greco-Roman]] imagery.
 
 ## 2. [[Byzantium and the Medieval World]]
 
@@ -103,7 +103,7 @@ With the decline of [[Rome]], the image became almost entirely a vehicle for doc
 
 ##### WHAT TO LOOK FOR
 
-Gold as light rather than decoration, [[inverse perspective]] as [[5 - Tags/Theology]] rather than error, and the total absence of a 'wrong' angle — every element is [[symbolic]]. Essential reading alongside Minor VII, Theology.
+Gold as light rather than decoration, [[inverse perspective]] as [[Theology]] rather than error, and the total absence of a 'wrong' angle — every element is [[symbolic]]. Essential reading alongside Minor VII, Theology.
 
 ## 3. [[The Early Renaissance]]
 
@@ -145,7 +145,7 @@ North of the Alps, painters developed oil [[glazing]] techniques of extraordinar
 
 ##### WHAT TO LOOK FOR
 
-Disguised [[symbolism]] — ordinary objects (a dog, a candle, a mirror) carrying [[doctrinal]] or [[moral weight]] — and the layered [[oil glaze]] technique that gives Northern panels their luminous depth. Read alongside Minor V, [[5 - Tags/Ecology]], for Bruegel's [[landscapes]] and seasons.
+Disguised [[symbolism]] — ordinary objects (a dog, a candle, a mirror) carrying [[doctrinal]] or [[moral weight]] — and the layered [[oil glaze]] technique that gives Northern panels their luminous depth. Read alongside Minor V, [[Ecology]], for Bruegel's [[landscapes]] and seasons.
 
 ## 6. [[The Baroque]]
 
@@ -159,7 +159,7 @@ c. 1600 – 1720 — [[Italy]], [[Spain]], [[Flanders]], the [[Dutch]] Republic
 
 ##### WHAT TO LOOK FOR
 
-[[Tenebrism]] and [[directional light]] as drama; the rise of [[genre painting]] and [[still life]] as subjects worthy of art in their own right, tied directly to a new Protestant, commercial society. Read alongside Minor III, History, for the [[Reformation]] and [[Counter-Reformation]], and Minor VII, [[5 - Tags/Theology]]
+[[Tenebrism]] and [[directional light]] as drama; the rise of [[genre painting]] and [[still life]] as subjects worthy of art in their own right, tied directly to a new Protestant, commercial society. Read alongside Minor III, History, for the [[Reformation]] and [[Counter-Reformation]], and Minor VII, [[Theology]]
 
 ## 7. [[Rococo and Neoclassicism]]
 
@@ -179,7 +179,7 @@ How abruptly style can change when political meaning changes — the same brush 
 
 c. 1780 – 1850 — [[Britain]], [[France]], [[Germany]], [[Spain]]
 
-Against [[Neoclassical]] reason, the [[Romantics]] prized [[emotion]], [[the sublime]], and [[the individual imagination]]— [[nature]] as overwhelming rather than orderly, [[5 - Tags/History]] as tragedy rather than lesson. Turner dissolved landscape into light and weather; Friedrich made the solitary human figure small before an immense natural world; Goya turned court painting into nightmare and protest.
+Against [[Neoclassical]] reason, the [[Romantics]] prized [[emotion]], [[the sublime]], and [[the individual imagination]]— [[nature]] as overwhelming rather than orderly, [[History]] as tragedy rather than lesson. Turner dissolved landscape into light and weather; Friedrich made the solitary human figure small before an immense natural world; Goya turned court painting into nightmare and protest.
 
 #### KEY FIGURES
 
@@ -187,7 +187,7 @@ Against [[Neoclassical]] reason, the [[Romantics]] prized [[emotion]], [[the sub
 
 ##### WHAT TO LOOK FOR
 
-The sublime — beauty mixed with terror or awe — and the new seriousness given to landscape and weather as subjects in themselves. Read alongside Minor V, [[5 - Tags/Ecology]], and Minor IV, [[5 - Tags/Geography]], for the specific coastlines, mountains and skies each painter actually studied.
+The sublime — beauty mixed with terror or awe — and the new seriousness given to landscape and weather as subjects in themselves. Read alongside Minor V, [[Ecology]], and Minor IV, [[Geography]], for the specific coastlines, mountains and skies each painter actually studied.
 
 ## 9. [[Realism and the Birth of Modern Life]]
 
@@ -229,7 +229,7 @@ Matisse and the Fauves pushed [[colour]] beyond description into pure emotional 
 
 ##### WHAT TO LOOK FOR
 
-The final collapse of illusionistic space as the default goal of painting, and colour used as feeling rather than description. Read alongside Minor I, [[5 - Tags/Philosophy]], for [[phenomenology]], and Minor IX, Astrology, for Kandinsky's [[theosophical]] and [[cosmological]] [[theory of colour]].
+The final collapse of illusionistic space as the default goal of painting, and colour used as feeling rather than description. Read alongside Minor I, [[Philosophy]], for [[phenomenology]], and Minor IX, Astrology, for Kandinsky's [[theosophical]] and [[cosmological]] [[theory of colour]].
 
 12. [[Modernism]] II — [[abstraction]], [[Surrealism]], [[Abstract Expressionism]]
 
@@ -243,7 +243,7 @@ Kandinsky and Malevich pursued abstraction as a spiritual language freed from th
 
 ##### WHAT TO LOOK FOR
 
-Scale as [[immersion]], gesture as [[subject matter]], and the search — across very different artists — for an art that bypasses recognisable [[imagery]] altogether. Read alongside Minor I, [[5 - Tags/Philosophy]], for [[existentialism]].
+Scale as [[immersion]], gesture as [[subject matter]], and the search — across very different artists — for an art that bypasses recognisable [[imagery]] altogether. Read alongside Minor I, [[Philosophy]], for [[existentialism]].
 
 ## 13. [[Contemporary Art]] and the Return of [[Figuration]]
 
@@ -293,7 +293,7 @@ Twentieth Century and Beyond
 
 Each minor answers one specific question a painter eventually asks. None is optional; each supports the Major directly.
 
-## [[Minor I]] — [[5 - Tags/Philosophy]]
+## [[Minor I]] — [[Philosophy]]
 
 Philosophy changes how an artist thinks, not just what they know. Aesthetics asks what beauty is and whether it can be defined at all; phenomenology asks what perception itself actually consists of, which matters enormously to anyone trying to paint what they see rather than what they know is there; existentialism gave twentieth-century painters a vocabulary for anxiety, freedom and authenticity that shows up directly in Abstract Expressionism.
 
@@ -331,7 +331,7 @@ Philosophy changes how an artist thinks, not just what they know. Aesthetics ask
 
 Read Merleau-Ponty's 'Eye and Mind' the same week you attempt a still life from direct observation. Note, in writing, every moment where what you paint contradicts what you 'know' the object looks like.
 
-## [[Minor II]] — [[5 - Tags/Literature]]
+## [[Minor II]] — [[Literature]]
 
 This is not literary analysis for its own sake — it is the question 'what books shaped artists?' Painters have always been readers, and entire movements are unreadable without their literary sources: [[Pre-Raphaelite]] painting without Dante and Malory, [[symbolism]] without Baudelaire, Surrealism without the unconscious explored by Joyce and Woolf.
 
@@ -371,7 +371,7 @@ This is not literary analysis for its own sake — it is the question 'what book
 
 Choose one canvas from this handbook drawn directly from literature (Delacroix's Dante and Virgil, Millais's Ophelia). Read the source passage, then write two hundred words on exactly what the painter chose to include, omit, and invent.
 
-## [[Minor III]] — [[5 - Tags/History]]
+## [[Minor III]] — [[History]]
 
 Not dates for their own sake, but the structural forces — [[political change]], [[cities]], [[trade]], [[religion]], [[technology]], [[empire]] — that determined who could [[commission]] art, what subjects were permitted, and which cities became artistic capitals in the first place.
 
@@ -391,7 +391,7 @@ Not dates for their own sake, but the structural forces — [[political change]]
 
 #### SUGGESTED READING & STUDY
 
-• [[Fernand Braudel]], [[The Mediterranean and the Mediterranean World]] (selections)
+• [[Fernand Braudel]], [[5 - Tags/The Mediterranean and the Mediterranean World]] (selections)
 
 • [[Peter Burke]], [[The Italian Renaissance- Culture and Society in Italy]]
 
@@ -403,7 +403,7 @@ Not dates for their own sake, but the structural forces — [[political change]]
 
 For any one painting in Part I, write a one-page 'patronage note': who paid for it, why, what they wanted from it, and what constraints that placed on the artist.
 
-## [[Minor IV]] — [[5 - Tags/Geography]]
+## [[Minor IV]] — [[Geography]]
 
 Landscape shapes civilisation, and civilisation shapes what gets painted. Florence sat on a river trade route with wool money to spend; Venice grew rich on maritime trade with the East and painted in a correspondingly luminous, colour-saturated way; Paris centralised [[patronage]], academies and dealers in one city; Edinburgh's stone, light and [[topography]] produced a specific and recognisable visual culture of its own.
 
@@ -431,7 +431,7 @@ Landscape shapes civilisation, and civilisation shapes what gets painted. Floren
 
 Pick a city from this handbook you have visited or can visit. Walk it deliberately, noting the quality of light, the building stone, and the water or hills nearby — then find one painting produced there and identify which of these physical facts appears in it.
 
-## [[Minor V]] — [[5 - Tags/Ecology]]
+## [[Minor V]] — [[Ecology]]
 
 Not [[environmental politics]], but the things painters actually observe: [[trees]], [[rivers]] [[weather]], [[seasons]], [[geology]]. A [[landscape painter]] who cannot identify a [[species of tree]], read a [[cloud formation]], or understand how a [[river valley]] was carved will paint a generic landscape rather than a specific, truthful one.
 
@@ -491,7 +491,7 @@ CORE TOPICS
 
 Draw the same hand from life six times in a single sitting, from six different angles, without reference to a photograph — until the underlying bone structure, not the surface skin, becomes what you are actually drawing.
 
-## [[Minor VII]] — [[5 - Tags/Theology]]
+## [[Minor VII]] — [[Theology]]
 
 Possibly the most overlooked subject by artists today, and one of the most necessary. [[Giotto]], [[Fra Angelico]], [[Michelangelo]], [[Raphael]], [[Rembrandt]] and [[El Greco]] cannot be understood without [[Christian doctrine]], and [[Buddhism]], [[Shinto]] and [[Islam]] shaped visual culture just as decisively wherever they took root.
 
@@ -551,7 +551,7 @@ SUGGESTED READING & STUDY
 
 Research the astrological attributes of your own birth month as they appear in Renaissance manuscript tradition, then design a small symbolic composition using only period-accurate imagery for it.
 
-## [[Minor IX]] — [[5 - Tags/Language]]
+## [[Minor IX]] — [[Language]]
 
 Primarily [[Danish]], [[English]] and [[Gaelic]], but the deeper aim is [[etymology]] — understanding why words mean what they do, since so much art vocabulary ([[fresco]], [[chiaroscuro]], [[Sfumato]], [[ukiyo-e]], [[disegno]]) only fully makes sense in its original tongue.
 
@@ -618,7 +618,7 @@ Read these alongside the corresponding period in Part I, not as a separate track
 |                              |                                                                                                                       |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | Period                       | Anchor Works to See in Person, in Order of Priority                                                                   |
-| [[5 - Tags/The Ancient World]]        | [[Egyptian Book of the Dead]] papyri (British Museum); [[Parthenon Marbles]]; [[Pompeii frescoes]], Naples            |
+| [[The Ancient World]]        | [[Egyptian Book of the Dead]] papyri (British Museum); [[Parthenon Marbles]]; [[Pompeii frescoes]], Naples            |
 | [[Medieval]] / [[Byzantine]] | [[Hagia Sophia mosaics]], [[Istanbul]]; [[the Book of Kells]], [[Dublin]]; [[Chartres Cathedral]] glass and sculpture |
 | [[The Early Renaissance]]    | [[Giotto]], [[Arena Chapel]], [[Padua]]; [[Masaccio]], [[Brancacci Chapel]], [[Florence]]                             |
 | [[The High Renaissance]]     | [[Michelangelo]], [[Sistine Chapel]]; [[Titian]], major Venetian altarpieces                                          |
@@ -646,10 +646,10 @@ Read these alongside the corresponding period in Part I, not as a separate track
 |      |                                                                   |                                                        |
 | ---- | ----------------------------------------------------------------- | ------------------------------------------------------ |
 | Year | Major Focus                                                       | Paired Minors                                          |
-| 1    | [[Ancient World through the Northern Renaissance]]                | [[5 - Tags/Theology]], [[Astrology]], [[Biology]] & [[Anatomy]] |
-| 2    | [[Baroque through Romanticism]]                                   | [[5 - Tags/History]], [[5 - Tags/Geography]], [[5 - Tags/Ecology]]                |
-| 3    | [[Realism through Post-Impressionism, including East Meets West]] | [[5 - Tags/Language]], [[5 - Tags/Ecology]], [[5 - Tags/Literature]]              |
-| 4    | [[Modernism through Contemporary art]]                            | [[5 - Tags/Philosophy]], [[5 - Tags/Literature]]                         |
+| 1    | [[Ancient World through the Northern Renaissance]]                | [[Theology]], [[Astrology]], [[Biology]] & [[Anatomy]] |
+| 2    | [[Baroque through Romanticism]]                                   | [[History]], [[Geography]], [[Ecology]]                |
+| 3    | [[Realism through Post-Impressionism, including East Meets West]] | [[Language]], [[Ecology]], [[Literature]]              |
+| 4    | [[Modernism through Contemporary art]]                            | [[Philosophy]], [[Literature]]                         |
 
 
 # Appendix — [[Glossary of Core Terms]]

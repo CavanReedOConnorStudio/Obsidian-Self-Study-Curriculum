@@ -1,1 +1,1 @@
-[[Minor V]] — [[5 - Tags/Ecology]]
+[[Minor V]] — [[Ecology]]

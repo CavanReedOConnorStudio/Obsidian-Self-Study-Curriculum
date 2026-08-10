@@ -1,5 +1,6 @@
 
-## [[Minor V]] — [[2 - Structure and Rhythm/Minors/Ecology]]
+
+## [[Minor V]] — [[Ecology]]
 
 Not [[environmental politics]], but the things painters actually observe: [[trees]], [[rivers]] [[weather]], [[seasons]], [[geology]]. A [[landscape painter]] who cannot identify a [[species of tree]], read a [[cloud formation]], or understand how a [[river valley]] was carved will paint a generic landscape rather than a specific, truthful one.
 

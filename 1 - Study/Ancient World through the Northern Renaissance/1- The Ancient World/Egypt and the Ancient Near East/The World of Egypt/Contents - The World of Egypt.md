@@ -1,6 +1,6 @@
 ### Read:
 
-## History
+## [[History of Egypt]]
 
 [[The Rise and Fall of Ancient Egypt — Toby Wilkinson]]
 
@@ -15,7 +15,7 @@ Focus:
 
 ---
 
-## Religion
+## [[Religion of Eygpt]]
 
 [[The Egyptian Book of the Dead]]
 
@@ -29,7 +29,7 @@ Focus:
 
 ---
 
-## Literature
+## [[Literature of Eygpt]]
 
 Read:
 
@@ -41,7 +41,7 @@ Question:
 
 ---
 
-## Art Focus
+## [[Art of Eygpt]]
 
 Study:
 

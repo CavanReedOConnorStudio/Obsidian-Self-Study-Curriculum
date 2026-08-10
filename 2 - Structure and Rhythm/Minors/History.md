@@ -1,5 +1,6 @@
 
-## [[Minor III]] — [[2 - Structure and Rhythm/Minors/History]]
+
+## [[Minor III]] — [[History]]
 
 Not dates for their own sake, but the structural forces — [[political change]], [[cities]], [[trade]], [[religion]], [[technology]], [[empire]] — that determined who could [[commission]] art, what subjects were permitted, and which cities became artistic capitals in the first place.
 
@@ -19,7 +20,7 @@ Not dates for their own sake, but the structural forces — [[political change]]
 
 #### SUGGESTED READING & STUDY
 
-• [[Fernand Braudel]], [[[[The Mediterranean and the Mediterranean World]] (selections)
+• [[Fernand Braudel]], [[The Mediterranean and the Mediterranean World]] (selections)
 
 • [[Peter Burke]], [[The Italian Renaissance- Culture and Society in Italy]]
 

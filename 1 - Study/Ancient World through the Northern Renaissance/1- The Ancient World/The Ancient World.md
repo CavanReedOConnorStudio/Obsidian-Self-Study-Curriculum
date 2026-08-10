@@ -515,7 +515,7 @@ Focus:
 
 ---
 
-## [[5 - Tags/Theology]]
+## [[Theology]]
 
 Study:
 

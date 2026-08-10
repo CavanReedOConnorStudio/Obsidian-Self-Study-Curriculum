@@ -1,1 +1,1 @@
-## [[Minor III]] — [[5 - Tags/History]]
+## [[Minor III]] — [[History]]

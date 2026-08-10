@@ -1,1 +1,1 @@
-## [[Minor II]] — [[5 - Tags/Literature]]
+## [[Minor II]] — [[Literature]]

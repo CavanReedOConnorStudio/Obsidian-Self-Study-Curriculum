@@ -1,1 +1,1 @@
-## [[Minor IV]] — [[5 - Tags/Geography]]
+## [[Minor IV]] — [[Geography]]
