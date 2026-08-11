@@ -20,7 +20,7 @@ A Personal Curriculum & Study Handbook
 
 # Preface — The Philosophy
 
-Every subject in this handbook exists to answer one question: why did [[5 - Tags/artists]] make the work they made?
+Every subject in this handbook exists to answer one question: why did [[Artists.base]] make the work they made?
 
 This handbook is not a study plan in the ordinary sense. It is the outline of a private liberal arts education — your own [[School of Painting]] — in which every subject is chosen because it changes how you see, and therefore how you paint. A study plan lists tasks to complete. An education changes the mind doing the looking.
 
@@ -28,9 +28,10 @@ Painting has never existed in isolation. A panel by [[Giotto]] cannot be separat
 
 This handbook therefore treats [[Art History]] as the spine of the course — the Major, occupying the majority of your attention — and surrounds it with nine Minors: [[Philosophy]], [[Literature]], [[History]], [[Geography]], [[Ecology]], [[Biology]] and [[Anatomy]], [[Theology]] [[Astrology]], and [[Language]]. None of these is decorative. Each answers a specific question a painter eventually asks.
 
-We do not see with the eye alone, but with the whole apparatus of the mind behind it.
 
-— after [[E.H. Gombrich]]
+> *We do not see with the eye alone, but with the whole apparatus of the mind behind it.*
+> 
+> *— after [[E.H. Gombrich]]*
 
 A note on scope: this is a Western-centred canon, because that is the tradition most [[European]] and [[American]] painting sits within, and because a coherent education needs a spine before it can grow branches. But the West was never sealed off from the rest of the world.[[ Islamic geometry]] shaped [[Gothic tracery]] and [[Renaissance ornament]]. [[Chinese porcelain]] and [[5 - Tags/painting]] shaped [[eighteenth-century]] taste. [[Japanese prints]] reorganised European composition after 1860. Wherever these currents cross the Western story, this handbook marks them, so that the canon is read as it actually happened — as an open, trading, borrowing tradition — rather than as a closed room.
 
