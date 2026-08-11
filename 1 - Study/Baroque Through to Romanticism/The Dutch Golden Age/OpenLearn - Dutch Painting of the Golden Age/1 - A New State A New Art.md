@@ -11,3 +11,5 @@ Two defining features served to distinguish [[the Dutch Republic]] from the pred
 
 1 - Each of the provinces were largely self-governed. Although there was a established central administrative body in [[The Hague]], each province developed strong local identities and traditions, particularly in cities such as [[Amsterdam]], [[Utrecht]], [[Leiden]], [[Haarlem]], and [[Delft]]. Agriculture and livestock was important, though it was a predominantly urban society, with a dense network of canals connecting the major trading centres.  
 
+2 - 
+
