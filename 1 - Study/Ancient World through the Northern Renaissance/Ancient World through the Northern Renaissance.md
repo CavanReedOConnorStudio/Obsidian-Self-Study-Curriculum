@@ -1,7 +1,9 @@
+#Research
 
+---
 # **Contents**
 
-## [[1 - Study/Ancient World through the Northern Renaissance/1- The Ancient World/The Ancient World]] 
+## [[The Ancient World]] 
 
 ## [[Byzantium and the Medieval World]]
 

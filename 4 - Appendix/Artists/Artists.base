@@ -3,7 +3,7 @@ views:
     name: Table
     filters:
       and:
-        - file.folder == "4 - Appendix/Artists"
+        - file.hasTag("Artist")
     order:
       - file.name
       - file.folder
