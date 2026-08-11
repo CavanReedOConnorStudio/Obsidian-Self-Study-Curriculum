@@ -3,6 +3,9 @@
 
 A SCHOOL OF PAINTING
 
+## *You cannot be an artist until you’re civilised. You cannot be civilised until you learn.*
+
+
 A Liberal Arts Handbook Centred on Art
 
 The History of Art as a Major, with Nine Supporting Minors
