@@ -30,5 +30,7 @@ The contrast to this is the 'grand style' of painting, associated with the Itali
 
 # Lecturers on Aesthetics
 
-It was not until the [[19th Century]] that Dutch Art was shown in a more positive evaluation. In a series of lectures on aesthetics, German philosopher [[G.W.F. Hegel]] drew a connection between the social and political emancipation of [[the Dutch Republic]], emphasising the 'overcoming of the Spanish [[despotism]] of church and crown', and the development of a new form of art rooted in the activites and accomplishments of its citizens. 
-""
+It was not until the [[19th Century]] that Dutch Art was shown in a more positive evaluation. In a series of lectures on aesthetics, German philosopher [[G.W.F. Hegel]] drew a connection between the social and political emancipation of [[the Dutch Republic]], emphasising the 'overcoming of the Spanish [[despotism]] of church and crown', and the development of a new form of art rooted in the activities and accomplishments of its citizens. 
+
+> "The final achievement of Dutch painting lies in 'its utterly living absorption in the world and its daily life' and that we should therefore not 'suppose that they should have avoided such subjects and portrayed only Greek gods, myths, and fables, or the Madonna, the Crucifixion, martyrs, Popes, saints male and female'"
+
