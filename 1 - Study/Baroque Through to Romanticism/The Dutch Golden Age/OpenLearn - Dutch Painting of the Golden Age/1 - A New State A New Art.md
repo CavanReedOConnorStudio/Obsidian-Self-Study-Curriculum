@@ -34,3 +34,8 @@ It was not until the [[19th Century]] that Dutch Art was shown in a more positiv
 
 > "The final achievement of Dutch painting lies in 'its utterly living absorption in the world and its daily life' and that we should therefore not 'suppose that they should have avoided such subjects and portrayed only Greek gods, myths, and fables, or the Madonna, the Crucifixion, martyrs, Popes, saints male and female'"
 
+Hegel also comments on how fascinated he is by the attention to detail Dutch artists bestowed on the visual appearance of even the most mundane objects, feeling this turn towards contemporary subjects as an expression of pride in Dutch citizenship and the hard-won freedoms of civil society:
+
+> Velvet, metallic lustre, light, horses, servants, old women, peasants blowing smoke from cutty pipes, the glitter of wine in a transparent glass, chaps in dirty jackets playing with old cards – these and hundreds of other things are brought before our eyes in these pictures, things that we scarcely bother about in daily life.
+
+With Dutch paintings, Hegel notes that the prosaic and somewhat insignificant subject matter of the depictions of everyday scenes, draws our attention to the manner in which the paintings has been produced and the technical skill in rendering appearances. Hegel puts this by saying that what enchants us ‘is not the subject of the painting and its lifelikeness’, but rather ‘the pure appearance which is wholly without the sort of interest that the subject has’. 
