@@ -14,3 +14,21 @@ Two defining features served to distinguish [[the Dutch Republic]] from the pred
 
 2 - [[Protestant Calvinsim]] rather than [[Catholicism]] was adopted as the state religion. Calvinist theology prohibit the use of images in churches and other places of worship, but not in secular buildings such as homes and civic buildings. This impacted the forms of art that were produced, creating a highly commercialised society that supported a independent art market, as opposed to the most other European centres of art where artists could hope to gain substantial commissions from the church or state, and were dependant on aristocratic patrons. 
 
+
+## "Journey to Flanders and Holland"
+
+Between 1640 to 1659, it is estimated that 1.3-1.4 million paintings were produced in the Netherlands. (Population was around 2 million). Oil paintings were avaliable to the masses, and within reach of the broad [[middlestrata]] of Dutch citizens (See Grijzenhout and van Veen, 1999, p. 1 for further information).
+One consequence of the development of the open market was the increase in specialisation. Artists concentrated on a particular subject, and create a reputation for their niche. [[Sir Joshua Reynolds]], president of the[[ Royal Academy]], later commented on this specialisation in his *Journey to Flanders and Holland* of 1781:
+
+> Two fine pictures of Terburg; the white sattin remarkably well-painted. He seldom omitted to introduce a piece of white sattin in his pictures.
+> 
+> Dead swans by Weeninx, as fine as possible. I suppose we did not see less than twenty pictures of dead swans by this painter.
+
+Reynolds addresses [[Jan Weenix]] and [[Gerard ter Borch]], who specialised in game birds. Reynolds does admire the level of artistry and technical accomplishment to be found in Dutch painters, though he comments that, "Their merit often consists in truth of representation alone" and that it "is to the eye only that the works of this school are addressed".
+
+The contrast to this is the 'grand style' of painting, associated with the Italian Renaissance, which was sustained through the state-sponsored Academies of Art across Europe. Reynolds promoted the tenet of academic art theory; to demonstrate a capacity for 'invention' and 'design' by depicting elevated subjects derived from biblical. historical. and mythological sources. These capacities were valured more than the 'mechanical' skill of imitation. Reynolds aligned with this classicist and idealising conception of art, he found fault with the imitative character of 17th Century Dutch art, not simply its abundance and apparent repetitiveness.  
+
+# Lecturers on Aesthetics
+
+It was not until the [[19th Century]] that Dutch Art was shown in a more positive evaluation. In a series of lectures on aesthetics, German philosopher [[G.W.F. Hegel]] drew a connection between the social and political emancipation of [[the Dutch Republic]], emphasising the 'overcoming of the Spanish [[despotism]] of church and crown', and the development of a new form of art rooted in the activites and accomplishments of its citizens. 
+""
