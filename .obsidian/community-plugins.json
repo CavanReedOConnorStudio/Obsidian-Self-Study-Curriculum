@@ -3,5 +3,7 @@
   "highlightr-plugin",
   "templater-obsidian",
   "omnisearch",
-  "dataview"
+  "dataview",
+  "buttons",
+  "obsidian-meta-bind-plugin"
 ]

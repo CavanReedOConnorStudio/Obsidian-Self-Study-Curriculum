@@ -1,17 +1,21 @@
-module.exports = async function (tp) {
+module.exports = async function (searchTerm) {
 
     // =====================================================
-    // SEARCH
+    // VALIDATE SEARCH
     // =====================================================
 
-    const searchTerm = await tp.system.prompt(
-        "Rijksmuseum Search",
-        "Artist name"
-    );
+    if (!searchTerm || !searchTerm.trim()) {
 
-    if (!searchTerm) {
-        return "Search cancelled.";
+        return {
+            success: false,
+            error: "No search term provided.",
+            results: []
+        };
+
     }
+
+
+    searchTerm = searchTerm.trim();
 
 
     // =====================================================
@@ -31,11 +35,17 @@ module.exports = async function (tp) {
         // =================================================
 
         const searchResponse = await requestUrl({
+
             url: searchURL,
+
             method: "GET"
+
         });
 
-        const searchData = searchResponse.json;
+
+        const searchData =
+            searchResponse.json;
+
 
         const items =
             searchData.orderedItems || [];
@@ -47,161 +57,96 @@ module.exports = async function (tp) {
 
         if (items.length === 0) {
 
-            return `No artworks found for "${searchTerm}".`;
+            return {
+
+                success: true,
+
+                searchTerm,
+
+                total: 0,
+
+                results: []
+
+            };
 
         }
 
 
         // =================================================
-        // RESULTS
+        // RESULTS ARRAY
         // =================================================
 
         const results = [];
 
 
         // =================================================
-        // GET INDIVIDUAL ARTWORK RECORDS
+        // PROCESS RESULTS
         // =================================================
 
-        for (const item of items.slice(0, 10)) {
+        for (
+            const item
+            of items.slice(0, 10)
+        ) {
 
             try {
 
+                // =========================================
+                // ARTWORK RECORD
+                // =========================================
+
                 const objectURL =
-                    item.id + "?_profile=la-framed";
+                    item.id +
+                    "?_profile=la-framed";
 
 
-                const objectResponse = await requestUrl({
-                    url: objectURL,
-                    method: "GET"
-                });
+                const objectResponse =
+                    await requestUrl({
+
+                        url: objectURL,
+
+                        method: "GET"
+
+                    });
 
 
                 const object =
                     objectResponse.json;
 
 
-                // =============================================
+                // =========================================
                 // TITLE
-                // =============================================
+                // =========================================
 
                 const names =
-                    Array.isArray(object.identified_by)
+                    Array.isArray(
+                        object.identified_by
+                    )
                         ? object.identified_by.filter(
                             x => x.type === "Name"
                         )
                         : [];
 
 
-                let originalTitle =
-                    names[0]?.content || "Untitled";
-
-
-                let englishTitle = "";
+                const originalTitle =
+                    names[0]?.content ||
+                    "Untitled";
 
 
                 /*
-                 * Look through all names for an English
-                 * title.
+                 * At this stage we use the museum's
+                 * supplied title.
                  *
-                 * Different records can encode language
-                 * information differently, so we check
-                 * several possible locations.
-                 */
-
-                for (const name of names) {
-
-                    const text =
-                        name.content || "";
-
-
-                    const languageValues = [];
-
-
-                    // language as an array
-                    if (Array.isArray(name.language)) {
-
-                        for (const language of name.language) {
-
-                            if (typeof language === "string") {
-
-                                languageValues.push(
-                                    language.toLowerCase()
-                                );
-
-                            }
-
-                            else if (language) {
-
-                                if (language.id) {
-
-                                    languageValues.push(
-                                        String(
-                                            language.id
-                                        ).toLowerCase()
-                                    );
-
-                                }
-
-                                if (language.label) {
-
-                                    languageValues.push(
-                                        String(
-                                            language.label
-                                        ).toLowerCase()
-                                    );
-
-                                }
-
-                            }
-
-                        }
-
-                    }
-
-
-                    // language as a string
-                    if (typeof name.language === "string") {
-
-                        languageValues.push(
-                            name.language.toLowerCase()
-                        );
-
-                    }
-
-
-                    const languageText =
-                        languageValues.join(" ");
-
-
-                    if (
-                        languageText.includes("english") ||
-                        languageText.includes("/en") ||
-                        languageText.endsWith("en")
-                    ) {
-
-                        englishTitle = text;
-
-                        break;
-
-                    }
-
-                }
-
-
-                /*
-                 * If no English title was found,
-                 * use the original title.
+                 * We'll add proper English-title
+                 * handling later.
                  */
 
                 const title =
-                    englishTitle ||
                     originalTitle;
 
 
-                // =============================================
+                // =========================================
                 // ARTIST
-                // =============================================
+                // =========================================
 
                 let artist =
                     searchTerm;
@@ -215,46 +160,49 @@ module.exports = async function (tp) {
                     production?.carried_out_by?.[0];
 
 
-                if (artistObject) {
+                if (
+                    artistObject?.name
+                ) {
 
-                    if (artistObject.name) {
+                    artist =
+                        artistObject.name;
 
-                        artist =
-                            artistObject.name;
+                }
 
-                    }
 
-                    else if (
-                        Array.isArray(
-                            artistObject.identified_by
-                        )
+                else if (
+                    Array.isArray(
+                        artistObject?.identified_by
+                    )
+                ) {
+
+                    const artistName =
+                        artistObject.identified_by.find(
+                            x =>
+                                x.type === "Name"
+                        );
+
+
+                    if (
+                        artistName?.content
                     ) {
 
-                        const artistName =
-                            artistObject.identified_by.find(
-                                x =>
-                                    x.type === "Name"
-                            );
-
-
-                        if (artistName?.content) {
-
-                            artist =
-                                artistName.content;
-
-                        }
+                        artist =
+                            artistName.content;
 
                     }
 
                 }
 
 
-                // =============================================
+                // =========================================
                 // DATE
-                // =============================================
+                // =========================================
 
                 let dateStart = null;
+
                 let dateEnd = null;
+
                 let dateDisplay = "";
 
 
@@ -262,9 +210,7 @@ module.exports = async function (tp) {
                     production?.timespan;
 
 
-                /*
-                 * Human-readable museum date.
-                 */
+                // Human-readable date
 
                 if (
                     Array.isArray(
@@ -279,7 +225,9 @@ module.exports = async function (tp) {
                         );
 
 
-                    if (dateName?.content) {
+                    if (
+                        dateName?.content
+                    ) {
 
                         dateDisplay =
                             dateName.content;
@@ -289,10 +237,7 @@ module.exports = async function (tp) {
                 }
 
 
-                /*
-                 * Extract years from the human-readable
-                 * date.
-                 */
+                // Extract years
 
                 if (dateDisplay) {
 
@@ -315,7 +260,9 @@ module.exports = async function (tp) {
 
                         dateEnd =
                             years.length > 1
-                                ? parseInt(years[1])
+                                ? parseInt(
+                                    years[1]
+                                )
                                 : dateStart;
 
                     }
@@ -323,9 +270,7 @@ module.exports = async function (tp) {
                 }
 
 
-                /*
-                 * Fallback to machine-readable date.
-                 */
+                // Machine-readable fallback
 
                 if (
                     dateStart === null &&
@@ -335,16 +280,19 @@ module.exports = async function (tp) {
                     const year =
                         parseInt(
                             String(
-                                timespan.begin_of_the_begin
+                                timespan
+                                    .begin_of_the_begin
                             ).substring(0, 4)
                         );
 
 
                     if (!isNaN(year)) {
 
-                        dateStart = year;
+                        dateStart =
+                            year;
 
-                        dateEnd = year;
+                        dateEnd =
+                            year;
 
                         dateDisplay =
                             String(year);
@@ -354,9 +302,9 @@ module.exports = async function (tp) {
                 }
 
 
-                // =============================================
+                // =========================================
                 // OBJECT NUMBER
-                // =============================================
+                // =========================================
 
                 let objectNumber = "";
 
@@ -390,41 +338,111 @@ module.exports = async function (tp) {
                 }
 
 
-                // =============================================
-                // MEDIUM
-                // =============================================
+                // =========================================
+                // IMAGE
+                // =========================================
 
-                let medium = "";
-
-
-                /*
-                 * Look for common material / technique
-                 * information.
-                 */
-
-                const techniques =
-                    production?.technique;
+                let imageURL = "";
 
 
-                if (Array.isArray(techniques)) {
+                const visualItem =
+                    object.shows?.[0];
 
-                    medium =
-                        techniques
-                            .map(
-                                technique =>
-                                    technique.label ||
-                                    technique.name ||
+
+                if (
+                    visualItem?.id
+                ) {
+
+                    const visualURL =
+                        visualItem.id.replace(
+                            "id.rijksmuseum.nl",
+                            "data.rijksmuseum.nl"
+                        );
+
+
+                    const visualResponse =
+                        await requestUrl({
+
+                            url:
+                                visualURL +
+                                "?_profile=la-framed",
+
+                            method: "GET"
+
+                        });
+
+
+                    const visual =
+                        visualResponse.json;
+
+
+                    const digitalObject =
+                        visual
+                            .digitally_shown_by?.[0];
+
+
+                    if (
+                        digitalObject?.id
+                    ) {
+
+                        const digitalURL =
+                            digitalObject.id.replace(
+                                "id.rijksmuseum.nl",
+                                "data.rijksmuseum.nl"
+                            );
+
+
+                        const digitalResponse =
+                            await requestUrl({
+
+                                url:
+                                    digitalURL +
+                                    "?_profile=la-framed",
+
+                                method: "GET"
+
+                            });
+
+
+                        const digital =
+                            digitalResponse.json;
+
+
+                        const accessPoint =
+                            digital.access_point?.find(
+                                x =>
+                                    x.id &&
+                                    x.id.includes(
+                                        "iiif.micr.io"
+                                    )
+                            );
+
+
+                        if (
+                            accessPoint?.id
+                        ) {
+
+                            const iiifBase =
+                                accessPoint.id.replace(
+                                    /\/full\/.*$/,
                                     ""
-                            )
-                            .filter(Boolean)
-                            .join(", ");
+                                );
+
+
+                            imageURL =
+                                iiifBase +
+                                "/full/800,/0/default.jpg";
+
+                        }
+
+                    }
 
                 }
 
 
-                // =============================================
-                // SAVE RESULT
-                // =============================================
+                // =========================================
+                // SAVE ARTWORK OBJECT
+                // =========================================
 
                 results.push({
 
@@ -440,12 +458,12 @@ module.exports = async function (tp) {
 
                     dateDisplay,
 
-                    medium,
-
                     objectNumber,
 
                     museumURL:
-                        item.id
+                        item.id,
+
+                    imageURL
 
                 });
 
@@ -465,119 +483,26 @@ module.exports = async function (tp) {
         }
 
 
-        // =====================================================
-        // DISPLAY RESULTS
-        // =====================================================
+        // =================================================
+        // RETURN DATA
+        // =================================================
 
-        let output =
-            "# Rijksmuseum Results\n\n";
+        return {
 
+            success: true,
 
-        output +=
-            `Search: **${searchTerm}**\n\n`;
+            searchTerm,
 
-
-        output +=
-            `Found **${
+            total:
                 searchData.partOf?.totalItems ??
-                results.length
-            }** artworks.\n\n`;
+                results.length,
 
+            results
 
-        // =====================================================
-        // ARTWORK RESULTS
-        // =====================================================
-
-        results.forEach(
-            (work, index) => {
-
-                output +=
-                    `## ${index + 1}. ${work.title}\n\n`;
-
-
-                output +=
-                    `**Artist:** ${work.artist}\n\n`;
-
-
-                /*
-                 * Show original title if different.
-                 */
-
-                if (
-                    work.originalTitle &&
-                    work.originalTitle !==
-                        work.title
-                ) {
-
-                    output +=
-                        `**Original title:** ${work.originalTitle}\n\n`;
-
-                }
-
-
-                if (work.dateDisplay) {
-
-                    output +=
-                        `**Date:** ${work.dateDisplay}\n\n`;
-
-                }
-
-
-                if (
-                    work.dateStart !== null
-                ) {
-
-                    output +=
-                        `**Timeline start:** ${work.dateStart}\n\n`;
-
-                }
-
-
-                if (
-                    work.dateEnd !== null
-                ) {
-
-                    output +=
-                        `**Timeline end:** ${work.dateEnd}\n\n`;
-
-                }
-
-
-                if (work.medium) {
-
-                    output +=
-                        `**Medium:** ${work.medium}\n\n`;
-
-                }
-
-
-                if (work.objectNumber) {
-
-                    output +=
-                        `**Object number:** ${work.objectNumber}\n\n`;
-
-                }
-
-
-                output +=
-                    `**Rijksmuseum ID:** ${work.museumURL}\n\n`;
-
-
-                output +=
-                    "---\n\n";
-
-            }
-        );
-
-
-        // =====================================================
-        // RETURN TO OBSIDIAN
-        // =====================================================
-
-        return output;
-
+        };
 
     }
+
 
     catch (error) {
 
@@ -587,10 +512,16 @@ module.exports = async function (tp) {
         );
 
 
-        return (
-            "Rijksmuseum search failed: " +
-            error.message
-        );
+        return {
+
+            success: false,
+
+            error:
+                error.message,
+
+            results: []
+
+        };
 
     }
 

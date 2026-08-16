@@ -1,4 +1,4 @@
-# Artwork Search
+<% tp.user.ArtworkSearch(tp) %>
 
 ## All Artworks
 
