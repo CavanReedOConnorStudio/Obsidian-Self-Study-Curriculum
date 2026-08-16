@@ -18,22 +18,3 @@ image_url:
 
 ![<% tp.frontmatter.title %>](<% tp.frontmatter.image_url %>)
 
-## Looking
-
-### Function
-
-### Patron
-
-### Materials
-
-### Composition
-
-### Light
-
-### Precedent
-
-## My Observations
-
-## Relation to My Practice
-
-## Further Research

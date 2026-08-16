@@ -493,29 +493,7 @@ image_url: ${yamlString(
 )}
 ---
 
-# ${artwork.title}
 
-${image}
-
-## Looking
-
-### Function
-
-### Patron
-
-### Materials
-
-### Composition
-
-### Light
-
-### Precedent
-
-## My Observations
-
-## Relation to My Practice
-
-## Further Research
 `;
 
 

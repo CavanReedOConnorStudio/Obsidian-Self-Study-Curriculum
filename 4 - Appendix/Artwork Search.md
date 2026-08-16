@@ -1,10 +1,7 @@
----
-artwork-search: Vermeer
+
 ---
 
-```meta-bind
-INPUT[text:artwork-search]
-```
+# Institution Search
 
 ```meta-bind-button
 label: SEARCH RIJKSMUSEUM

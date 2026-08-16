@@ -1,4 +1,4 @@
-```javascript
+
 module.exports = async function (searchTerm) {
 
     // =====================================================
@@ -50,10 +50,8 @@ module.exports = async function (searchTerm) {
 
             const response =
                 await requestUrl({
-
                     url: nextURL,
                     method: "GET"
-
                 });
 
 
@@ -61,9 +59,9 @@ module.exports = async function (searchTerm) {
                 response.json;
 
 
-            // ---------------------------------------------
+            // =============================================
             // ADD RESULTS
-            // ---------------------------------------------
+            // =============================================
 
             if (
                 Array.isArray(
@@ -78,9 +76,9 @@ module.exports = async function (searchTerm) {
             }
 
 
-            // ---------------------------------------------
+            // =============================================
             // NEXT PAGE
-            // ---------------------------------------------
+            // =============================================
 
             nextURL =
                 data.next?.id || null;
@@ -102,12 +100,10 @@ module.exports = async function (searchTerm) {
         if (items.length === 0) {
 
             return {
-
                 success: true,
                 searchTerm,
                 total: 0,
                 results: []
-
             };
 
         }
@@ -152,15 +148,25 @@ module.exports = async function (searchTerm) {
 
                 const objectResponse =
                     await requestUrl({
-
                         url: objectURL,
                         method: "GET"
-
                     });
 
 
                 const object =
                     objectResponse.json;
+
+
+                // =========================================
+                // IDENTIFIERS
+                // =========================================
+
+                const identifiedBy =
+                    Array.isArray(
+                        object.identified_by
+                    )
+                        ? object.identified_by
+                        : [];
 
 
                 // =========================================
@@ -172,14 +178,6 @@ module.exports = async function (searchTerm) {
 
                 let originalTitle =
                     "Untitled";
-
-
-                const identifiedBy =
-                    Array.isArray(
-                        object.identified_by
-                    )
-                        ? object.identified_by
-                        : [];
 
 
                 const titleObject =
@@ -216,9 +214,6 @@ module.exports = async function (searchTerm) {
 
                 const artistObjects = [];
 
-
-                // Linked Art can store creators directly
-                // or inside production parts.
 
                 if (
                     Array.isArray(
@@ -400,9 +395,9 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // -----------------------------------------
+                // =========================================
                 // EXTRACT YEARS
-                // -----------------------------------------
+                // =========================================
 
                 if (
                     dateDisplay
@@ -437,9 +432,9 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // -----------------------------------------
+                // =========================================
                 // MACHINE DATE FALLBACK
-                // -----------------------------------------
+                // =========================================
 
                 if (
                     dateStart === null &&
@@ -542,9 +537,9 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // -----------------------------------------
-                // VERMEER FALLBACK
-                // -----------------------------------------
+                // =========================================
+                // VERMEER PERIOD FALLBACK
+                // =========================================
 
                 if (
                     !period &&
@@ -630,9 +625,6 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // Linked Art's production can contain
-                // material information in several places.
-
                 const mediumValues = [];
 
 
@@ -641,8 +633,6 @@ module.exports = async function (searchTerm) {
                     production?.technique,
 
                     production?.used_specific_object,
-
-                    production?.carried_out_by,
 
                     object.made_of,
 
@@ -672,7 +662,9 @@ module.exports = async function (searchTerm) {
                     ) {
 
                         if (
-                            !mediumValues.includes(value)
+                            !mediumValues.includes(
+                                value
+                            )
                         ) {
 
                             mediumValues.push(
@@ -690,20 +682,6 @@ module.exports = async function (searchTerm) {
                     mediumValues.join(
                         ", "
                     );
-
-
-                // -----------------------------------------
-                // COMMON FALLBACK
-                // -----------------------------------------
-
-                if (
-                    !medium
-                ) {
-
-                    medium =
-                        "";
-
-                }
 
 
                 // =========================================
@@ -768,13 +746,10 @@ module.exports = async function (searchTerm) {
 
                     const visualResponse =
                         await requestUrl({
-
                             url:
                                 visualURL +
                                 "?_profile=la-framed",
-
                             method: "GET"
-
                         });
 
 
@@ -799,13 +774,10 @@ module.exports = async function (searchTerm) {
 
                         const digitalResponse =
                             await requestUrl({
-
                                 url:
                                     digitalURL +
                                     "?_profile=la-framed",
-
                                 method: "GET"
-
                             });
 
 
@@ -895,7 +867,7 @@ module.exports = async function (searchTerm) {
 
 
         // =================================================
-        // RETURN
+        // RETURN RESULTS
         // =================================================
 
         return {
@@ -936,574 +908,4 @@ module.exports = async function (searchTerm) {
     }
 
 };
-```
-
-## 2. `ArtworkButton.js`
-
-Now replace the **entire** contents of your working `ArtworkButton.js` with this version.
-
-```javascript
-const encoded =
-    context.args?.artwork;
-
-
-// =====================================================
-// VALIDATE ARTWORK
-// =====================================================
-
-if (!encoded) {
-
-    new Notice(
-        "No artwork received."
-    );
-
-    return;
-
-}
-
-
-// =====================================================
-// DECODE ARTWORK
-// =====================================================
-
-let artwork;
-
-
-try {
-
-    artwork =
-        JSON.parse(
-            decodeURIComponent(
-                encoded
-            )
-        );
-
-}
-
-
-catch (error) {
-
-    new Notice(
-        "Could not read artwork data."
-    );
-
-    console.error(
-        error
-    );
-
-    return;
-
-}
-
-
-// =====================================================
-// FOLDERS
-// =====================================================
-
-const artworkFolder =
-    "4 - Appendix/Artworks";
-
-const artistFolder =
-    "4 - Appendix/Artists";
-
-const institutionFolder =
-    "4 - Appendix/Institutions";
-
-const periodFolder =
-    "4 - Appendix/Periods";
-
-
-// =====================================================
-// ENSURE FOLDER
-// =====================================================
-
-async function ensureFolder(
-    path
-) {
-
-    const existing =
-        app.vault.getAbstractFileByPath(
-            path
-        );
-
-
-    if (!existing) {
-
-        await app.vault.createFolder(
-            path
-        );
-
-    }
-
-}
-
-
-// =====================================================
-// CREATE FOLDERS
-// =====================================================
-
-await ensureFolder(
-    "4 - Appendix"
-);
-
-await ensureFolder(
-    artworkFolder
-);
-
-await ensureFolder(
-    artistFolder
-);
-
-await ensureFolder(
-    institutionFolder
-);
-
-await ensureFolder(
-    periodFolder
-);
-
-
-// =====================================================
-// SAFE FILE NAME
-// =====================================================
-
-function safeFileName(
-    value
-) {
-
-    return String(
-        value || ""
-    )
-        .replace(
-            /[\\/:*?"<>|]/g,
-            ""
-        )
-        .trim();
-
-}
-
-
-// =====================================================
-// YAML STRING
-// =====================================================
-
-function yamlString(
-    value
-) {
-
-    if (
-        value === null ||
-        value === undefined ||
-        value === ""
-    ) {
-
-        return "";
-
-    }
-
-
-    return `"${String(value)
-        .replace(
-            /\\/g,
-            "\\\\"
-        )
-        .replace(
-            /"/g,
-            '\\"'
-        )
-        .replace(
-            /\n/g,
-            " "
-        )}"`;
-
-}
-
-
-// =====================================================
-// CREATE LINKED NOTE
-// =====================================================
-
-async function createLinkedNote(
-    folder,
-    name,
-    type
-) {
-
-    if (
-        !name
-    ) {
-
-        return;
-
-    }
-
-
-    const cleanName =
-        safeFileName(
-            name
-        );
-
-
-    if (
-        !cleanName
-    ) {
-
-        return;
-
-    }
-
-
-    const filePath =
-        `${folder}/${cleanName}.md`;
-
-
-    const existing =
-        app.vault.getAbstractFileByPath(
-            filePath
-        );
-
-
-    // Never overwrite existing notes.
-
-    if (
-        existing
-    ) {
-
-        return;
-
-    }
-
-
-    let content =
-        "";
-
-
-    // =================================================
-    // ARTIST
-    // =================================================
-
-    if (
-        type === "artist"
-    ) {
-
-        content =
-`---
-name: ${yamlString(name)}
-type: "Artist"
----
-
-# ${name}
-
-## Biography
-
-## Artistic Context
-
-## Major Works
-
-## Relation to My Practice
-
-## Further Research
-`;
-
-    }
-
-
-    // =================================================
-    // INSTITUTION
-    // =================================================
-
-    else if (
-        type === "institution"
-    ) {
-
-        content =
-`---
-name: ${yamlString(name)}
-type: "Institution"
----
-
-# ${name}
-
-## History
-
-## Collection
-
-## Significance
-
-## Further Research
-`;
-
-    }
-
-
-    // =================================================
-    // PERIOD
-    // =================================================
-
-    else if (
-        type === "period"
-    ) {
-
-        content =
-`---
-name: ${yamlString(name)}
-type: "Period"
----
-
-# ${name}
-
-## Historical Context
-
-## Characteristics
-
-## Major Artists
-
-## Major Works
-
-## Relation to My Practice
-
-## Further Research
-`;
-
-    }
-
-
-    if (
-        content
-    ) {
-
-        await app.vault.create(
-            filePath,
-            content
-        );
-
-    }
-
-}
-
-
-// =====================================================
-// CREATE ARTIST NOTE
-// =====================================================
-
-if (
-    artwork.artist
-) {
-
-    await createLinkedNote(
-        artistFolder,
-        artwork.artist,
-        "artist"
-    );
-
-}
-
-
-// =====================================================
-// CREATE INSTITUTION NOTE
-// =====================================================
-
-if (
-    artwork.institution
-) {
-
-    await createLinkedNote(
-        institutionFolder,
-        artwork.institution,
-        "institution"
-    );
-
-}
-
-
-// =====================================================
-// CREATE PERIOD NOTE
-// =====================================================
-
-if (
-    artwork.period
-) {
-
-    await createLinkedNote(
-        periodFolder,
-        artwork.period,
-        "period"
-    );
-
-}
-
-
-// =====================================================
-// ARTWORK FILE NAME
-// =====================================================
-
-const fileName =
-    safeFileName(
-        artwork.title
-    );
-
-
-if (
-    !fileName
-) {
-
-    new Notice(
-        "Artwork has no title."
-    );
-
-    return;
-
-}
-
-
-const filePath =
-    `${artworkFolder}/${fileName}.md`;
-
-
-// =====================================================
-// DUPLICATE CHECK
-// =====================================================
-
-const existingArtwork =
-    app.vault.getAbstractFileByPath(
-        filePath
-    );
-
-
-if (
-    existingArtwork
-) {
-
-    new Notice(
-        `"${artwork.title}" already exists.`
-    );
-
-    return;
-
-}
-
-
-// =====================================================
-// WIKI LINKS
-// =====================================================
-
-const artistLink =
-    artwork.artist
-        ? `"[[${artwork.artist}]]"`
-        : "";
-
-
-const periodLink =
-    artwork.period
-        ? `"[[${artwork.period}]]"`
-        : "";
-
-
-const institutionLink =
-    artwork.institution
-        ? `"[[${artwork.institution}]]"`
-        : "";
-
-
-// =====================================================
-// IMAGE
-// =====================================================
-
-const image =
-    artwork.imageURL
-        ? `![${artwork.title}](${artwork.imageURL})`
-        : "";
-
-
-// =====================================================
-// ARTWORK NOTE
-// =====================================================
-
-const content =
-`---
-title: ${yamlString(
-    artwork.title
-)}
-
-original_title: ${yamlString(
-    artwork.originalTitle
-)}
-
-artist: ${artistLink}
-
-date_start: ${artwork.dateStart}
-date_end: ${artwork.dateEnd}
-date_display: ${yamlString(
-    artwork.dateDisplay
-)}
-
-period: ${periodLink}
-
-medium: ${yamlString(
-    artwork.medium
-)}
-
-institution: ${institutionLink}
-
-source: ${yamlString(
-    artwork.source || "Rijksmuseum"
-)}
-
-source_id: ${yamlString(
-    artwork.objectNumber
-)}
-
-source_url: ${yamlString(
-    artwork.museumURL
-)}
-
-image_url: ${yamlString(
-    artwork.imageURL
-)}
----
-
-# ${artwork.title}
-
-${image}
-
-## Looking
-
-### Function
-
-### Patron
-
-### Materials
-
-### Composition
-
-### Light
-
-### Precedent
-
-## My Observations
-
-## Relation to My Practice
-
-## Further Research
-`;
-
-
-// =====================================================
-// CREATE ARTWORK
-// =====================================================
-
-await app.vault.create(
-    filePath,
-    content
-);
-
-
-// =====================================================
-// SUCCESS
-// =====================================================
-
-new Notice(
-    `Saved "${artwork.title}" to Artwork Bank.`
-);
-```
 
