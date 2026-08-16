@@ -12,10 +12,6 @@ source:
 source_id:
 source_url:
 image_url:
-subjects:
-  -
-themes:
-  -
 ---
 
 # <% tp.frontmatter.title %>

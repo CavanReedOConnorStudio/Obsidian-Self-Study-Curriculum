@@ -1,38 +1,21 @@
 module.exports = async function (tp) {
 
-    // =====================================================
-    // SEARCH
-    // =====================================================
-
     const searchTerm =
         await tp.system.prompt(
             "Artwork Search",
             "Artist name"
         );
 
-    if (
-        !searchTerm ||
-        !searchTerm.trim()
-    ) {
-
+    if (!searchTerm || !searchTerm.trim()) {
         return "Search cancelled.";
-
     }
 
-
-    // =====================================================
-    // RIJKSMUSEUM
-    // =====================================================
 
     const data =
         await tp.user.RijksmuseumSearch(
             searchTerm.trim()
         );
 
-
-    // =====================================================
-    // ERROR
-    // =====================================================
 
     if (!data || !data.success) {
 
@@ -44,14 +27,7 @@ module.exports = async function (tp) {
     }
 
 
-    // =====================================================
-    // NO RESULTS
-    // =====================================================
-
-    if (
-        !data.results ||
-        data.results.length === 0
-    ) {
+    if (!data.results || data.results.length === 0) {
 
         return (
             `# Rijksmuseum Search\n\n` +
@@ -61,10 +37,6 @@ module.exports = async function (tp) {
 
     }
 
-
-    // =====================================================
-    // HEADER
-    // =====================================================
 
     let output =
         `# Rijksmuseum Results\n\n`;
@@ -76,146 +48,127 @@ module.exports = async function (tp) {
         `Found **${data.results.length}** artworks.\n\n`;
 
 
-    // =====================================================
-    // RESULTS
-    // =====================================================
+    data.results.forEach((work, index) => {
 
-    data.results.forEach(
-        (work, index) => {
-
-            output +=
-                `## ${index + 1}. ${work.title}\n\n`;
+        output +=
+            `## ${index + 1}. ${work.title}\n\n`;
 
 
-            // IMAGE
-
-            if (work.imageURL) {
-
-                output +=
-                    `![${escapeMarkdown(work.title)}](${work.imageURL})\n\n`;
-
-            }
-
-
-            // ARTIST
-
-            if (work.artist) {
-
-                output +=
-                    `**Artist:** ${work.artist}\n\n`;
-
-            }
-
-
-            // DATE
-
-            if (work.dateDisplay) {
-
-                output +=
-                    `**Date:** ${work.dateDisplay}\n\n`;
-
-            }
-
-
-            // OBJECT NUMBER
-
-            if (work.objectNumber) {
-
-                output +=
-                    `**Object number:** ${work.objectNumber}\n\n`;
-
-            }
-
-
-            // RIJKSMUSEUM LINK
-
-            if (work.museumURL) {
-
-                output +=
-                    `**Rijksmuseum:** [View artwork](${work.museumURL})\n\n`;
-
-            }
-
-
-            // =================================================
-            // PREPARE ARTWORK DATA
-            // =================================================
-
-            const artwork = {
-
-                title:
-                    work.title || "",
-
-                originalTitle:
-                    work.originalTitle || "",
-
-                artist:
-                    work.artist || "",
-
-                dateStart:
-                    work.dateStart ?? "",
-
-                dateEnd:
-                    work.dateEnd ?? "",
-
-                dateDisplay:
-                    work.dateDisplay || "",
-
-                period:
-                    work.period || "",
-
-                medium:
-                    work.medium || "",
-
-                institution:
-                    work.institution || "Rijksmuseum",
-
-                source:
-                    work.source || "Rijksmuseum",
-
-                objectNumber:
-                    work.objectNumber || "",
-
-                museumURL:
-                    work.museumURL || "",
-
-                imageURL:
-                    work.imageURL || "",
-
-                subjects:
-                    work.subjects || [],
-
-                themes:
-                    work.themes || []
-
-            };
-
-
-            // =================================================
-            // ENCODE ARTWORK
-            // =================================================
-
-            const artworkJSON =
-                JSON.stringify(artwork);
-
-
-            const encodedArtwork =
-                encodeURIComponent(
-                    artworkJSON
-                );
-
-
-            // =================================================
-            // SAVE BUTTON
-            // =================================================
+        if (work.imageURL) {
 
             output +=
+                `![${escapeMarkdown(work.title)}](${work.imageURL})\n\n`;
+
+        }
+
+
+        if (work.artist) {
+
+            output +=
+                `**Artist:** ${work.artist}\n\n`;
+
+        }
+
+
+        if (work.dateDisplay) {
+
+            output +=
+                `**Date:** ${work.dateDisplay}\n\n`;
+
+        }
+
+
+        if (work.objectNumber) {
+
+            output +=
+                `**Object number:** ${work.objectNumber}\n\n`;
+
+        }
+
+
+        if (work.museumURL) {
+
+            output +=
+                `**Rijksmuseum:** [View artwork](${work.museumURL})\n\n`;
+
+        }
+
+
+        // =============================================
+        // ARTWORK DATA
+        // =============================================
+
+        const artwork = {
+
+            title:
+                work.title || "",
+
+            originalTitle:
+                work.originalTitle || "",
+
+            artist:
+                work.artist || "",
+
+            dateStart:
+                work.dateStart ?? "",
+
+            dateEnd:
+                work.dateEnd ?? "",
+
+            dateDisplay:
+                work.dateDisplay || "",
+
+            period:
+                work.period || "",
+
+            medium:
+                work.medium || "",
+
+            institution:
+                work.institution || "Rijksmuseum",
+
+            source:
+                work.source || "Rijksmuseum",
+
+            objectNumber:
+                work.objectNumber || "",
+
+            museumURL:
+                work.museumURL || "",
+
+            imageURL:
+                work.imageURL || "",
+
+            subjects:
+                work.subjects || [],
+
+            themes:
+                work.themes || []
+
+        };
+
+
+        // =============================================
+        // ENCODE DATA FOR META BIND
+        // =============================================
+
+        const encodedArtwork =
+            encodeURIComponent(
+                JSON.stringify(artwork)
+            );
+
+
+        // =============================================
+        // BUTTON
+        // =============================================
+
+        output +=
 ` \`\`\`meta-bind-button
 label: SAVE TO ARTWORK BANK
 style: primary
 actions:
   - type: js
-    file: "8 - Scripts/ArtworkButton.js"
+    file: "8 - Scripts/Buttons/ArtworkButton.js"
     args:
       artwork: "${encodedArtwork}"
 \`\`\`
@@ -223,32 +176,18 @@ actions:
 `;
 
 
-            // =================================================
-            // SEPARATOR
-            // =================================================
+        output += "---\n\n";
 
-            output +=
-                `---\n\n`;
-
-        }
-    );
+    });
 
 
     return output;
-
 };
 
-
-// =========================================================
-// ESCAPE MARKDOWN
-// =========================================================
 
 function escapeMarkdown(value) {
 
     return String(value || "")
-        .replace(
-            /[\[\]]/g,
-            "\\$&"
-        );
+        .replace(/[\[\]]/g, "\\$&");
 
 }

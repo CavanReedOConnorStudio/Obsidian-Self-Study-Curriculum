@@ -5,5 +5,10 @@ type: "Institution"
 
 # Rijksmuseum
 
-## Artworks
+## History
 
+## Collection
+
+## Significance
+
+## Further Research

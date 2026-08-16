@@ -1,3 +1,4 @@
+```javascript
 module.exports = async function (searchTerm) {
 
     // =====================================================
@@ -14,41 +15,84 @@ module.exports = async function (searchTerm) {
 
     }
 
-
     searchTerm = searchTerm.trim();
 
 
     // =====================================================
-    // RIJKSMUSEUM SEARCH URL
+    // SEARCH URL
     // =====================================================
 
-    const searchURL =
+    let nextURL =
         "https://data.rijksmuseum.nl/search/collection?" +
-        "type=painting&imageAvailable=true&creator=" +
+        "type=painting" +
+        "&imageAvailable=true" +
+        "&creator=" +
         encodeURIComponent(searchTerm);
 
 
     try {
 
         // =================================================
-        // SEARCH RIJKSMUSEUM
+        // COLLECT ALL RESULTS
         // =================================================
 
-        const searchResponse = await requestUrl({
+        const items = [];
 
-            url: searchURL,
-
-            method: "GET"
-
-        });
+        let page = 1;
 
 
-        const searchData =
-            searchResponse.json;
+        while (nextURL) {
+
+            console.log(
+                `Rijksmuseum: loading search page ${page}`
+            );
 
 
-        const items =
-            searchData.orderedItems || [];
+            const response =
+                await requestUrl({
+
+                    url: nextURL,
+                    method: "GET"
+
+                });
+
+
+            const data =
+                response.json;
+
+
+            // ---------------------------------------------
+            // ADD RESULTS
+            // ---------------------------------------------
+
+            if (
+                Array.isArray(
+                    data.orderedItems
+                )
+            ) {
+
+                items.push(
+                    ...data.orderedItems
+                );
+
+            }
+
+
+            // ---------------------------------------------
+            // NEXT PAGE
+            // ---------------------------------------------
+
+            nextURL =
+                data.next?.id || null;
+
+            page++;
+
+        }
+
+
+        console.log(
+            `Rijksmuseum: ${items.length} results found`
+        );
 
 
         // =================================================
@@ -60,11 +104,8 @@ module.exports = async function (searchTerm) {
             return {
 
                 success: true,
-
                 searchTerm,
-
                 total: 0,
-
                 results: []
 
             };
@@ -73,25 +114,35 @@ module.exports = async function (searchTerm) {
 
 
         // =================================================
-        // RESULTS ARRAY
+        // RESULTS
         // =================================================
 
         const results = [];
 
 
         // =================================================
-        // PROCESS RESULTS
+        // PROCESS EVERY RESULT
         // =================================================
 
         for (
-            const item
-            of items.slice(0, 10)
+            let index = 0;
+            index < items.length;
+            index++
         ) {
+
+            const item =
+                items[index];
+
 
             try {
 
+                console.log(
+                    `Rijksmuseum: processing ${index + 1}/${items.length}`
+                );
+
+
                 // =========================================
-                // ARTWORK RECORD
+                // OBJECT RECORD
                 // =========================================
 
                 const objectURL =
@@ -103,7 +154,6 @@ module.exports = async function (searchTerm) {
                     await requestUrl({
 
                         url: objectURL,
-
                         method: "GET"
 
                     });
@@ -117,31 +167,39 @@ module.exports = async function (searchTerm) {
                 // TITLE
                 // =========================================
 
-                const names =
-                    Array.isArray(
-                        object.identified_by
-                    )
-                        ? object.identified_by.filter(
-                            x => x.type === "Name"
-                        )
-                        : [];
+                let title =
+                    "Untitled";
 
-
-                const originalTitle =
-                    names[0]?.content ||
+                let originalTitle =
                     "Untitled";
 
 
-                /*
-                 * At this stage we use the museum's
-                 * supplied title.
-                 *
-                 * We'll add proper English-title
-                 * handling later.
-                 */
+                const identifiedBy =
+                    Array.isArray(
+                        object.identified_by
+                    )
+                        ? object.identified_by
+                        : [];
 
-                const title =
-                    originalTitle;
+
+                const titleObject =
+                    identifiedBy.find(
+                        x =>
+                            x.type === "Name"
+                    );
+
+
+                if (
+                    titleObject?.content
+                ) {
+
+                    title =
+                        titleObject.content;
+
+                    originalTitle =
+                        titleObject.content;
+
+                }
 
 
                 // =========================================
@@ -156,41 +214,145 @@ module.exports = async function (searchTerm) {
                     object.produced_by;
 
 
-                const artistObject =
-                    production?.carried_out_by?.[0];
+                const artistObjects = [];
 
+
+                // Linked Art can store creators directly
+                // or inside production parts.
 
                 if (
-                    artistObject?.name
+                    Array.isArray(
+                        production?.carried_out_by
+                    )
                 ) {
 
-                    artist =
-                        artistObject.name;
+                    artistObjects.push(
+                        ...production.carried_out_by
+                    );
 
                 }
 
 
-                else if (
+                if (
                     Array.isArray(
-                        artistObject?.identified_by
+                        production?.part
                     )
                 ) {
 
-                    const artistName =
-                        artistObject.identified_by.find(
-                            x =>
-                                x.type === "Name"
-                        );
+                    for (
+                        const part
+                        of production.part
+                    ) {
 
+                        if (
+                            Array.isArray(
+                                part.carried_out_by
+                            )
+                        ) {
+
+                            artistObjects.push(
+                                ...part.carried_out_by
+                            );
+
+                        }
+
+                    }
+
+                }
+
+
+                const artistObject =
+                    artistObjects[0];
+
+
+                if (
+                    artistObject
+                ) {
 
                     if (
-                        artistName?.content
+                        artistObject.name
                     ) {
 
                         artist =
-                            artistName.content;
+                            artistObject.name;
 
                     }
+
+                    else if (
+                        Array.isArray(
+                            artistObject.identified_by
+                        )
+                    ) {
+
+                        const artistName =
+                            artistObject.identified_by.find(
+                                x =>
+                                    x.type === "Name"
+                            );
+
+
+                        if (
+                            artistName?.content
+                        ) {
+
+                            artist =
+                                artistName.content;
+
+                        }
+
+                    }
+
+                    else if (
+                        Array.isArray(
+                            artistObject.notation
+                        )
+                    ) {
+
+                        const notation =
+                            artistObject.notation.find(
+                                x =>
+                                    x["@value"]
+                            );
+
+
+                        if (
+                            notation?.["@value"]
+                        ) {
+
+                            artist =
+                                notation["@value"];
+
+                        }
+
+                    }
+
+                }
+
+
+                // =========================================
+                // ARTIST NORMALISATION
+                // =========================================
+
+                const artistNames = {
+
+                    "Vermeer":
+                        "Johannes Vermeer",
+
+                    "Jan Vermeer":
+                        "Johannes Vermeer",
+
+                    "Johannes Vermeer":
+                        "Johannes Vermeer"
+
+                };
+
+
+                if (
+                    artistNames[artist]
+                ) {
+
+                    artist =
+                        artistNames[artist];
 
                 }
 
@@ -199,18 +361,19 @@ module.exports = async function (searchTerm) {
                 // DATE
                 // =========================================
 
-                let dateStart = null;
+                let dateStart =
+                    null;
 
-                let dateEnd = null;
+                let dateEnd =
+                    null;
 
-                let dateDisplay = "";
+                let dateDisplay =
+                    "";
 
 
                 const timespan =
                     production?.timespan;
 
-
-                // Human-readable date
 
                 if (
                     Array.isArray(
@@ -237,9 +400,13 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // Extract years
+                // -----------------------------------------
+                // EXTRACT YEARS
+                // -----------------------------------------
 
-                if (dateDisplay) {
+                if (
+                    dateDisplay
+                ) {
 
                     const years =
                         dateDisplay.match(
@@ -249,7 +416,7 @@ module.exports = async function (searchTerm) {
 
                     if (
                         years &&
-                        years.length > 0
+                        years.length
                     ) {
 
                         dateStart =
@@ -270,7 +437,9 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // Machine-readable fallback
+                // -----------------------------------------
+                // MACHINE DATE FALLBACK
+                // -----------------------------------------
 
                 if (
                     dateStart === null &&
@@ -280,13 +449,14 @@ module.exports = async function (searchTerm) {
                     const year =
                         parseInt(
                             String(
-                                timespan
-                                    .begin_of_the_begin
+                                timespan.begin_of_the_begin
                             ).substring(0, 4)
                         );
 
 
-                    if (!isNaN(year)) {
+                    if (
+                        !isNaN(year)
+                    ) {
 
                         dateStart =
                             year;
@@ -303,23 +473,250 @@ module.exports = async function (searchTerm) {
 
 
                 // =========================================
+                // PERIOD
+                // =========================================
+
+                let period =
+                    "";
+
+
+                const periodSources = [
+
+                    object.classified_as,
+
+                    object.about
+
+                ];
+
+
+                for (
+                    const source
+                    of periodSources
+                ) {
+
+                    if (
+                        !Array.isArray(source)
+                    ) {
+
+                        continue;
+
+                    }
+
+
+                    for (
+                        const value
+                        of source
+                    ) {
+
+                        const text =
+                            value?.name ||
+                            value?.content ||
+                            value?.label ||
+                            "";
+
+
+                        if (
+                            typeof text === "string" &&
+                            /golden age|baroque|renaissance|rococo|romantic|impression|realism|modern/i
+                                .test(text)
+                        ) {
+
+                            period =
+                                text;
+
+                            break;
+
+                        }
+
+                    }
+
+
+                    if (
+                        period
+                    ) {
+
+                        break;
+
+                    }
+
+                }
+
+
+                // -----------------------------------------
+                // VERMEER FALLBACK
+                // -----------------------------------------
+
+                if (
+                    !period &&
+                    artist === "Johannes Vermeer"
+                ) {
+
+                    period =
+                        "Dutch Golden Age";
+
+                }
+
+
+                // =========================================
+                // MEDIUM
+                // =========================================
+
+                let medium =
+                    "";
+
+
+                function extractName(value) {
+
+                    if (
+                        !value
+                    ) {
+
+                        return "";
+
+                    }
+
+
+                    if (
+                        typeof value === "string"
+                    ) {
+
+                        return value;
+
+                    }
+
+
+                    return (
+                        value.name ||
+                        value.content ||
+                        value.label ||
+                        ""
+                    );
+
+                }
+
+
+                function collectMedium(source) {
+
+                    if (
+                        !source
+                    ) {
+
+                        return [];
+
+                    }
+
+
+                    if (
+                        Array.isArray(source)
+                    ) {
+
+                        return source
+                            .map(
+                                extractName
+                            )
+                            .filter(Boolean);
+
+                    }
+
+
+                    const value =
+                        extractName(source);
+
+
+                    return value
+                        ? [value]
+                        : [];
+
+                }
+
+
+                // Linked Art's production can contain
+                // material information in several places.
+
+                const mediumValues = [];
+
+
+                const mediumSources = [
+
+                    production?.technique,
+
+                    production?.used_specific_object,
+
+                    production?.carried_out_by,
+
+                    object.made_of,
+
+                    object.material,
+
+                    object.materials,
+
+                    object.medium
+
+                ];
+
+
+                for (
+                    const source
+                    of mediumSources
+                ) {
+
+                    const values =
+                        collectMedium(
+                            source
+                        );
+
+
+                    for (
+                        const value
+                        of values
+                    ) {
+
+                        if (
+                            !mediumValues.includes(value)
+                        ) {
+
+                            mediumValues.push(
+                                value
+                            );
+
+                        }
+
+                    }
+
+                }
+
+
+                medium =
+                    mediumValues.join(
+                        ", "
+                    );
+
+
+                // -----------------------------------------
+                // COMMON FALLBACK
+                // -----------------------------------------
+
+                if (
+                    !medium
+                ) {
+
+                    medium =
+                        "";
+
+                }
+
+
+                // =========================================
                 // OBJECT NUMBER
                 // =========================================
 
-                let objectNumber = "";
-
-
-                const identifiers =
-                    Array.isArray(
-                        object.identified_by
-                    )
-                        ? object.identified_by
-                        : [];
+                let objectNumber =
+                    "";
 
 
                 for (
                     const identifier
-                    of identifiers
+                    of identifiedBy
                 ) {
 
                     if (
@@ -339,10 +736,19 @@ module.exports = async function (searchTerm) {
 
 
                 // =========================================
+                // INSTITUTION
+                // =========================================
+
+                const institution =
+                    "Rijksmuseum";
+
+
+                // =========================================
                 // IMAGE
                 // =========================================
 
-                let imageURL = "";
+                let imageURL =
+                    "";
 
 
                 const visualItem =
@@ -377,8 +783,7 @@ module.exports = async function (searchTerm) {
 
 
                     const digitalObject =
-                        visual
-                            .digitally_shown_by?.[0];
+                        visual.digitally_shown_by?.[0];
 
 
                     if (
@@ -441,7 +846,7 @@ module.exports = async function (searchTerm) {
 
 
                 // =========================================
-                // SAVE ARTWORK OBJECT
+                // SAVE RESULT
                 // =========================================
 
                 results.push({
@@ -458,6 +863,12 @@ module.exports = async function (searchTerm) {
 
                     dateDisplay,
 
+                    period,
+
+                    medium,
+
+                    institution,
+
                     objectNumber,
 
                     museumURL:
@@ -467,8 +878,8 @@ module.exports = async function (searchTerm) {
 
                 });
 
-
             }
+
 
             catch (error) {
 
@@ -484,7 +895,7 @@ module.exports = async function (searchTerm) {
 
 
         // =================================================
-        // RETURN DATA
+        // RETURN
         // =================================================
 
         return {
@@ -494,7 +905,6 @@ module.exports = async function (searchTerm) {
             searchTerm,
 
             total:
-                searchData.partOf?.totalItems ??
                 results.length,
 
             results
@@ -526,3 +936,574 @@ module.exports = async function (searchTerm) {
     }
 
 };
+```
+
+## 2. `ArtworkButton.js`
+
+Now replace the **entire** contents of your working `ArtworkButton.js` with this version.
+
+```javascript
+const encoded =
+    context.args?.artwork;
+
+
+// =====================================================
+// VALIDATE ARTWORK
+// =====================================================
+
+if (!encoded) {
+
+    new Notice(
+        "No artwork received."
+    );
+
+    return;
+
+}
+
+
+// =====================================================
+// DECODE ARTWORK
+// =====================================================
+
+let artwork;
+
+
+try {
+
+    artwork =
+        JSON.parse(
+            decodeURIComponent(
+                encoded
+            )
+        );
+
+}
+
+
+catch (error) {
+
+    new Notice(
+        "Could not read artwork data."
+    );
+
+    console.error(
+        error
+    );
+
+    return;
+
+}
+
+
+// =====================================================
+// FOLDERS
+// =====================================================
+
+const artworkFolder =
+    "4 - Appendix/Artworks";
+
+const artistFolder =
+    "4 - Appendix/Artists";
+
+const institutionFolder =
+    "4 - Appendix/Institutions";
+
+const periodFolder =
+    "4 - Appendix/Periods";
+
+
+// =====================================================
+// ENSURE FOLDER
+// =====================================================
+
+async function ensureFolder(
+    path
+) {
+
+    const existing =
+        app.vault.getAbstractFileByPath(
+            path
+        );
+
+
+    if (!existing) {
+
+        await app.vault.createFolder(
+            path
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// CREATE FOLDERS
+// =====================================================
+
+await ensureFolder(
+    "4 - Appendix"
+);
+
+await ensureFolder(
+    artworkFolder
+);
+
+await ensureFolder(
+    artistFolder
+);
+
+await ensureFolder(
+    institutionFolder
+);
+
+await ensureFolder(
+    periodFolder
+);
+
+
+// =====================================================
+// SAFE FILE NAME
+// =====================================================
+
+function safeFileName(
+    value
+) {
+
+    return String(
+        value || ""
+    )
+        .replace(
+            /[\\/:*?"<>|]/g,
+            ""
+        )
+        .trim();
+
+}
+
+
+// =====================================================
+// YAML STRING
+// =====================================================
+
+function yamlString(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+
+        return "";
+
+    }
+
+
+    return `"${String(value)
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+        .replace(
+            /"/g,
+            '\\"'
+        )
+        .replace(
+            /\n/g,
+            " "
+        )}"`;
+
+}
+
+
+// =====================================================
+// CREATE LINKED NOTE
+// =====================================================
+
+async function createLinkedNote(
+    folder,
+    name,
+    type
+) {
+
+    if (
+        !name
+    ) {
+
+        return;
+
+    }
+
+
+    const cleanName =
+        safeFileName(
+            name
+        );
+
+
+    if (
+        !cleanName
+    ) {
+
+        return;
+
+    }
+
+
+    const filePath =
+        `${folder}/${cleanName}.md`;
+
+
+    const existing =
+        app.vault.getAbstractFileByPath(
+            filePath
+        );
+
+
+    // Never overwrite existing notes.
+
+    if (
+        existing
+    ) {
+
+        return;
+
+    }
+
+
+    let content =
+        "";
+
+
+    // =================================================
+    // ARTIST
+    // =================================================
+
+    if (
+        type === "artist"
+    ) {
+
+        content =
+`---
+name: ${yamlString(name)}
+type: "Artist"
+---
+
+# ${name}
+
+## Biography
+
+## Artistic Context
+
+## Major Works
+
+## Relation to My Practice
+
+## Further Research
+`;
+
+    }
+
+
+    // =================================================
+    // INSTITUTION
+    // =================================================
+
+    else if (
+        type === "institution"
+    ) {
+
+        content =
+`---
+name: ${yamlString(name)}
+type: "Institution"
+---
+
+# ${name}
+
+## History
+
+## Collection
+
+## Significance
+
+## Further Research
+`;
+
+    }
+
+
+    // =================================================
+    // PERIOD
+    // =================================================
+
+    else if (
+        type === "period"
+    ) {
+
+        content =
+`---
+name: ${yamlString(name)}
+type: "Period"
+---
+
+# ${name}
+
+## Historical Context
+
+## Characteristics
+
+## Major Artists
+
+## Major Works
+
+## Relation to My Practice
+
+## Further Research
+`;
+
+    }
+
+
+    if (
+        content
+    ) {
+
+        await app.vault.create(
+            filePath,
+            content
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// CREATE ARTIST NOTE
+// =====================================================
+
+if (
+    artwork.artist
+) {
+
+    await createLinkedNote(
+        artistFolder,
+        artwork.artist,
+        "artist"
+    );
+
+}
+
+
+// =====================================================
+// CREATE INSTITUTION NOTE
+// =====================================================
+
+if (
+    artwork.institution
+) {
+
+    await createLinkedNote(
+        institutionFolder,
+        artwork.institution,
+        "institution"
+    );
+
+}
+
+
+// =====================================================
+// CREATE PERIOD NOTE
+// =====================================================
+
+if (
+    artwork.period
+) {
+
+    await createLinkedNote(
+        periodFolder,
+        artwork.period,
+        "period"
+    );
+
+}
+
+
+// =====================================================
+// ARTWORK FILE NAME
+// =====================================================
+
+const fileName =
+    safeFileName(
+        artwork.title
+    );
+
+
+if (
+    !fileName
+) {
+
+    new Notice(
+        "Artwork has no title."
+    );
+
+    return;
+
+}
+
+
+const filePath =
+    `${artworkFolder}/${fileName}.md`;
+
+
+// =====================================================
+// DUPLICATE CHECK
+// =====================================================
+
+const existingArtwork =
+    app.vault.getAbstractFileByPath(
+        filePath
+    );
+
+
+if (
+    existingArtwork
+) {
+
+    new Notice(
+        `"${artwork.title}" already exists.`
+    );
+
+    return;
+
+}
+
+
+// =====================================================
+// WIKI LINKS
+// =====================================================
+
+const artistLink =
+    artwork.artist
+        ? `"[[${artwork.artist}]]"`
+        : "";
+
+
+const periodLink =
+    artwork.period
+        ? `"[[${artwork.period}]]"`
+        : "";
+
+
+const institutionLink =
+    artwork.institution
+        ? `"[[${artwork.institution}]]"`
+        : "";
+
+
+// =====================================================
+// IMAGE
+// =====================================================
+
+const image =
+    artwork.imageURL
+        ? `![${artwork.title}](${artwork.imageURL})`
+        : "";
+
+
+// =====================================================
+// ARTWORK NOTE
+// =====================================================
+
+const content =
+`---
+title: ${yamlString(
+    artwork.title
+)}
+
+original_title: ${yamlString(
+    artwork.originalTitle
+)}
+
+artist: ${artistLink}
+
+date_start: ${artwork.dateStart}
+date_end: ${artwork.dateEnd}
+date_display: ${yamlString(
+    artwork.dateDisplay
+)}
+
+period: ${periodLink}
+
+medium: ${yamlString(
+    artwork.medium
+)}
+
+institution: ${institutionLink}
+
+source: ${yamlString(
+    artwork.source || "Rijksmuseum"
+)}
+
+source_id: ${yamlString(
+    artwork.objectNumber
+)}
+
+source_url: ${yamlString(
+    artwork.museumURL
+)}
+
+image_url: ${yamlString(
+    artwork.imageURL
+)}
+---
+
+# ${artwork.title}
+
+${image}
+
+## Looking
+
+### Function
+
+### Patron
+
+### Materials
+
+### Composition
+
+### Light
+
+### Precedent
+
+## My Observations
+
+## Relation to My Practice
+
+## Further Research
+`;
+
+
+// =====================================================
+// CREATE ARTWORK
+// =====================================================
+
+await app.vault.create(
+    filePath,
+    content
+);
+
+
+// =====================================================
+// SUCCESS
+// =====================================================
+
+new Notice(
+    `Saved "${artwork.title}" to Artwork Bank.`
+);
+```
+

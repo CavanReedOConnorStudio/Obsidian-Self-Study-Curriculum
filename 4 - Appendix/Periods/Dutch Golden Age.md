@@ -5,5 +5,14 @@ type: "Period"
 
 # Dutch Golden Age
 
-## Artworks
+## Historical Context
 
+## Characteristics
+
+## Major Artists
+
+## Major Works
+
+## Relation to My Practice
+
+## Further Research
