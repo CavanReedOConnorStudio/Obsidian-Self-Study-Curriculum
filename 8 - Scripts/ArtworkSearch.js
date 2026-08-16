@@ -134,7 +134,7 @@ label: SAVE TO ARTWORK BANK
 style: primary
 action:
   type: js
-  file: Scripts/ArtworkButton.js
+  file: "8 - Scripts/ArtworkButton.js"
 \`\`\`
 
 `;
