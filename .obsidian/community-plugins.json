@@ -1,10 +1,11 @@
 [
   "obsidian-git",
+  "obsidian-excalidraw-plugin",
   "highlightr-plugin",
+  "realclaudian",
   "templater-obsidian",
   "omnisearch",
   "dataview",
-  "buttons",
-  "obsidian-meta-bind-plugin",
-  "js-engine"
+  "js-engine",
+  "obsidian-meta-bind-plugin"
 ]
