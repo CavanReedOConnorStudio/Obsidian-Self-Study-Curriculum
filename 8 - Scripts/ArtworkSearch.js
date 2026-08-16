@@ -10,7 +10,6 @@ module.exports = async function (tp) {
             "Artist name"
         );
 
-
     if (
         !searchTerm ||
         !searchTerm.trim()
@@ -20,7 +19,6 @@ module.exports = async function (tp) {
 
     }
 
-
     // =====================================================
     // RUN RIJKSMUSEUM SEARCH
     // =====================================================
@@ -29,7 +27,6 @@ module.exports = async function (tp) {
         await tp.user.RijksmuseumSearch(
             searchTerm
         );
-
 
     // =====================================================
     // ERROR
@@ -43,7 +40,6 @@ module.exports = async function (tp) {
         );
 
     }
-
 
     // =====================================================
     // NO RESULTS
@@ -59,133 +55,140 @@ module.exports = async function (tp) {
 
     }
 
+    // =====================================================
+    // CREATE TEMPORARY SELECTION FOLDER
+    // =====================================================
+
+    const selectionPath =
+        "4 - Appendix/.artwork-selection.json";
 
     // =====================================================
-    // BUILD RESULTS
+    // START OUTPUT
     // =====================================================
 
     let output =
-        "# Rijksmuseum Search\n\n";
-
+        `# Rijksmuseum Results\n\n`;
 
     output +=
         `Search: **${data.searchTerm}**\n\n`;
 
+    output +=
+        `Found **${data.results.length}** artworks.\n\n`;
+
+    // =====================================================
+    // SHOW FIRST RESULT ONLY
+    // =====================================================
+
+    const work =
+        data.results[0];
 
     output +=
-        `Found **${data.total}** artworks.\n\n`;
+        `## ${work.title}\n\n`;
 
+    // =====================================================
+    // IMAGE
+    // =====================================================
 
-    data.results.forEach(
-        (work, index) => {
+    if (work.imageURL) {
 
-            output +=
-                `## ${index + 1}. ${work.title}\n\n`;
+        output +=
+            `![${escapeMarkdown(work.title)}](${work.imageURL})\n\n`;
 
+    }
 
-            // IMAGE
+    // =====================================================
+    // INFORMATION
+    // =====================================================
 
-            if (
-                work.imageURL
-            ) {
+    output +=
+        `**Artist:** ${work.artist}\n\n`;
 
-                output +=
-                    `![${work.title}](${work.imageURL})\n\n`;
+    if (work.dateDisplay) {
 
-            }
+        output +=
+            `**Date:** ${work.dateDisplay}\n\n`;
 
+    }
 
-            // ARTIST
+    if (work.objectNumber) {
 
-            output +=
-                `**Artist:** ${work.artist}\n\n`;
+        output +=
+            `**Object number:** ${work.objectNumber}\n\n`;
 
+    }
 
-            // ORIGINAL TITLE
+    // =====================================================
+    // RIJKSMUSEUM LINK
+    // =====================================================
 
-            if (
-                work.originalTitle &&
-                work.originalTitle !==
-                    work.title
-            ) {
+    output +=
+        `**Rijksmuseum:** ${work.museumURL}\n\n`;
 
-                output +=
-                    `**Original title:** ${work.originalTitle}\n\n`;
+    // =====================================================
+    // SAVE BUTTON
+    // =====================================================
 
-            }
+    output +=
+` \`\`\`meta-bind-button
+label: SAVE TO ARTWORK BANK
+style: primary
+action:
+  type: js
+  file: Scripts/ArtworkButton.js
+\`\`\`
 
+`;
 
-            // DATE
+    output +=
+        "---\n\n";
 
-            if (
-                work.dateDisplay
-            ) {
+    // =====================================================
+    // STORE ARTWORK DATA
+    // =====================================================
 
-                output +=
-                    `**Date:** ${work.dateDisplay}\n\n`;
+    const existingSelection =
+        app.vault.getAbstractFileByPath(
+            selectionPath
+        );
 
-            }
+    if (existingSelection) {
 
+        await app.vault.modify(
+            existingSelection,
+            JSON.stringify(
+                work,
+                null,
+                2
+            )
+        );
 
-            // TIMELINE
+    } else {
 
-            if (
-                work.dateStart !== null
-            ) {
+        await app.vault.create(
+            selectionPath,
+            JSON.stringify(
+                work,
+                null,
+                2
+            )
+        );
 
-                output +=
-                    `**Timeline start:** ${work.dateStart}\n\n`;
-
-            }
-
-
-            if (
-                work.dateEnd !== null
-            ) {
-
-                output +=
-                    `**Timeline end:** ${work.dateEnd}\n\n`;
-
-            }
-
-
-            // OBJECT NUMBER
-
-            if (
-                work.objectNumber
-            ) {
-
-                output +=
-                    `**Object number:** ${work.objectNumber}\n\n`;
-
-            }
-
-
-            // RIJKSMUSEUM ID
-
-            output +=
-                `**Rijksmuseum ID:** ${work.museumURL}\n\n`;
-
-
-            // IMAGE URL
-
-            if (
-                work.imageURL
-            ) {
-
-                output +=
-                    `**Image URL:** ${work.imageURL}\n\n`;
-
-            }
-
-
-            output +=
-                "---\n\n";
-
-        }
-    );
-
+    }
 
     return output;
-
 };
+
+
+// =========================================================
+// ESCAPE MARKDOWN
+// =========================================================
+
+function escapeMarkdown(value) {
+
+    return String(value || "")
+        .replace(
+            /[\[\]]/g,
+            "\\$&"
+        );
+
+}

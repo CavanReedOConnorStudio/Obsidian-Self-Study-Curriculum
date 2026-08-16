@@ -4,9 +4,6 @@ module.exports = async function (artwork) {
     // SETTINGS
     // =====================================================
 
-    const templatePath =
-        "7 - Templates/Artwork Template.md";
-
     const baseFolder =
         "4 - Appendix";
 
@@ -19,9 +16,6 @@ module.exports = async function (artwork) {
     const periodFolder =
         `${baseFolder}/Periods`;
 
-    const mediumFolder =
-        `${baseFolder}/Mediums`;
-
     const institutionFolder =
         `${baseFolder}/Institutions`;
 
@@ -30,6 +24,9 @@ module.exports = async function (artwork) {
 
     const themeFolder =
         `${baseFolder}/Themes`;
+
+    const templatePath =
+        "7 - Templates/Artwork Template.md";
 
 
     // =====================================================
@@ -42,8 +39,7 @@ module.exports = async function (artwork) {
             "No artwork data was supplied."
         );
 
-        return;
-
+        return null;
     }
 
 
@@ -56,47 +52,44 @@ module.exports = async function (artwork) {
             templatePath
         );
 
-
     if (!template) {
 
         new Notice(
             `Artwork template not found:\n${templatePath}`
         );
 
-        return;
-
+        return null;
     }
 
 
     // =====================================================
-    // CREATE FOLDERS
+    // CREATE REQUIRED FOLDERS
     // =====================================================
 
     await ensureFolder(artworkFolder);
     await ensureFolder(artistFolder);
     await ensureFolder(periodFolder);
-    await ensureFolder(mediumFolder);
     await ensureFolder(institutionFolder);
     await ensureFolder(subjectFolder);
     await ensureFolder(themeFolder);
 
 
     // =====================================================
-    // CLEAN ARTWORK TITLE
+    // ARTWORK TITLE
     // =====================================================
 
-    const safeTitle =
-        cleanFilename(
-            artwork.title
-        );
+    const artworkTitle =
+        cleanName(artwork.title);
 
+    const artworkFilename =
+        cleanFilename(artworkTitle);
 
     const artworkPath =
-        `${artworkFolder}/${safeTitle}.md`;
+        `${artworkFolder}/${artworkFilename}.md`;
 
 
     // =====================================================
-    // CHECK DUPLICATE ARTWORK
+    // DUPLICATE CHECK
     // =====================================================
 
     if (
@@ -106,16 +99,15 @@ module.exports = async function (artwork) {
     ) {
 
         new Notice(
-            `"${safeTitle}" already exists in Artwork Bank.`
+            `"${artworkTitle}" already exists.`
         );
 
-        return;
-
+        return null;
     }
 
 
     // =====================================================
-    // NORMALISE ARTIST
+    // NORMALISE DATA
     // =====================================================
 
     const artistName =
@@ -123,20 +115,30 @@ module.exports = async function (artwork) {
             artwork.artist
         );
 
-
-    // =====================================================
-    // DEFAULT / EMPTY VALUES
-    // =====================================================
-
     const periodName =
-        artwork.period || "";
+        cleanName(
+            artwork.period
+        );
 
     const mediumName =
-        artwork.medium || "";
+        cleanName(
+            artwork.medium
+        );
 
     const institutionName =
-        artwork.institution ||
-        "Rijksmuseum";
+        cleanName(
+            artwork.institution
+        );
+
+    const subjects =
+        normaliseArray(
+            artwork.subjects
+        );
+
+    const themes =
+        normaliseArray(
+            artwork.themes
+        );
 
 
     // =====================================================
@@ -150,7 +152,6 @@ module.exports = async function (artwork) {
             artistFolder,
             "Artist"
         );
-
     }
 
 
@@ -161,18 +162,6 @@ module.exports = async function (artwork) {
             periodFolder,
             "Period"
         );
-
-    }
-
-
-    if (mediumName) {
-
-        await createReferenceNote(
-            mediumName,
-            mediumFolder,
-            "Medium"
-        );
-
     }
 
 
@@ -183,72 +172,39 @@ module.exports = async function (artwork) {
             institutionFolder,
             "Institution"
         );
-
     }
 
 
     // =====================================================
-    // SUBJECTS
+    // SUBJECT NOTES
     // =====================================================
 
-    const subjects =
-        Array.isArray(
-            artwork.subjects
-        )
-            ? artwork.subjects
-            : [];
+    for (const subject of subjects) {
 
-
-    for (
-        const subject
-        of subjects
-    ) {
-
-        if (subject) {
-
-            await createReferenceNote(
-                subject,
-                subjectFolder,
-                "Subject"
-            );
-
-        }
-
+        await createReferenceNote(
+            subject,
+            subjectFolder,
+            "Subject"
+        );
     }
 
 
     // =====================================================
-    // THEMES
+    // THEME NOTES
     // =====================================================
 
-    const themes =
-        Array.isArray(
-            artwork.themes
-        )
-            ? artwork.themes
-            : [];
+    for (const theme of themes) {
 
-
-    for (
-        const theme
-        of themes
-    ) {
-
-        if (theme) {
-
-            await createReferenceNote(
-                theme,
-                themeFolder,
-                "Theme"
-            );
-
-        }
-
+        await createReferenceNote(
+            theme,
+            themeFolder,
+            "Theme"
+        );
     }
 
 
     // =====================================================
-    // READ TEMPLATE
+    // READ ARTWORK TEMPLATE
     // =====================================================
 
     let content =
@@ -258,7 +214,7 @@ module.exports = async function (artwork) {
 
 
     // =====================================================
-    // YAML LINKS
+    // BUILD LINKS
     // =====================================================
 
     const artistLink =
@@ -266,18 +222,10 @@ module.exports = async function (artwork) {
             ? `[[${artistName}]]`
             : "";
 
-
     const periodLink =
         periodName
             ? `[[${periodName}]]`
             : "";
-
-
-    const mediumLink =
-        mediumName
-            ? `[[${mediumName}]]`
-            : "";
-
 
     const institutionLink =
         institutionName
@@ -286,16 +234,16 @@ module.exports = async function (artwork) {
 
 
     // =====================================================
-    // SUBJECT LINKS
+    // SUBJECT YAML
     // =====================================================
 
     const subjectYaml =
-        subjects.length > 0
+        subjects.length
 
             ? subjects
                 .map(
                     subject =>
-                        `  - "[[${cleanName(subject)}]]"`
+                        `  - "[[${escapeYaml(subject)}]]"`
                 )
                 .join("\n")
 
@@ -303,16 +251,16 @@ module.exports = async function (artwork) {
 
 
     // =====================================================
-    // THEME LINKS
+    // THEME YAML
     // =====================================================
 
     const themeYaml =
-        themes.length > 0
+        themes.length
 
             ? themes
                 .map(
                     theme =>
-                        `  - "[[${cleanName(theme)}]]"`
+                        `  - "[[${escapeYaml(theme)}]]"`
                 )
                 .join("\n")
 
@@ -325,7 +273,7 @@ module.exports = async function (artwork) {
 
     const frontmatter =
 `---
-title: "${escapeYaml(artwork.title)}"
+title: "${escapeYaml(artworkTitle)}"
 original_title: "${escapeYaml(artwork.originalTitle || "")}"
 
 artist: "${escapeYaml(artistLink)}"
@@ -336,11 +284,11 @@ date_display: "${escapeYaml(artwork.dateDisplay || "")}"
 
 period: "${escapeYaml(periodLink)}"
 
-medium: "${escapeYaml(mediumLink)}"
+medium: "${escapeYaml(mediumName)}"
 
 institution: "${escapeYaml(institutionLink)}"
 
-source: "Rijksmuseum"
+source: "${escapeYaml(artwork.source || "Rijksmuseum")}"
 source_id: "${escapeYaml(artwork.objectNumber || "")}"
 source_url: "${escapeYaml(artwork.museumURL || "")}"
 
@@ -366,7 +314,7 @@ ${themeYaml}
 
 
     // =====================================================
-    // CREATE ARTWORK
+    // CREATE ARTWORK NOTE
     // =====================================================
 
     await app.vault.create(
@@ -376,16 +324,16 @@ ${themeYaml}
 
 
     // =====================================================
-    // SUCCESS
+    // SUCCESS MESSAGE
     // =====================================================
 
     new Notice(
-        `Saved "${safeTitle}" to Artwork Bank.`
+        `Saved "${artworkTitle}" to Artwork Bank.`
     );
 
 
     // =====================================================
-    // OPEN ARTWORK
+    // OPEN NEW ARTWORK
     // =====================================================
 
     const newFile =
@@ -393,36 +341,40 @@ ${themeYaml}
             artworkPath
         );
 
-
     if (newFile) {
 
         await app.workspace
             .getLeaf(false)
             .openFile(newFile);
-
     }
 
+
+    // =====================================================
+    // RETURN FILE
+    // =====================================================
+
+    return newFile;
 };
 
 
 // =========================================================
-// CREATE FOLDER
+// ENSURE FOLDER EXISTS
 // =========================================================
 
 async function ensureFolder(path) {
 
     if (
-        !app.vault.getAbstractFileByPath(
+        app.vault.getAbstractFileByPath(
             path
         )
     ) {
 
-        await app.vault.createFolder(
-            path
-        );
-
+        return;
     }
 
+    await app.vault.createFolder(
+        path
+    );
 }
 
 
@@ -436,19 +388,19 @@ async function createReferenceNote(
     type
 ) {
 
-    const clean =
-        cleanFilename(name);
-
-    if (!clean) {
+    if (!name) {
         return;
     }
 
 
+    const filename =
+        cleanFilename(name);
+
     const path =
-        `${folder}/${clean}.md`;
+        `${folder}/${filename}.md`;
 
 
-    // Already exists
+    // Don't overwrite an existing note
 
     if (
         app.vault.getAbstractFileByPath(
@@ -457,7 +409,6 @@ async function createReferenceNote(
     ) {
 
         return;
-
     }
 
 
@@ -478,7 +429,48 @@ type: "${type}"
         path,
         content
     );
+}
 
+
+// =========================================================
+// NORMALISE ARRAY
+// =========================================================
+
+function normaliseArray(value) {
+
+    if (!Array.isArray(value)) {
+
+        return [];
+    }
+
+
+    return value
+
+        .map(
+            item =>
+                cleanName(item)
+        )
+
+        .filter(
+            item =>
+                item.length > 0
+        );
+}
+
+
+// =========================================================
+// CLEAN NAME
+// =========================================================
+
+function cleanName(value) {
+
+    return String(value || "")
+
+        .replace(/\[\[/g, "")
+
+        .replace(/\]\]/g, "")
+
+        .trim();
 }
 
 
@@ -489,35 +481,36 @@ type: "${type}"
 function cleanFilename(value) {
 
     return String(value || "")
-        .replace(/[\\/:*?"<>|]/g, "")
-        .trim();
 
+        .replace(
+            /[\\/:*?"<>|]/g,
+            ""
+        )
+
+        .trim();
 }
 
 
 // =========================================================
-// CLEAN LINK NAME
-// =========================================================
-
-function cleanName(value) {
-
-    return String(value || "")
-        .replace(/\[\[/g, "")
-        .replace(/\]\]/g, "")
-        .trim();
-
-}
-
-
-// =========================================================
-// YAML ESCAPING
+// ESCAPE YAML
 // =========================================================
 
 function escapeYaml(value) {
 
     return String(value || "")
-        .replace(/\\/g, "\\\\")
-        .replace(/"/g, '\\"')
-        .replace(/\n/g, " ");
 
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+
+        .replace(
+            /"/g,
+            '\\"'
+        )
+
+        .replace(
+            /\n/g,
+            " "
+        );
 }
