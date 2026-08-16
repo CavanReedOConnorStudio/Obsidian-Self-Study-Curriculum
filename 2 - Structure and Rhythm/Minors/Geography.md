@@ -11,7 +11,7 @@ Landscape shapes civilisation, and civilisation shapes what gets painted. Floren
 
 • Why [[Paris]] became the capital of nineteenth-century art: [[centralisation]], [[academies]], [[dealers]]
 
-• Why [[Edinburgh]] looks the way it does: [[geology]], [[Light]], and [[the Enlightenment city]]
+• Why [[Edinburgh]] looks the way it does: [[geology]], [[5 - Tags/Light]], and [[the Enlightenment city]]
 
 • [[Regional light]] and its effect on [[palette]]: [[Provence]], [[the Dutch coast]], [[the Scottish Highlands]]
 

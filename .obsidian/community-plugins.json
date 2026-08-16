@@ -1,7 +1,7 @@
 [
   "obsidian-git",
-  "obsidian-excalidraw-plugin",
   "highlightr-plugin",
   "templater-obsidian",
-  "omnisearch"
+  "omnisearch",
+  "dataview"
 ]

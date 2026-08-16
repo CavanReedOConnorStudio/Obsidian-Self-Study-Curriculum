@@ -2,5 +2,6 @@
   "alwaysUpdateLinks": true,
   "attachmentFolderPath": "+",
   "newFileLocation": "current",
-  "promptDelete": false
+  "promptDelete": false,
+  "propertiesInDocument": "visible"
 }

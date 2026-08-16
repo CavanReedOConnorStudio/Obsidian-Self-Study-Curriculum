@@ -75,7 +75,7 @@ Before working through the chronology, it is worth fixing a method for looking, 
 
 • [[Composition]]: where does the eye enter, and where is it led?
 
-• [[Light]]: is it describing a real time of day, or serving a [[symbolic]] or [[dramatic]] purpose?
+• [[5 - Tags/Light]]: is it describing a real time of day, or serving a [[symbolic]] or [[dramatic]] purpose?
 
 • [[Precedent]]: what earlier work is this painting answering, copying, or rejecting?
 
@@ -127,7 +127,7 @@ c. 1300 – 1450 — [[Florence]], Siena
 
 c. 1450 – 1520 — [[Florence]], [[Rome]], [[Venice]]
 
-Leonardo, Michelangelo and Raphael brought [[The Early Renaissance]] experiments to a [[classical synthesis]]: [[anatomical precision]], [[atmospheric perspective]], and [[idealised composition]] balanced against individual [[psychological]] presence. In [[Venice]], a parallel tradition under [[Bellini]], Giorgione and Titian prized [[colour]] and [[Light]]— [[colorito]] — over the Florentine emphasis on [[line]] and [[drawing]] — [[disegno]], a debate that would echo for three centuries.
+Leonardo, Michelangelo and Raphael brought [[The Early Renaissance]] experiments to a [[classical synthesis]]: [[anatomical precision]], [[atmospheric perspective]], and [[idealised composition]] balanced against individual [[psychological]] presence. In [[Venice]], a parallel tradition under [[Bellini]], Giorgione and Titian prized [[colour]] and [[5 - Tags/Light]]— [[colorito]] — over the Florentine emphasis on [[line]] and [[drawing]] — [[disegno]], a debate that would echo for three centuries.
 
 #### KEY FIGURES
 
@@ -419,7 +419,7 @@ Landscape shapes civilisation, and civilisation shapes what gets painted. Floren
 
 • Why [[Paris]] became the capital of nineteenth-century art: [[centralisation]], [[academies]], [[dealers]]
 
-• Why [[Edinburgh]] looks the way it does: [[geology]], [[Light]], and [[the Enlightenment city]]
+• Why [[Edinburgh]] looks the way it does: [[geology]], [[5 - Tags/Light]], and [[the Enlightenment city]]
 
 • [[Regional light]] and its effect on [[palette]]: [[Provence]], [[the Dutch coast]], [[the Scottish Highlands]]
 
