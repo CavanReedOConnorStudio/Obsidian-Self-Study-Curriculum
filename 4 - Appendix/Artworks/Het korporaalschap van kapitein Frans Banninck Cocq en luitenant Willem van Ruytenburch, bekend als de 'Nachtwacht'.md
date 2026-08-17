@@ -23,7 +23,7 @@ source_url: "https://id.rijksmuseum.nl/200107928"
 
 image_url: "https://iiif.micr.io/PJEZO/full/800,/0/default.jpg"
 ---
-
+#Artwork
 # Het korporaalschap van kapitein Frans Banninck Cocq en luitenant Willem van Ruytenburch, bekend als de 'Nachtwacht'
 
 ![Het korporaalschap van kapitein Frans Banninck Cocq en luitenant Willem van Ruytenburch, bekend als de 'Nachtwacht'](https://iiif.micr.io/PJEZO/full/800,/0/default.jpg)
