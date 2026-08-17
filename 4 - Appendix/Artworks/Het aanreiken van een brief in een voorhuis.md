@@ -23,5 +23,5 @@ source_url: "https://id.rijksmuseum.nl/200109392"
 
 image_url: "https://iiif.micr.io/YEDXA/full/800,/0/default.jpg"
 ---
-#Artwork
+
 

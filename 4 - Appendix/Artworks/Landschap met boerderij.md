@@ -23,7 +23,7 @@ source_url: "https://id.rijksmuseum.nl/200108954"
 
 image_url: "https://iiif.micr.io/FXPHv/full/800,/0/default.jpg"
 ---
-#Artwork
+
 # Landschap met boerderij
 
 ![Landschap met boerderij](https://iiif.micr.io/FXPHv/full/800,/0/default.jpg)

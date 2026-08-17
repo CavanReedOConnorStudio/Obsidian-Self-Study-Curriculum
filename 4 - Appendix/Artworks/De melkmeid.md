@@ -23,7 +23,7 @@ source_url: "https://id.rijksmuseum.nl/200108369"
 
 image_url: "https://iiif.micr.io/QkOGy/full/800,/0/default.jpg"
 ---
-#Artwork
+
 # De melkmeid
 
 ![De melkmeid](https://iiif.micr.io/QkOGy/full/800,/0/default.jpg)

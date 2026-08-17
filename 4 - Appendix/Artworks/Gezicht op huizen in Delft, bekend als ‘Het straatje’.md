@@ -23,7 +23,7 @@ source_url: "https://id.rijksmuseum.nl/200108371"
 
 image_url: "https://iiif.micr.io/VWEov/full/800,/0/default.jpg"
 ---
-#Artwork
+
 # Gezicht op huizen in Delft, bekend als ‘Het straatje’
 
 ![Gezicht op huizen in Delft, bekend als ‘Het straatje’](https://iiif.micr.io/VWEov/full/800,/0/default.jpg)
