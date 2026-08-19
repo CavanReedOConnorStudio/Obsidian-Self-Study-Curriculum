@@ -10,6 +10,14 @@ tags:
 
 Complete catalogue of artists represented in the Rijksmuseum painting collection.
 
+```meta-bind-button
+label: SEARCH RIJKSMUSEUM
+style: primary
+action:
+  type: js
+  file: "8 - Scripts/Buttons/ArtworkSearchButton.js"
+```
+
 **Artists:** 1291
 
 **Painting records scanned:** 5336
