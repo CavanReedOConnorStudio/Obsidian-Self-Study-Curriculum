@@ -8,40 +8,36 @@ tags:
 
 # Rijksmuseum Artists
 
-Artists represented in the Rijksmuseum artwork collection.
+Artists represented in my saved Rijksmuseum artwork collection.
+
+**Artists:** 2
+
+**Saved Rijksmuseum artworks:** 5
+
+_Last updated: 2026-08-19_
+
+---
 
 ## Artists
 
-```dataviewjs
-const artists = dv.pages('"4 - Appendix/Artists"')
-    .where(p => p.type === "Artist")
-    .sort(p => p.file.name);
+| Artist | Saved Works |
+|---|---:|
+| [[Johannes Vermeer]] | 3 |
+| [[Rembrandt van Rijn]] | 2 |
 
-const artworks = dv.pages('"4 - Appendix/Artworks"')
-    .where(p => String(p.institution).includes("Rijksmuseum"));
 
-const rijksArtists = artists.filter(artist =>
-    artworks.some(artwork =>
-        String(artwork.artist).includes(artist.file.name)
-    )
-);
+---
 
-dv.table(
-    ["Artist", "Saved Works"],
-    rijksArtists.map(artist => {
+## Saved Works by Artist
 
-        const works = artworks.filter(
-            artwork =>
-                String(artwork.artist).includes(
-                    artist.file.name
-                )
-        );
+### [[Johannes Vermeer]]
 
-        return [
-            artist.file.link,
-            works.length
-        ];
+- [[4 - Appendix/Artworks/The Love Letter.md|The Love Letter]]
+- [[4 - Appendix/Artworks/The Milkmaid.md|The Milkmaid]]
+- [[4 - Appendix/Artworks/View of Houses in Delft, Known as ‘The Little Street’.md|View of Houses in Delft, Known as ‘The Little Street’]]
 
-    })
-);
-```
+### [[Rembrandt van Rijn]]
+
+- [[4 - Appendix/Artworks/Self-portrait as the Apostle Paul.md|Self-portrait as the Apostle Paul]]
+- [[4 - Appendix/Artworks/Zelfportret.md|Zelfportret]]
+

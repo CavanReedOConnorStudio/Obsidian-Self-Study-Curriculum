@@ -1,11 +1,16 @@
 // =====================================================
-// RIJKSMUSEUM ARTIST CATALOGUE
+// RIJKSMUSEUM ARTIST INDEX
 // =====================================================
 //
-// Builds a catalogue of artists represented in the
-// Rijksmuseum painting collection.
+// Builds an index from artworks you have actually saved
+// from the Rijksmuseum.
 //
-// This is separate from the normal artwork search.
+// It reads:
+// 4 - Appendix/Artworks/
+//
+// and only includes artworks where:
+// institution: "[[Rijksmuseum]]"
+//
 // =====================================================
 
 
@@ -13,226 +18,11 @@
 // SETTINGS
 // =====================================================
 
+const ARTWORK_FOLDER =
+    "4 - Appendix/Artworks";
+
 const OUTPUT =
     "4 - Appendix/Institutions/Rijksmuseum/Rijksmuseum Artists.md";
-
-const SEARCH_URL =
-    "https://data.rijksmuseum.nl/search/collection?type=painting";
-
-
-// =====================================================
-// SAFE FILE / MARKDOWN HELPERS
-// =====================================================
-
-function escapeMarkdown(value) {
-
-    return String(value || "")
-        .replace(
-            /[\[\]\|]/g,
-            "\\$&"
-        );
-
-}
-
-
-// =====================================================
-// EXTRACT ARTIST NAME
-// =====================================================
-
-function extractArtistName(actor) {
-
-    if (!actor) {
-        return "";
-    }
-
-
-    // Direct name
-
-    if (
-        typeof actor.name === "string" &&
-        actor.name.trim()
-    ) {
-
-        return actor.name.trim();
-
-    }
-
-
-    // Linked Art identified_by
-
-    if (
-        Array.isArray(
-            actor.identified_by
-        )
-    ) {
-
-        for (
-            const identifier
-            of actor.identified_by
-        ) {
-
-            if (
-                identifier?.type === "Name" &&
-                identifier.content
-            ) {
-
-                return String(
-                    identifier.content
-                ).trim();
-
-            }
-
-        }
-
-    }
-
-
-    // Notation
-
-    if (
-        Array.isArray(
-            actor.notation
-        )
-    ) {
-
-        for (
-            const notation
-            of actor.notation
-        ) {
-
-            const value =
-                notation?.["@value"];
-
-
-            if (value) {
-
-                return String(
-                    value
-                ).trim();
-
-            }
-
-        }
-
-    }
-
-
-    return "";
-
-}
-
-
-// =====================================================
-// EXTRACT CREATORS FROM OBJECT
-// =====================================================
-
-function extractCreators(object) {
-
-    const creators = [];
-
-
-    const production =
-        object?.produced_by;
-
-
-    if (!production) {
-
-        return creators;
-
-    }
-
-
-    // -------------------------------------------------
-    // Direct carried_out_by
-    // -------------------------------------------------
-
-    if (
-        Array.isArray(
-            production.carried_out_by
-        )
-    ) {
-
-        for (
-            const actor
-            of production.carried_out_by
-        ) {
-
-            const name =
-                extractArtistName(
-                    actor
-                );
-
-
-            if (
-                name &&
-                !creators.includes(name)
-            ) {
-
-                creators.push(name);
-
-            }
-
-        }
-
-    }
-
-
-    // -------------------------------------------------
-    // Production parts
-    // -------------------------------------------------
-
-    if (
-        Array.isArray(
-            production.part
-        )
-    ) {
-
-        for (
-            const part
-            of production.part
-        ) {
-
-            if (
-                !Array.isArray(
-                    part?.carried_out_by
-                )
-            ) {
-
-                continue;
-
-            }
-
-
-            for (
-                const actor
-                of part.carried_out_by
-            ) {
-
-                const name =
-                    extractArtistName(
-                        actor
-                    );
-
-
-                if (
-                    name &&
-                    !creators.includes(name)
-                ) {
-
-                    creators.push(name);
-
-                }
-
-            }
-
-        }
-
-    }
-
-
-    return creators;
-
-}
 
 
 // =====================================================
@@ -244,86 +34,23 @@ module.exports = async function () {
     try {
 
         new Notice(
-            "Rijksmuseum artist catalogue: starting..."
+            "Building Rijksmuseum Artist Index..."
         );
 
 
         // =================================================
-        // COLLECT ALL PAINTING IDENTIFIERS
+        // FIND SAVED ARTWORKS
         // =================================================
 
-        const items = [];
-
-
-        let nextURL =
-            SEARCH_URL;
-
-
-        let page =
-            1;
-
-
-        while (nextURL) {
-
-            new Notice(
-                `Rijksmuseum: loading painting page ${page}...`,
-                3000
-            );
-
-
-            console.log(
-                `Rijksmuseum: loading page ${page}`
-            );
-
-
-            const response =
-                await requestUrl({
-
-                    url:
-                        nextURL,
-
-                    method:
-                        "GET"
-
-                });
-
-
-            const data =
-                response.json;
-
-
-            if (
-                Array.isArray(
-                    data.orderedItems
-                )
-            ) {
-
-                items.push(
-                    ...data.orderedItems
+        const artworkFiles =
+            app.vault
+                .getMarkdownFiles()
+                .filter(
+                    file =>
+                        file.path.startsWith(
+                            ARTWORK_FOLDER + "/"
+                        )
                 );
-
-            }
-
-
-            nextURL =
-                data.next?.id ||
-                null;
-
-
-            page++;
-
-        }
-
-
-        console.log(
-            `Rijksmuseum: ${items.length} paintings found`
-        );
-
-
-        new Notice(
-            `Found ${items.length} Rijksmuseum paintings. Now identifying artists...`,
-            5000
-        );
 
 
         // =================================================
@@ -335,146 +62,8 @@ module.exports = async function () {
 
 
         // =================================================
-        // PROCESS OBJECTS
+        // PROCESS ARTWORKS
         // =================================================
-
-        for (
-            let index = 0;
-            index < items.length;
-            index++
-        ) {
-
-            const item =
-                items[index];
-
-
-            try {
-
-                console.log(
-                    `Rijksmuseum artist catalogue: ${index + 1}/${items.length}`
-                );
-
-
-                // -----------------------------------------
-                // Resolve object
-                // -----------------------------------------
-
-                const objectResponse =
-                    await requestUrl({
-
-                        url:
-                            item.id +
-                            "?_profile=la-framed",
-
-                        method:
-                            "GET"
-
-                    });
-
-
-                const object =
-                    objectResponse.json;
-
-
-                // -----------------------------------------
-                // Extract creators
-                // -----------------------------------------
-
-                const creators =
-                    extractCreators(
-                        object
-                    );
-
-
-                // -----------------------------------------
-                // Count works
-                // -----------------------------------------
-
-                for (
-                    const artist
-                    of creators
-                ) {
-
-                    if (
-                        !artists.has(
-                            artist
-                        )
-                    ) {
-
-                        artists.set(
-                            artist,
-                            {
-                                name:
-                                    artist,
-
-                                works:
-                                    0
-                            }
-                        );
-
-                    }
-
-
-                    artists.get(
-                        artist
-                    ).works++;
-
-                }
-
-            }
-
-
-            catch (error) {
-
-                console.warn(
-                    "Could not process Rijksmuseum object:",
-                    item.id,
-                    error
-                );
-
-            }
-
-        }
-
-
-        // =================================================
-        // SORT ARTISTS
-        // =================================================
-
-        const artistList =
-            Array.from(
-                artists.values()
-            )
-            .sort(
-                (a, b) =>
-                    a.name.localeCompare(
-                        b.name
-                    )
-            );
-
-
-        console.log(
-            `Rijksmuseum: ${artistList.length} artists found`
-        );
-
-
-        // =================================================
-        // CHECK EXISTING ARTWORK BANK
-        // =================================================
-
-        const artworkFiles =
-            app.vault.getMarkdownFiles()
-            .filter(
-                file =>
-                    file.path.startsWith(
-                        "4 - Appendix/Artworks/"
-                    )
-            );
-
-
-        const savedArtists =
-            new Set();
-
 
         for (
             const file
@@ -487,36 +76,179 @@ module.exports = async function () {
                 );
 
 
-            const artist =
-                cache?.frontmatter?.artist;
+            const frontmatter =
+                cache?.frontmatter;
 
 
-            if (!artist) {
+            if (!frontmatter) {
+                continue;
+            }
+
+
+            // =================================================
+            // CHECK INSTITUTION
+            // =================================================
+
+            let institution =
+                String(
+                    frontmatter.institution || ""
+                );
+
+
+            institution =
+                institution
+                    .replace(
+                        /^\[\[/,
+                        ""
+                    )
+                    .replace(
+                        /\]\]$/,
+                        ""
+                    )
+                    .trim();
+
+
+            if (
+                institution.toLowerCase() !==
+                "rijksmuseum"
+            ) {
 
                 continue;
 
             }
 
 
-            // Remove Obsidian link formatting
+            // =================================================
+            // GET ARTIST
+            // =================================================
 
-            const cleaned =
+            let artist =
                 String(
-                    artist
-                )
-                .replace(
-                    /^\[\[/,
-                    ""
-                )
-                .replace(
-                    /\]\]$/,
-                    ""
+                    frontmatter.artist || ""
                 );
 
 
-            savedArtists.add(
-                cleaned
+            artist =
+                artist
+                    .replace(
+                        /^\[\[/,
+                        ""
+                    )
+                    .replace(
+                        /\]\]$/,
+                        ""
+                    )
+                    .trim();
+
+
+            if (!artist) {
+                continue;
+            }
+
+
+            // =================================================
+            // NORMALISE ARTIST
+            // =================================================
+
+            const artistNames = {
+
+                "Vermeer":
+                    "Johannes Vermeer",
+
+                "Jan Vermeer":
+                    "Johannes Vermeer",
+
+                "Johannes Vermeer":
+                    "Johannes Vermeer"
+
+            };
+
+
+            if (
+                artistNames[artist]
+            ) {
+
+                artist =
+                    artistNames[artist];
+
+            }
+
+
+            // =================================================
+            // CREATE ARTIST
+            // =================================================
+
+            if (
+                !artists.has(
+                    artist
+                )
+            ) {
+
+                artists.set(
+                    artist,
+                    []
+                );
+
+            }
+
+
+            // =================================================
+            // ADD ARTWORK
+            // =================================================
+
+            artists
+                .get(artist)
+                .push({
+
+                    file:
+                        file,
+
+                    title:
+                        frontmatter.title ||
+                        file.basename
+
+                });
+
+        }
+
+
+        // =================================================
+        // SORT ARTISTS
+        // =================================================
+
+        const artistList =
+            Array.from(
+                artists.entries()
+            )
+            .sort(
+                (
+                    a,
+                    b
+                ) =>
+                    a[0].localeCompare(
+                        b[0]
+                    )
             );
+
+
+        // =================================================
+        // COUNT ARTWORKS
+        // =================================================
+
+        let artworkCount =
+            0;
+
+
+        for (
+            const [
+                artist,
+                works
+            ]
+            of artistList
+        ) {
+
+            artworkCount +=
+                works.length;
 
         }
 
@@ -536,85 +268,125 @@ tags:
 
 # Rijksmuseum Artists
 
-Complete catalogue of artists represented in the Rijksmuseum painting collection.
+Artists represented in my saved Rijksmuseum artwork collection.
 
 **Artists:** ${artistList.length}
 
-**Painting records scanned:** ${items.length}
+**Saved Rijksmuseum artworks:** ${artworkCount}
 
-_Last updated: ${new Date().toISOString().split("T")[0]}_
+_Last updated: ${new Date()
+    .toISOString()
+    .split("T")[0]}_
 
 ---
 
 ## Artists
 
-| Artist | Rijksmuseum Paintings | Saved |
-|---|---:|:---:|
+| Artist | Saved Works |
+|---|---:|
 `;
 
 
+        // =================================================
+        // ARTIST TABLE
+        // =================================================
+
         for (
-            const artist
+            const [
+                artist,
+                works
+            ]
             of artistList
         ) {
 
-            const escaped =
-                escapeMarkdown(
-                    artist.name
-                );
-
-
-            // ---------------------------------------------
-            // Determine whether user has saved work
-            // ---------------------------------------------
-
-            let isSaved =
-                false;
-
-
-            for (
-                const saved
-                of savedArtists
-            ) {
-
-                if (
-                    saved
-                        .toLowerCase()
-                        .includes(
-                            artist.name.toLowerCase()
-                        ) ||
-                    artist.name
-                        .toLowerCase()
-                        .includes(
-                            saved.toLowerCase()
-                        )
-                ) {
-
-                    isSaved =
-                        true;
-
-                    break;
-
-                }
-
-            }
-
-
-            const savedMark =
-                isSaved
-                    ? "✓"
-                    : "";
-
-
             output +=
-`| [[${escaped}]] | ${artist.works} | ${savedMark} |
+`| [[${artist}]] | ${works.length} |
 `;
 
         }
 
 
         // =================================================
-        // WRITE FILE
+        // NO RESULTS
+        // =================================================
+
+        if (
+            artistList.length === 0
+        ) {
+
+            output +=
+`| No Rijksmuseum artists saved yet | 0 |
+`;
+
+        }
+
+
+        // =================================================
+        // WORKS BY ARTIST
+        // =================================================
+
+        output +=
+`
+
+---
+
+## Saved Works by Artist
+
+`;
+
+
+        for (
+            const [
+                artist,
+                works
+            ]
+            of artistList
+        ) {
+
+            output +=
+`### [[${artist}]]
+
+`;
+
+
+            // Sort works alphabetically
+
+            works.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    String(
+                        a.title
+                    ).localeCompare(
+                        String(
+                            b.title
+                        )
+                    )
+            );
+
+
+            for (
+                const work
+                of works
+            ) {
+
+                output +=
+`- [[${work.file.path}|${work.title}]]
+`;
+
+            }
+
+
+            output +=
+`
+`;
+
+        }
+
+
+        // =================================================
+        // FIND OUTPUT FILE
         // =================================================
 
         const existing =
@@ -622,6 +394,10 @@ _Last updated: ${new Date().toISOString().split("T")[0]}_
                 OUTPUT
             );
 
+
+        // =================================================
+        // UPDATE EXISTING FILE
+        // =================================================
 
         if (existing) {
 
@@ -631,6 +407,11 @@ _Last updated: ${new Date().toISOString().split("T")[0]}_
             );
 
         }
+
+
+        // =================================================
+        // CREATE NEW FILE
+        // =================================================
 
         else {
 
@@ -643,17 +424,17 @@ _Last updated: ${new Date().toISOString().split("T")[0]}_
 
 
         // =================================================
-        // COMPLETE
+        // SUCCESS
         // =================================================
 
         new Notice(
-            `Rijksmuseum Artist Catalogue complete: ${artistList.length} artists.`,
+            `Rijksmuseum Artist Index updated: ${artistList.length} artists, ${artworkCount} artworks.`,
             8000
         );
 
 
         console.log(
-            "Rijksmuseum artist catalogue complete."
+            "Rijksmuseum Artist Index complete."
         );
 
 
@@ -662,16 +443,20 @@ _Last updated: ${new Date().toISOString().split("T")[0]}_
     }
 
 
+    // =================================================
+    // ERROR
+    // =================================================
+
     catch (error) {
 
         console.error(
-            "Rijksmuseum artist catalogue failed:",
+            "Rijksmuseum Artist Index failed:",
             error
         );
 
 
         new Notice(
-            "Rijksmuseum Artist Catalogue failed. Check the console."
+            "Rijksmuseum Artist Index failed. Check the console."
         );
 
 
