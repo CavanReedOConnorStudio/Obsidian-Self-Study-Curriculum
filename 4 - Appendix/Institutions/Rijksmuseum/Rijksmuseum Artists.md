@@ -24,6 +24,14 @@ action:
 
 _Last updated: 2026-08-19_
 
+```meta-bind-button
+label:  Update Rijksmuseum Catalogue
+style: default
+action:
+  type: js
+  file: "8 - Scripts/Buttons/RijksmuseumArtistButton.js"
+```
+
 ---
 
 ## Artists

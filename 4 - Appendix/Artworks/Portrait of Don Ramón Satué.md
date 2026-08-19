@@ -1,14 +1,14 @@
 ---
 title: "Portrait of Don Ramón Satué"
 
-original_title: "Portret van Don Ramón Satué (1765-1824)"
+original_title: "Portrait of Don Ramón Satué"
 
 type: "Artwork"
 
 tags:
   - artwork
 
-artist: "[[Goya]]"
+artist: "[[Francisco de Goya]]"
 
 date_start: 1823
 date_end: 1823
