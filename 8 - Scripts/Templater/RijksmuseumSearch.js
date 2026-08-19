@@ -32,7 +32,6 @@ module.exports = async function (searchTerm) {
     try {
 
         const items = [];
-
         let page = 1;
 
 
@@ -46,22 +45,18 @@ module.exports = async function (searchTerm) {
                 `Rijksmuseum: loading search page ${page}`
             );
 
-
             const response =
                 await requestUrl({
                     url: nextURL,
                     method: "GET"
                 });
 
-
             const data =
                 response.json;
 
 
             if (
-                Array.isArray(
-                    data.orderedItems
-                )
+                Array.isArray(data.orderedItems)
             ) {
 
                 items.push(
@@ -108,7 +103,7 @@ module.exports = async function (searchTerm) {
 
 
         // =================================================
-        // HELPER: EXTRACT TEXT
+        // HELPER — EXTRACT TEXT
         // =================================================
 
         function extractText(value) {
@@ -117,17 +112,17 @@ module.exports = async function (searchTerm) {
                 return "";
             }
 
-
             if (typeof value === "string") {
                 return value;
             }
-
 
             return (
                 value.content ||
                 value.name ||
                 value.label ||
                 value._label ||
+                value.value ||
+                value["@value"] ||
                 ""
             );
 
@@ -135,97 +130,18 @@ module.exports = async function (searchTerm) {
 
 
         // =================================================
-        // HELPER: GET LANGUAGE
-        // =================================================
-
-        function getLanguages(value) {
-
-            if (!Array.isArray(value?.language)) {
-                return [];
-            }
-
-
-            return value.language
-                .map(language => {
-
-                    return (
-                        language?.id ||
-                        language?.content ||
-                        language?.label ||
-                        ""
-                    );
-
-                })
-                .filter(Boolean)
-                .map(value =>
-                    String(value).toLowerCase()
-                );
-
-        }
-
-
-        // =================================================
-        // HELPER: ENGLISH
-        // =================================================
-
-        function isEnglish(value) {
-
-            const languages =
-                getLanguages(value);
-
-
-            return languages.some(
-                language =>
-                    language.includes("eng") ||
-                    language.includes("en/")
-            );
-
-        }
-
-
-        // =================================================
-        // HELPER: DUTCH
-        // =================================================
-
-        function isDutch(value) {
-
-            const languages =
-                getLanguages(value);
-
-
-            return languages.some(
-                language =>
-                    language.includes("dut") ||
-                    language.includes("nld") ||
-                    language.includes("nl/")
-            );
-
-        }
-
-
-        // =================================================
-        // HELPER: NORMALISE MEDIUM
+        // HELPER — NORMALISE MEDIUM
         // =================================================
 
         function normaliseMedium(value) {
 
-            if (!value) {
-                return "";
-            }
-
-
             let text =
                 extractText(value);
-
 
             if (!text) {
                 return "";
             }
 
-
-            // ---------------------------------------------
-            // DUTCH → ENGLISH
-            // ---------------------------------------------
 
             const replacements = [
 
@@ -375,107 +291,313 @@ module.exports = async function (searchTerm) {
                 // =================================================
 
                 const identifiedBy =
-                    Array.isArray(
-                        object.identified_by
-                    )
+                    Array.isArray(object.identified_by)
                         ? object.identified_by
                         : [];
 
 
                 // =================================================
-                // TITLES
+                // ORIGINAL / DUTCH TITLE
                 // =================================================
 
-                const names =
-                    identifiedBy.filter(
+                let originalTitle =
+                    "Untitled";
+
+
+                const titleObject =
+                    identifiedBy.find(
                         value =>
-                            value?.type === "Name" &&
-                            extractText(value)
+                            value?.type === "Name"
                     );
 
+
+                if (
+                    titleObject?.content
+                ) {
+
+                    originalTitle =
+                        titleObject.content;
+
+                }
+
+
+                // =================================================
+                // OBJECT NUMBER
+                // =================================================
+
+                let objectNumber =
+                    "";
+
+
+                for (
+                    const identifier
+                    of identifiedBy
+                ) {
+
+                    if (
+                        identifier?.type === "Identifier" &&
+                        identifier.content
+                    ) {
+
+                        objectNumber =
+                            identifier.content;
+
+                        break;
+
+                    }
+
+                }
+
+
+                // =================================================
+                // ENGLISH TITLE
+                //
+                // IMPORTANT:
+                // We deliberately use the English Rijksmuseum
+                // webpage rather than guessing from Linked Art.
+                // =================================================
 
                 let englishTitle =
                     "";
 
 
-                let originalTitle =
-                    "";
+                if (objectNumber) {
+
+                    try {
+
+                        const englishPageURL =
+                            "https://www.rijksmuseum.nl/en/collection/" +
+                            encodeURIComponent(
+                                objectNumber
+                            );
 
 
-                // -------------------------------------------------
-                // FIND ENGLISH TITLE
-                // -------------------------------------------------
-
-                const englishName =
-                    names.find(
-                        value =>
-                            isEnglish(value)
-                    );
-
-
-                if (englishName) {
-
-                    englishTitle =
-                        extractText(
-                            englishName
+                        console.log(
+                            `Rijksmuseum: reading English page for ${objectNumber}`
                         );
+
+
+                        const pageResponse =
+                            await requestUrl({
+
+                                url:
+                                    englishPageURL,
+
+                                method:
+                                    "GET"
+
+                            });
+
+
+                        const html =
+                            pageResponse.text;
+
+
+                        // -----------------------------------------
+                        // Try JSON-LD first
+                        // -----------------------------------------
+
+                        const jsonLdMatches =
+                            html.match(
+                                /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi
+                            );
+
+
+                        if (
+                            jsonLdMatches
+                        ) {
+
+                            for (
+                                const block
+                                of jsonLdMatches
+                            ) {
+
+                                const jsonText =
+                                    block
+                                        .replace(
+                                            /<script[^>]*>/i,
+                                            ""
+                                        )
+                                        .replace(
+                                            /<\/script>/i,
+                                            ""
+                                        )
+                                        .trim();
+
+
+                                try {
+
+                                    const json =
+                                        JSON.parse(
+                                            jsonText
+                                        );
+
+
+                                    const possibleTitle =
+                                        json.name;
+
+
+                                    if (
+                                        possibleTitle &&
+                                        typeof possibleTitle === "string"
+                                    ) {
+
+                                        englishTitle =
+                                            possibleTitle.trim();
+
+                                        break;
+
+                                    }
+
+                                }
+
+                                catch (
+                                    ignored
+                                ) {
+
+                                    // Continue searching.
+
+                                }
+
+                            }
+
+                        }
+
+
+                        // -----------------------------------------
+                        // Try page heading
+                        // -----------------------------------------
+
+                        if (!englishTitle) {
+
+                            const h1Match =
+                                html.match(
+                                    /<h1[^>]*>([\s\S]*?)<\/h1>/i
+                                );
+
+
+                            if (
+                                h1Match?.[1]
+                            ) {
+
+                                englishTitle =
+                                    h1Match[1]
+                                        .replace(
+                                            /<[^>]+>/g,
+                                            ""
+                                        )
+                                        .replace(
+                                            /&amp;/g,
+                                            "&"
+                                        )
+                                        .replace(
+                                            /&quot;/g,
+                                            '"'
+                                        )
+                                        .replace(
+                                            /&#39;/g,
+                                            "'"
+                                        )
+                                        .replace(
+                                            /&#x27;/g,
+                                            "'"
+                                        )
+                                        .trim();
+
+                            }
+
+                        }
+
+
+                        // -----------------------------------------
+                        // Try page title
+                        // -----------------------------------------
+
+                        if (!englishTitle) {
+
+                            const titleMatch =
+                                html.match(
+                                    /<title[^>]*>([\s\S]*?)<\/title>/i
+                                );
+
+
+                            if (
+                                titleMatch?.[1]
+                            ) {
+
+                                let candidate =
+                                    titleMatch[1]
+                                        .replace(
+                                            /<[^>]+>/g,
+                                            ""
+                                        )
+                                        .replace(
+                                            /&amp;/g,
+                                            "&"
+                                        )
+                                        .replace(
+                                            /&quot;/g,
+                                            '"'
+                                        )
+                                        .replace(
+                                            /&#39;/g,
+                                            "'"
+                                        )
+                                        .trim();
+
+
+                                candidate =
+                                    candidate.replace(
+                                        /\s*[-|]\s*Rijksmuseum.*$/i,
+                                        ""
+                                    );
+
+
+                                if (candidate) {
+
+                                    englishTitle =
+                                        candidate;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    catch (error) {
+
+                        console.warn(
+                            `Could not retrieve English title for ${objectNumber}:`,
+                            error
+                        );
+
+                    }
 
                 }
 
 
-                // -------------------------------------------------
-                // FIND DUTCH / ORIGINAL TITLE
-                // -------------------------------------------------
-
-                const dutchName =
-                    names.find(
-                        value =>
-                            isDutch(value)
-                    );
-
-
-                if (dutchName) {
-
-                    originalTitle =
-                        extractText(
-                            dutchName
-                        );
-
-                }
-
-
-                // -------------------------------------------------
-                // FALLBACK TITLE
-                // -------------------------------------------------
-
-                if (!originalTitle && names.length) {
-
-                    originalTitle =
-                        extractText(
-                            names[0]
-                        );
-
-                }
-
-
-                if (!englishTitle && names.length) {
-
-                    englishTitle =
-                        extractText(
-                            names[0]
-                        );
-
-                }
-
-
-                // -------------------------------------------------
+                // =================================================
                 // MAIN TITLE
-                // -------------------------------------------------
+                // =================================================
 
                 const title =
                     englishTitle ||
-                    originalTitle ||
-                    "Untitled";
+                    originalTitle;
+
+
+                console.log(
+                    `Original title: ${originalTitle}`
+                );
+
+                console.log(
+                    `English title: ${englishTitle || "(not found)"}`
+                );
+
+                console.log(
+                    `Main title: ${title}`
+                );
 
 
                 // =================================================
@@ -538,7 +660,9 @@ module.exports = async function (searchTerm) {
                     artistObjects[0];
 
 
-                if (artistObject) {
+                if (
+                    artistObject
+                ) {
 
                     artist =
                         extractText(
@@ -584,10 +708,8 @@ module.exports = async function (searchTerm) {
                 let dateStart =
                     null;
 
-
                 let dateEnd =
                     null;
-
 
                 let dateDisplay =
                     "";
@@ -647,9 +769,7 @@ module.exports = async function (searchTerm) {
 
                         dateEnd =
                             years.length > 1
-                                ? parseInt(
-                                    years[1]
-                                )
+                                ? parseInt(years[1])
                                 : dateStart;
 
                     }
@@ -699,9 +819,7 @@ module.exports = async function (searchTerm) {
 
 
                 const statements =
-                    Array.isArray(
-                        object.referred_to_by
-                    )
+                    Array.isArray(object.referred_to_by)
                         ? object.referred_to_by
                         : [];
 
@@ -752,11 +870,9 @@ module.exports = async function (searchTerm) {
                     "";
 
 
-                // -------------------------------------------------
-                // FIRST: PHYSICAL DESCRIPTION
-                // -------------------------------------------------
-
-                if (physicalDescription) {
+                if (
+                    physicalDescription
+                ) {
 
                     medium =
                         normaliseMedium(
@@ -767,7 +883,7 @@ module.exports = async function (searchTerm) {
 
 
                 // -------------------------------------------------
-                // FALLBACK: MATERIAL DATA
+                // FALLBACK
                 // -------------------------------------------------
 
                 if (!medium) {
@@ -775,11 +891,8 @@ module.exports = async function (searchTerm) {
                     const mediumSources = [
 
                         object.made_of,
-
                         object.material,
-
                         object.materials,
-
                         production?.technique
 
                     ];
@@ -810,9 +923,7 @@ module.exports = async function (searchTerm) {
 
                                 if (
                                     text &&
-                                    !mediumValues.includes(
-                                        text
-                                    )
+                                    !mediumValues.includes(text)
                                 ) {
 
                                     mediumValues.push(
@@ -835,9 +946,7 @@ module.exports = async function (searchTerm) {
 
                             if (
                                 text &&
-                                !mediumValues.includes(
-                                    text
-                                )
+                                !mediumValues.includes(text)
                             ) {
 
                                 mediumValues.push(
@@ -870,7 +979,6 @@ module.exports = async function (searchTerm) {
                 const periodSources = [
 
                     object.classified_as,
-
                     object.about
 
                 ];
@@ -901,8 +1009,7 @@ module.exports = async function (searchTerm) {
 
                         if (
                             typeof text === "string" &&
-                            /golden age|baroque|renaissance|rococo|romantic|impression|realism|modern|gouden eeuw|barok|renaissance|romantiek|impressionisme|realisme/i
-                                .test(text)
+                            /golden age|baroque|renaissance|rococo|romantic|impression|realism|modern|gouden eeuw|barok|renaissance|romantiek|impressionisme|realisme/i.test(text)
                         ) {
 
                             period =
@@ -922,9 +1029,9 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // -------------------------------------------------
+                // =================================================
                 // VERMEER FALLBACK
-                // -------------------------------------------------
+                // =================================================
 
                 if (
                     !period &&
@@ -933,35 +1040,6 @@ module.exports = async function (searchTerm) {
 
                     period =
                         "Dutch Golden Age";
-
-                }
-
-
-                // =================================================
-                // OBJECT NUMBER
-                // =================================================
-
-                let objectNumber =
-                    "";
-
-
-                for (
-                    const identifier
-                    of identifiedBy
-                ) {
-
-                    if (
-                        identifier.type ===
-                            "Identifier" &&
-                        identifier.content
-                    ) {
-
-                        objectNumber =
-                            identifier.content;
-
-                        break;
-
-                    }
 
                 }
 
@@ -999,10 +1077,14 @@ module.exports = async function (searchTerm) {
 
                     const visualResponse =
                         await requestUrl({
+
                             url:
                                 visualURL +
                                 "?_profile=la-framed",
-                            method: "GET"
+
+                            method:
+                                "GET"
+
                         });
 
 
@@ -1027,10 +1109,14 @@ module.exports = async function (searchTerm) {
 
                         const digitalResponse =
                             await requestUrl({
+
                                 url:
                                     digitalURL +
                                     "?_profile=la-framed",
-                                method: "GET"
+
+                                method:
+                                    "GET"
+
                             });
 
 
@@ -1041,7 +1127,7 @@ module.exports = async function (searchTerm) {
                         const accessPoint =
                             digital.access_point?.find(
                                 value =>
-                                    value.id &&
+                                    value?.id &&
                                     value.id.includes(
                                         "iiif.micr.io"
                                     )
