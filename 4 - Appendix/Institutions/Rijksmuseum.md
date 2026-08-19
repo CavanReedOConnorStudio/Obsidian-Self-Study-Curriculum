@@ -5,4 +5,7 @@ tags:
   - institution
 ---
 
-# Rijksmuseum
+
+## [[Rijksmuseum Index]]
+
+## [[Rijksmuseum Artists]]

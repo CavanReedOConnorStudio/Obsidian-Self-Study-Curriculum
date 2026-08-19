@@ -36,21 +36,38 @@ dv.table(
 
 ```dataviewjs
 const periods = dv.pages('"4 - Appendix/Periods"')
+    .where(p => p.type === "Period")
     .sort(p => p.file.name);
 
-const artworks = dv.pages('"4 - Appendix/Artworks"');
+const artworks = dv.pages('"4 - Appendix/Artworks"')
+    .where(p =>
+        String(p.institution).includes("Rijksmuseum")
+    );
+
+const rijksPeriods = periods.filter(period =>
+    artworks.some(artwork =>
+        String(artwork.period).includes(
+            period.file.name
+        )
+    )
+);
 
 dv.table(
     ["Period", "Saved Works"],
-    periods.map(period => {
+    rijksPeriods.map(period => {
+
         const count = artworks.filter(
-            artwork => String(artwork.period).includes(period.file.name)
+            artwork =>
+                String(artwork.period).includes(
+                    period.file.name
+                )
         ).length;
 
         return [
             period.file.link,
             count
         ];
+
     })
 );
 ```

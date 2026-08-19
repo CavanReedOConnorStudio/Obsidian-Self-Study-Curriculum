@@ -26,3 +26,28 @@ dv.table(
     ])
 );
 ```
+
+
+
+## Period Index
+
+```dataviewjs
+const periods = dv.pages('"4 - Appendix/Periods"')
+    .sort(p => p.file.name);
+
+const artworks = dv.pages('"4 - Appendix/Artworks"');
+
+dv.table(
+    ["Period", "Saved Works"],
+    periods.map(period => {
+        const count = artworks.filter(
+            artwork => String(artwork.period).includes(period.file.name)
+        ).length;
+
+        return [
+            period.file.link,
+            count
+        ];
+    })
+);
+```
