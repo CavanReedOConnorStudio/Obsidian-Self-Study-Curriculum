@@ -627,7 +627,7 @@ Read these alongside the corresponding period in Part I, not as a separate track
 | [[The Early Renaissance]]    | [[Giotto]], [[Arena Chapel]], [[Padua]]; [[Masaccio]], [[Brancacci Chapel]], [[Florence]]                             |
 | [[The High Renaissance]]     | [[Michelangelo]], [[Sistine Chapel]]; [[Titian]], major Venetian altarpieces                                          |
 | [[The Northern Renaissance]] | Van Eyck, [[Ghent Altarpiece]]; [[Pieter Bruegel the Elder]], [[Kunsthistorisches Museum]], [[Vienna]]                |
-| [[The Baroque]]              | [[Caravaggio]], Rome church cycles; [[Johannes Vermeer]], [[Rijksmuseum]] and [[Mauritshuis]]                         |
+| [[The Baroque]]              | [[Caravaggio]], Rome church cycles; [[Johannes Vermeer]], [[5 - Tags/Rijksmuseum]] and [[Mauritshuis]]                         |
 | [[Romanticism]]              | Turner, [[Tate Britain]]; [[Caspar David Friedrich]], [[Alte Nationalgalerie]], [[Berlin]]                            |
 | [[Impressionism]]            | [[Musée d'Orsay]], [[Paris]]; Monet's [[Water Lilies]], [[Musée de l'Orangerie]]                                      |
 | [[Modernism]]                | [[Pablo Picasso]], [[Guernica]], [[Reina Sofía]], [[Madrid]]; [[MoMA]], New York, twentieth-century holdings          |
@@ -686,7 +686,7 @@ Original works reward study in a way reproductions cannot — scale, surface, an
 
 • [[Britain]]: [[the National Gallery]] and [[Tate Britain]] ([[London]]); the [[Kelvingrove]] and [[National Galleries of Scotland]] ([[Glasgow]] and [[Edinburgh]])
 
-• [[the Netherlands]]: the [[Rijksmuseum]] and [[Van Gogh Museum]] ([[Amsterdam]]); the [[Mauritshuis]] ([[The Hague]])
+• [[the Netherlands]]: the [[5 - Tags/Rijksmuseum]] and [[Van Gogh Museum]] ([[Amsterdam]]); the [[Mauritshuis]] ([[The Hague]])
 
 • [[Spain]]: [[the Prado]] and [[Reina Sofía]] ([[Madrid]])
 

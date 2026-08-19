@@ -238,16 +238,6 @@ tags:
 ---
 
 # ${name}
-
-## Biography
-
-## Artistic Context
-
-## Major Works
-
-## Relation to My Practice
-
-## Further Research
 `;
 
     }
@@ -270,14 +260,6 @@ tags:
 ---
 
 # ${name}
-
-## History
-
-## Collection
-
-## Significance
-
-## Further Research
 `;
 
     }
@@ -300,18 +282,6 @@ tags:
 ---
 
 # ${name}
-
-## Historical Context
-
-## Characteristics
-
-## Major Artists
-
-## Major Works
-
-## Relation to My Practice
-
-## Further Research
 `;
 
     }
@@ -499,10 +469,6 @@ source: ${yamlString(
     artwork.source || "Rijksmuseum"
 )}
 
-source_id: ${yamlString(
-    artwork.objectNumber
-)}
-
 source_url: ${yamlString(
     artwork.museumURL
 )}
@@ -515,26 +481,6 @@ image_url: ${yamlString(
 # ${artwork.title}
 
 ${image}
-
-## Looking
-
-### Function
-
-### Patron
-
-### Materials
-
-### Composition
-
-### Light
-
-### Precedent
-
-## My Observations
-
-## Relation to My Practice
-
-## Further Research
 `;
 
 
