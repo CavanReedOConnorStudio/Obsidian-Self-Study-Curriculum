@@ -1,3 +1,4 @@
+
 module.exports = async function (searchTerm) {
 
     // =====================================================
@@ -31,13 +32,14 @@ module.exports = async function (searchTerm) {
 
     try {
 
-        const items = [];
-        let page = 1;
-
-
         // =================================================
         // COLLECT ALL RESULTS
         // =================================================
+
+        const items = [];
+
+        let page = 1;
+
 
         while (nextURL) {
 
@@ -45,18 +47,26 @@ module.exports = async function (searchTerm) {
                 `Rijksmuseum: loading search page ${page}`
             );
 
+
             const response =
                 await requestUrl({
                     url: nextURL,
                     method: "GET"
                 });
 
+
             const data =
                 response.json;
 
 
+            // =============================================
+            // ADD RESULTS
+            // =============================================
+
             if (
-                Array.isArray(data.orderedItems)
+                Array.isArray(
+                    data.orderedItems
+                )
             ) {
 
                 items.push(
@@ -65,6 +75,10 @@ module.exports = async function (searchTerm) {
 
             }
 
+
+            // =============================================
+            // NEXT PAGE
+            // =============================================
 
             nextURL =
                 data.next?.id || null;
@@ -103,677 +117,7 @@ module.exports = async function (searchTerm) {
 
 
         // =================================================
-        // HELPER — EXTRACT TEXT
-        // =================================================
-
-        function extractText(value) {
-
-            if (!value) {
-                return "";
-            }
-
-
-            if (
-                typeof value === "string"
-            ) {
-
-                return value;
-
-            }
-
-
-            return (
-                value.content ||
-                value.name ||
-                value.label ||
-                value._label ||
-                value.value ||
-                value["@value"] ||
-                ""
-            );
-
-        }
-
-
-        // =================================================
-        // HELPER — ENGLISH VALUE
-        // =================================================
-
-        function englishValue(value) {
-
-            if (!value) {
-                return "";
-            }
-
-
-            if (Array.isArray(value)) {
-
-                for (
-                    const item
-                    of value
-                ) {
-
-                    const result =
-                        englishValue(item);
-
-                    if (result) {
-                        return result;
-                    }
-
-                }
-
-                return "";
-
-            }
-
-
-            if (
-                typeof value !== "object"
-            ) {
-
-                return "";
-
-            }
-
-
-            let language = "";
-
-
-            if (
-                Array.isArray(value.language)
-            ) {
-
-                for (
-                    const languageObject
-                    of value.language
-                ) {
-
-                    const languageLabel =
-                        String(
-                            languageObject?._label ||
-                            languageObject?.label ||
-                            ""
-                        )
-                        .toLowerCase()
-                        .trim();
-
-
-                    if (
-                        languageLabel === "english"
-                    ) {
-
-                        language = "en";
-                        break;
-
-                    }
-
-                }
-
-            }
-
-
-            language =
-                language ||
-                String(
-                    value["@language"] ||
-                    value.language ||
-                    value.lang ||
-                    value["xml:lang"] ||
-                    ""
-                )
-                .toLowerCase()
-                .trim();
-
-
-            const content =
-                value["@value"] ||
-                value.content ||
-                value.value ||
-                value.name ||
-                value.label ||
-                "";
-
-
-            if (
-                (
-                    language === "en" ||
-                    language === "eng" ||
-                    language.includes("english")
-                ) &&
-                content
-            ) {
-
-                return String(
-                    content
-                ).trim();
-
-            }
-
-
-            return "";
-
-        }
-
-
-        // =================================================
-        // HELPER — PREFERRED NAME
-        // =================================================
-
-        function isPreferredName(identifier) {
-
-            if (
-                !identifier ||
-                identifier.type !== "Name"
-            ) {
-
-                return false;
-
-            }
-
-
-            const classifications =
-                Array.isArray(
-                    identifier.classified_as
-                )
-                    ? identifier.classified_as
-                    : [];
-
-
-            return classifications.some(
-                classification => {
-
-                    const id =
-                        String(
-                            classification?.id ||
-                            ""
-                        );
-
-
-                    const label =
-                        String(
-                            classification?._label ||
-                            classification?.label ||
-                            ""
-                        )
-                        .toLowerCase();
-
-
-                    return (
-                        id.includes("300404670") ||
-                        label.includes("primary name") ||
-                        label.includes("preferred") ||
-                        label.includes("title")
-                    );
-
-                }
-            );
-
-        }
-
-
-        // =================================================
-        // HELPER — ARTIST NAME
-        // =================================================
-
-        async function getArtistName(actor) {
-
-            if (!actor) {
-                return "";
-            }
-
-
-            // ---------------------------------------------
-            // Preferred name directly available
-            // ---------------------------------------------
-
-            if (
-                Array.isArray(
-                    actor.identified_by
-                )
-            ) {
-
-                for (
-                    const identifier
-                    of actor.identified_by
-                ) {
-
-                    if (
-                        isPreferredName(identifier) &&
-                        identifier.content
-                    ) {
-
-                        return String(
-                            identifier.content
-                        ).trim();
-
-                    }
-
-                }
-
-            }
-
-
-            // ---------------------------------------------
-            // English name
-            // ---------------------------------------------
-
-            if (
-                Array.isArray(
-                    actor.identified_by
-                )
-            ) {
-
-                for (
-                    const identifier
-                    of actor.identified_by
-                ) {
-
-                    if (
-                        identifier?.type !== "Name"
-                    ) {
-
-                        continue;
-
-                    }
-
-
-                    const english =
-                        englishValue(
-                            identifier
-                        );
-
-
-                    if (english) {
-
-                        return english;
-
-                    }
-
-                }
-
-            }
-
-
-            // ---------------------------------------------
-            // Resolve artist entity
-            // ---------------------------------------------
-
-            if (actor.id) {
-
-                try {
-
-                    const artistResponse =
-                        await requestUrl({
-                            url:
-                                actor.id +
-                                "?_profile=la-framed",
-                            method: "GET"
-                        });
-
-
-                    const artistObject =
-                        artistResponse.json;
-
-
-                    if (
-                        Array.isArray(
-                            artistObject.identified_by
-                        )
-                    ) {
-
-                        // Preferred name
-
-                        for (
-                            const identifier
-                            of artistObject.identified_by
-                        ) {
-
-                            if (
-                                isPreferredName(identifier) &&
-                                identifier.content
-                            ) {
-
-                                return String(
-                                    identifier.content
-                                ).trim();
-
-                            }
-
-                        }
-
-
-                        // English name
-
-                        for (
-                            const identifier
-                            of artistObject.identified_by
-                        ) {
-
-                            if (
-                                identifier?.type !== "Name"
-                            ) {
-
-                                continue;
-
-                            }
-
-
-                            const english =
-                                englishValue(
-                                    identifier
-                                );
-
-
-                            if (english) {
-
-                                return english;
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-                catch (error) {
-
-                    console.warn(
-                        "Could not resolve artist entity:",
-                        actor.id,
-                        error
-                    );
-
-                }
-
-            }
-
-
-            // ---------------------------------------------
-            // Final fallback
-            // ---------------------------------------------
-
-            return String(
-                actor._label ||
-                actor.label ||
-                actor.name ||
-                ""
-            ).trim();
-
-        }
-
-
-        // =================================================
-        // HELPER — NORMALISE ARTIST
-        // =================================================
-
-        function normaliseArtistName(name) {
-
-            if (!name) {
-                return "";
-            }
-
-
-            let cleaned =
-                String(name)
-                    .trim()
-                    .replace(/\s+/g, " ");
-
-
-            const artistNames = {
-
-                "Goya":
-                    "Francisco de Goya",
-
-                "Francisco Goya":
-                    "Francisco de Goya",
-
-                "Goya, Francisco de":
-                    "Francisco de Goya",
-
-                "Francisco de Goya":
-                    "Francisco de Goya",
-
-                "Vermeer":
-                    "Johannes Vermeer",
-
-                "Jan Vermeer":
-                    "Johannes Vermeer",
-
-                "Johannes Vermeer":
-                    "Johannes Vermeer",
-
-                "Rembrandt":
-                    "Rembrandt van Rijn",
-
-                "Rembrandt van Rijn":
-                    "Rembrandt van Rijn",
-
-                "El Greco":
-                    "El Greco"
-
-            };
-
-
-            return (
-                artistNames[cleaned] ||
-                cleaned
-            );
-
-        }
-
-
-        // =================================================
-        // HELPER — EXTRACT ARTISTS
-        // =================================================
-
-        async function extractArtists(production) {
-
-            const artistObjects = [];
-
-
-            if (!production) {
-                return [];
-            }
-
-
-            if (
-                Array.isArray(
-                    production.carried_out_by
-                )
-            ) {
-
-                artistObjects.push(
-                    ...production.carried_out_by
-                );
-
-            }
-
-
-            if (
-                Array.isArray(
-                    production.part
-                )
-            ) {
-
-                for (
-                    const part
-                    of production.part
-                ) {
-
-                    if (
-                        Array.isArray(
-                            part?.carried_out_by
-                        )
-                    ) {
-
-                        artistObjects.push(
-                            ...part.carried_out_by
-                        );
-
-                    }
-
-                }
-
-            }
-
-
-            const names = [];
-
-
-            for (
-                const artistObject
-                of artistObjects
-            ) {
-
-                const rawName =
-                    await getArtistName(
-                        artistObject
-                    );
-
-
-                const name =
-                    normaliseArtistName(
-                        rawName
-                    );
-
-
-                if (
-                    name &&
-                    !names.includes(name)
-                ) {
-
-                    names.push(name);
-
-                }
-
-            }
-
-
-            return names;
-
-        }
-
-
-        // =================================================
-        // HELPER — NORMALISE MEDIUM
-        // =================================================
-
-        function normaliseMedium(value) {
-
-            let text =
-                extractText(value);
-
-
-            if (!text) {
-                return "";
-            }
-
-
-            const replacements = [
-
-                [
-                    /\bolieverf op doek\b/gi,
-                    "Oil on canvas"
-                ],
-
-                [
-                    /\bolieverf op paneel\b/gi,
-                    "Oil on panel"
-                ],
-
-                [
-                    /\bolieverf op hout\b/gi,
-                    "Oil on wood"
-                ],
-
-                [
-                    /\bolieverf op papier\b/gi,
-                    "Oil on paper"
-                ],
-
-                [
-                    /\bolieverf\b/gi,
-                    "Oil paint"
-                ],
-
-                [
-                    /\baquarel op papier\b/gi,
-                    "Watercolour on paper"
-                ],
-
-                [
-                    /\baquarel\b/gi,
-                    "Watercolour"
-                ],
-
-                [
-                    /\btempera op paneel\b/gi,
-                    "Tempera on panel"
-                ],
-
-                [
-                    /\btempera\b/gi,
-                    "Tempera"
-                ],
-
-                [
-                    /\binkt op papier\b/gi,
-                    "Ink on paper"
-                ],
-
-                [
-                    /\bpotlood op papier\b/gi,
-                    "Pencil on paper"
-                ],
-
-                [
-                    /\bkrijt op papier\b/gi,
-                    "Chalk on paper"
-                ],
-
-                [
-                    /\bhoutskool op papier\b/gi,
-                    "Charcoal on paper"
-                ],
-
-                [
-                    /\bets\b/gi,
-                    "Etching"
-                ],
-
-                [
-                    /\bgravure\b/gi,
-                    "Engraving"
-                ]
-
-            ];
-
-
-            for (
-                const [
-                    pattern,
-                    replacement
-                ]
-                of replacements
-            ) {
-
-                text =
-                    text.replace(
-                        pattern,
-                        replacement
-                    );
-
-            }
-
-
-            return text.trim();
-
-        }
-
-
-        // =================================================
-        // PROCESS EVERY ARTWORK
+        // PROCESS EVERY RESULT
         // =================================================
 
         for (
@@ -793,15 +137,18 @@ module.exports = async function (searchTerm) {
                 );
 
 
-                // -----------------------------------------
-                // OBJECT
-                // -----------------------------------------
+                // =========================================
+                // OBJECT RECORD
+                // =========================================
+
+                const objectURL =
+                    item.id +
+                    "?_profile=la-framed";
+
 
                 const objectResponse =
                     await requestUrl({
-                        url:
-                            item.id +
-                            "?_profile=la-framed",
+                        url: objectURL,
                         method: "GET"
                     });
 
@@ -809,6 +156,10 @@ module.exports = async function (searchTerm) {
                 const object =
                     objectResponse.json;
 
+
+                // =========================================
+                // IDENTIFIERS
+                // =========================================
 
                 const identifiedBy =
                     Array.isArray(
@@ -818,181 +169,201 @@ module.exports = async function (searchTerm) {
                         : [];
 
 
-                // =================================================
+                // =========================================
                 // TITLE
-                // =================================================
+                // =========================================
 
-                let originalTitle = "";
-                let englishTitle = "";
+                let title =
+                    "Untitled";
+
+                let originalTitle =
+                    "Untitled";
 
 
-                // Preferred/current title
-
-                const preferredTitle =
+                const titleObject =
                     identifiedBy.find(
-                        identifier =>
-                            isPreferredName(
-                                identifier
-                            ) &&
-                            identifier.content
+                        x =>
+                            x.type === "Name"
                     );
 
 
                 if (
-                    preferredTitle?.content
+                    titleObject?.content
                 ) {
+
+                    title =
+                        titleObject.content;
 
                     originalTitle =
-                        String(
-                            preferredTitle.content
-                        ).trim();
+                        titleObject.content;
 
                 }
 
 
-                // Fallback to a Name that isn't explicitly
-                // marked as a former/alternative title.
-
-                if (!originalTitle) {
-
-                    const fallbackTitle =
-                        identifiedBy.find(
-                            identifier => {
-
-                                if (
-                                    identifier?.type !== "Name" ||
-                                    !identifier?.content
-                                ) {
-
-                                    return false;
-
-                                }
-
-
-                                const label =
-                                    String(
-                                        identifier?._label ||
-                                        identifier?.label ||
-                                        ""
-                                    )
-                                    .toLowerCase();
-
-
-                                return (
-                                    !label.includes("former") &&
-                                    !label.includes("alternative") &&
-                                    !label.includes("former title")
-                                );
-
-                            }
-                        );
-
-
-                    if (
-                        fallbackTitle?.content
-                    ) {
-
-                        originalTitle =
-                            String(
-                                fallbackTitle.content
-                            ).trim();
-
-                    }
-
-                }
-
-
-                // English title from Name records only
-
-                for (
-                    const identifier
-                    of identifiedBy
-                ) {
-
-                    if (
-                        identifier?.type !== "Name"
-                    ) {
-
-                        continue;
-
-                    }
-
-
-                    const english =
-                        englishValue(
-                            identifier
-                        );
-
-
-                    if (english) {
-
-                        englishTitle =
-                            english;
-
-                        break;
-
-                    }
-
-                }
-
-
-                const title =
-                    englishTitle ||
-                    originalTitle ||
-                    "Untitled";
-
-
-                console.log(
-                    `Title: ${title}`
-                );
-
-
-                // =================================================
+                // =========================================
                 // ARTIST
-                // =================================================
+                // =========================================
 
                 let artist =
                     searchTerm;
 
 
-                const artistNames =
-                    await extractArtists(
-                        object.produced_by
-                    );
+                const production =
+                    object.produced_by;
+
+
+                const artistObjects = [];
 
 
                 if (
-                    artistNames.length > 0
+                    Array.isArray(
+                        production?.carried_out_by
+                    )
                 ) {
 
-                    artist =
-                        artistNames[0];
+                    artistObjects.push(
+                        ...production.carried_out_by
+                    );
 
                 }
 
 
-                artist =
-                    normaliseArtistName(
-                        artist
-                    );
+                if (
+                    Array.isArray(
+                        production?.part
+                    )
+                ) {
+
+                    for (
+                        const part
+                        of production.part
+                    ) {
+
+                        if (
+                            Array.isArray(
+                                part.carried_out_by
+                            )
+                        ) {
+
+                            artistObjects.push(
+                                ...part.carried_out_by
+                            );
+
+                        }
+
+                    }
+
+                }
 
 
-                console.log(
-                    `Artist: ${artist}`
-                );
+                const artistObject =
+                    artistObjects[0];
 
 
-                // =================================================
+                if (
+                    artistObject
+                ) {
+
+                    if (
+                        artistObject.name
+                    ) {
+
+                        artist =
+                            artistObject.name;
+
+                    }
+
+                    else if (
+                        Array.isArray(
+                            artistObject.identified_by
+                        )
+                    ) {
+
+                        const artistName =
+                            artistObject.identified_by.find(
+                                x =>
+                                    x.type === "Name"
+                            );
+
+
+                        if (
+                            artistName?.content
+                        ) {
+
+                            artist =
+                                artistName.content;
+
+                        }
+
+                    }
+
+                    else if (
+                        Array.isArray(
+                            artistObject.notation
+                        )
+                    ) {
+
+                        const notation =
+                            artistObject.notation.find(
+                                x =>
+                                    x["@value"]
+                            );
+
+
+                        if (
+                            notation?.["@value"]
+                        ) {
+
+                            artist =
+                                notation["@value"];
+
+                        }
+
+                    }
+
+                }
+
+
+                // =========================================
+                // ARTIST NORMALISATION
+                // =========================================
+
+                const artistNames = {
+
+                    "Vermeer":
+                        "Johannes Vermeer",
+
+                    "Jan Vermeer":
+                        "Johannes Vermeer",
+
+                    "Johannes Vermeer":
+                        "Johannes Vermeer"
+
+                };
+
+
+                if (
+                    artistNames[artist]
+                ) {
+
+                    artist =
+                        artistNames[artist];
+
+                }
+
+
+                // =========================================
                 // DATE
-                // =================================================
+                // =========================================
 
-                let dateStart = null;
-                let dateEnd = null;
-                let dateDisplay = "";
+                let dateStart =
+                    null;
 
+                let dateEnd =
+                    null;
 
-                const production =
-                    object.produced_by;
+                let dateDisplay =
+                    "";
 
 
                 const timespan =
@@ -1007,24 +378,30 @@ module.exports = async function (searchTerm) {
 
                     const dateName =
                         timespan.identified_by.find(
-                            value =>
-                                value?.type === "Name"
+                            x =>
+                                x.type === "Name"
                         );
 
 
-                    if (dateName) {
+                    if (
+                        dateName?.content
+                    ) {
 
                         dateDisplay =
-                            extractText(
-                                dateName
-                            );
+                            dateName.content;
 
                     }
 
                 }
 
 
-                if (dateDisplay) {
+                // =========================================
+                // EXTRACT YEARS
+                // =========================================
+
+                if (
+                    dateDisplay
+                ) {
 
                     const years =
                         dateDisplay.match(
@@ -1045,13 +422,19 @@ module.exports = async function (searchTerm) {
 
                         dateEnd =
                             years.length > 1
-                                ? parseInt(years[1])
+                                ? parseInt(
+                                    years[1]
+                                )
                                 : dateStart;
 
                     }
 
                 }
 
+
+                // =========================================
+                // MACHINE DATE FALLBACK
+                // =========================================
 
                 if (
                     dateStart === null &&
@@ -1066,171 +449,38 @@ module.exports = async function (searchTerm) {
                         );
 
 
-                    if (!isNaN(year)) {
-
-                        dateStart = year;
-                        dateEnd = year;
-                        dateDisplay = String(year);
-
-                    }
-
-                }
-
-
-                // =================================================
-                // PHYSICAL DESCRIPTION
-                // =================================================
-
-                let physicalDescription = "";
-
-
-                const statements =
-                    Array.isArray(
-                        object.referred_to_by
-                    )
-                        ? object.referred_to_by
-                        : [];
-
-
-                for (
-                    const statement
-                    of statements
-                ) {
-
-                    const text =
-                        extractText(statement);
-
-
-                    if (!text) {
-                        continue;
-                    }
-
-
-                    const lower =
-                        text.toLowerCase();
-
-
                     if (
-                        lower.includes("fysieke kenmerken") ||
-                        lower.includes("physical characteristics") ||
-                        lower.includes("olieverf") ||
-                        lower.includes("oil on") ||
-                        lower.includes("oil paint")
+                        !isNaN(year)
                     ) {
 
-                        physicalDescription =
-                            text;
+                        dateStart =
+                            year;
 
-                        break;
+                        dateEnd =
+                            year;
+
+                        dateDisplay =
+                            String(year);
 
                     }
 
                 }
 
 
-                // =================================================
-                // MEDIUM
-                // =================================================
-
-                let medium = "";
-
-
-                if (physicalDescription) {
-
-                    medium =
-                        normaliseMedium(
-                            physicalDescription
-                        );
-
-                }
-
-
-                if (!medium) {
-
-                    const mediumSources = [
-
-                        object.made_of,
-                        object.material,
-                        object.materials,
-                        production?.technique
-
-                    ];
-
-
-                    const mediumValues = [];
-
-
-                    for (
-                        const source
-                        of mediumSources
-                    ) {
-
-                        if (
-                            Array.isArray(source)
-                        ) {
-
-                            for (
-                                const value
-                                of source
-                            ) {
-
-                                const text =
-                                    normaliseMedium(
-                                        value
-                                    );
-
-
-                                if (
-                                    text &&
-                                    !mediumValues.includes(text)
-                                ) {
-
-                                    mediumValues.push(text);
-
-                                }
-
-                            }
-
-                        }
-
-                        else {
-
-                            const text =
-                                normaliseMedium(
-                                    source
-                                );
-
-
-                            if (
-                                text &&
-                                !mediumValues.includes(text)
-                            ) {
-
-                                mediumValues.push(text);
-
-                            }
-
-                        }
-
-                    }
-
-
-                    medium =
-                        mediumValues.join(", ");
-
-                }
-
-
-                // =================================================
+                // =========================================
                 // PERIOD
-                // =================================================
+                // =========================================
 
-                let period = "";
+                let period =
+                    "";
 
 
                 const periodSources = [
+
                     object.classified_as,
+
                     object.about
+
                 ];
 
 
@@ -1254,29 +504,21 @@ module.exports = async function (searchTerm) {
                     ) {
 
                         const text =
-                            extractText(value);
+                            value?.name ||
+                            value?.content ||
+                            value?.label ||
+                            "";
 
 
                         if (
                             typeof text === "string" &&
-                            (
-                                /golden age/i.test(text) ||
-                                /baroque/i.test(text) ||
-                                /renaissance/i.test(text) ||
-                                /rococo/i.test(text) ||
-                                /romantic/i.test(text) ||
-                                /impression/i.test(text) ||
-                                /realism/i.test(text) ||
-                                /modern/i.test(text) ||
-                                /gouden eeuw/i.test(text) ||
-                                /barok/i.test(text) ||
-                                /romantiek/i.test(text) ||
-                                /impressionisme/i.test(text) ||
-                                /realisme/i.test(text)
-                            )
+                            /golden age|baroque|renaissance|rococo|romantic|impression|realism|modern/i
+                                .test(text)
                         ) {
 
-                            period = text;
+                            period =
+                                text;
+
                             break;
 
                         }
@@ -1284,16 +526,20 @@ module.exports = async function (searchTerm) {
                     }
 
 
-                    if (period) {
+                    if (
+                        period
+                    ) {
+
                         break;
+
                     }
 
                 }
 
 
-                // =================================================
-                // ARTIST PERIOD FALLBACKS
-                // =================================================
+                // =========================================
+                // VERMEER PERIOD FALLBACK
+                // =========================================
 
                 if (
                     !period &&
@@ -1306,11 +552,144 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // =================================================
-                // OBJECT NUMBER
-                // =================================================
+                // =========================================
+                // MEDIUM
+                // =========================================
 
-                let objectNumber = "";
+                let medium =
+                    "";
+
+
+                function extractName(value) {
+
+                    if (
+                        !value
+                    ) {
+
+                        return "";
+
+                    }
+
+
+                    if (
+                        typeof value === "string"
+                    ) {
+
+                        return value;
+
+                    }
+
+
+                    return (
+                        value.name ||
+                        value.content ||
+                        value.label ||
+                        ""
+                    );
+
+                }
+
+
+                function collectMedium(source) {
+
+                    if (
+                        !source
+                    ) {
+
+                        return [];
+
+                    }
+
+
+                    if (
+                        Array.isArray(source)
+                    ) {
+
+                        return source
+                            .map(
+                                extractName
+                            )
+                            .filter(Boolean);
+
+                    }
+
+
+                    const value =
+                        extractName(source);
+
+
+                    return value
+                        ? [value]
+                        : [];
+
+                }
+
+
+                const mediumValues = [];
+
+
+                const mediumSources = [
+
+                    production?.technique,
+
+                    production?.used_specific_object,
+
+                    object.made_of,
+
+                    object.material,
+
+                    object.materials,
+
+                    object.medium
+
+                ];
+
+
+                for (
+                    const source
+                    of mediumSources
+                ) {
+
+                    const values =
+                        collectMedium(
+                            source
+                        );
+
+
+                    for (
+                        const value
+                        of values
+                    ) {
+
+                        if (
+                            !mediumValues.includes(
+                                value
+                            )
+                        ) {
+
+                            mediumValues.push(
+                                value
+                            );
+
+                        }
+
+                    }
+
+                }
+
+
+                medium =
+                    mediumValues.join(
+                        ", "
+                    );
+
+
+                // =========================================
+                // OBJECT NUMBER
+                // =========================================
+
+                let objectNumber =
+                    "";
 
 
                 for (
@@ -1319,7 +698,8 @@ module.exports = async function (searchTerm) {
                 ) {
 
                     if (
-                        identifier?.type === "Identifier" &&
+                        identifier.type ===
+                            "Identifier" &&
                         identifier.content
                     ) {
 
@@ -1333,26 +713,29 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // =================================================
+                // =========================================
                 // INSTITUTION
-                // =================================================
+                // =========================================
 
                 const institution =
                     "Rijksmuseum";
 
 
-                // =================================================
+                // =========================================
                 // IMAGE
-                // =================================================
+                // =========================================
 
-                let imageURL = "";
+                let imageURL =
+                    "";
 
 
                 const visualItem =
                     object.shows?.[0];
 
 
-                if (visualItem?.id) {
+                if (
+                    visualItem?.id
+                ) {
 
                     const visualURL =
                         visualItem.id.replace(
@@ -1378,7 +761,9 @@ module.exports = async function (searchTerm) {
                         visual.digitally_shown_by?.[0];
 
 
-                    if (digitalObject?.id) {
+                    if (
+                        digitalObject?.id
+                    ) {
 
                         const digitalURL =
                             digitalObject.id.replace(
@@ -1402,15 +787,17 @@ module.exports = async function (searchTerm) {
 
                         const accessPoint =
                             digital.access_point?.find(
-                                value =>
-                                    value?.id &&
-                                    value.id.includes(
+                                x =>
+                                    x.id &&
+                                    x.id.includes(
                                         "iiif.micr.io"
                                     )
                             );
 
 
-                        if (accessPoint?.id) {
+                        if (
+                            accessPoint?.id
+                        ) {
 
                             const iiifBase =
                                 accessPoint.id.replace(
@@ -1430,15 +817,13 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // =================================================
+                // =========================================
                 // SAVE RESULT
-                // =================================================
+                // =========================================
 
                 results.push({
 
                     title,
-
-                    englishTitle,
 
                     originalTitle,
 
@@ -1453,8 +838,6 @@ module.exports = async function (searchTerm) {
                     period,
 
                     medium,
-
-                    physicalDescription,
 
                     institution,
 
@@ -1484,7 +867,7 @@ module.exports = async function (searchTerm) {
 
 
         // =================================================
-        // RETURN
+        // RETURN RESULTS
         // =================================================
 
         return {
@@ -1525,3 +908,4 @@ module.exports = async function (searchTerm) {
     }
 
 };
+

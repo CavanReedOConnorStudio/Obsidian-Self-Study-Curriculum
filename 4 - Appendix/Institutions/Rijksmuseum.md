@@ -1,11 +1,14 @@
 ---
 name: "Rijksmuseum"
 type: "Institution"
-tags:
-  - institution
 ---
 
+# Rijksmuseum
 
-## [[Rijksmuseum Index]]
+## History
 
-## [[Rijksmuseum Artists]]
+## Collection
+
+## Significance
+
+## Further Research
