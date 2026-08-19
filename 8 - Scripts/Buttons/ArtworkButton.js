@@ -1,5 +1,5 @@
 // =====================================================
-// RECEIVE ARTWORK
+// ARTWORK BUTTON
 // =====================================================
 
 const encoded =
@@ -7,7 +7,7 @@ const encoded =
 
 
 // =====================================================
-// CHECK ARTWORK
+// VALIDATE ARTWORK
 // =====================================================
 
 if (!encoded) {
@@ -31,7 +31,9 @@ try {
 
     artwork =
         JSON.parse(
-            decodeURIComponent(encoded)
+            decodeURIComponent(
+                encoded
+            )
         );
 
 }
@@ -43,23 +45,12 @@ catch (error) {
     );
 
     console.error(
-        "ArtworkButton decode error:",
         error
     );
 
     return;
 
 }
-
-
-// =====================================================
-// DEBUG
-// =====================================================
-
-console.log(
-    "Artwork received:",
-    artwork
-);
 
 
 // =====================================================
@@ -80,7 +71,7 @@ const periodFolder =
 
 
 // =====================================================
-// ENSURE FOLDER EXISTS
+// ENSURE FOLDER
 // =====================================================
 
 async function ensureFolder(path) {
@@ -102,7 +93,7 @@ async function ensureFolder(path) {
 
 
 // =====================================================
-// CREATE REQUIRED FOLDERS
+// CREATE FOLDERS
 // =====================================================
 
 await ensureFolder(
@@ -195,7 +186,9 @@ async function createLinkedNote(
 
 
     const cleanName =
-        safeFileName(name);
+        safeFileName(
+            name
+        );
 
 
     if (!cleanName) {
@@ -215,7 +208,7 @@ async function createLinkedNote(
         );
 
 
-    // Never overwrite an existing note.
+    // Never overwrite existing notes.
 
     if (existing) {
 
@@ -224,19 +217,24 @@ async function createLinkedNote(
     }
 
 
-    let content = "";
+    let content =
+        "";
 
 
     // =================================================
     // ARTIST
     // =================================================
 
-    if (type === "artist") {
+    if (
+        type === "artist"
+    ) {
 
         content =
 `---
 name: ${yamlString(name)}
 type: "Artist"
+tags:
+  - artist
 ---
 
 # ${name}
@@ -259,12 +257,16 @@ type: "Artist"
     // INSTITUTION
     // =================================================
 
-    if (type === "institution") {
+    else if (
+        type === "institution"
+    ) {
 
         content =
 `---
 name: ${yamlString(name)}
 type: "Institution"
+tags:
+  - institution
 ---
 
 # ${name}
@@ -285,12 +287,16 @@ type: "Institution"
     // PERIOD
     // =================================================
 
-    if (type === "period") {
+    else if (
+        type === "period"
+    ) {
 
         content =
 `---
 name: ${yamlString(name)}
 type: "Period"
+tags:
+  - period
 ---
 
 # ${name}
@@ -311,6 +317,10 @@ type: "Period"
     }
 
 
+    // =================================================
+    // CREATE NOTE
+    // =================================================
+
     if (content) {
 
         await app.vault.create(
@@ -327,7 +337,9 @@ type: "Period"
 // CREATE ARTIST NOTE
 // =====================================================
 
-if (artwork.artist) {
+if (
+    artwork.artist
+) {
 
     await createLinkedNote(
         artistFolder,
@@ -342,7 +354,9 @@ if (artwork.artist) {
 // CREATE INSTITUTION NOTE
 // =====================================================
 
-if (artwork.institution) {
+if (
+    artwork.institution
+) {
 
     await createLinkedNote(
         institutionFolder,
@@ -357,7 +371,9 @@ if (artwork.institution) {
 // CREATE PERIOD NOTE
 // =====================================================
 
-if (artwork.period) {
+if (
+    artwork.period
+) {
 
     await createLinkedNote(
         periodFolder,
@@ -369,7 +385,7 @@ if (artwork.period) {
 
 
 // =====================================================
-// ARTWORK TITLE
+// ARTWORK FILE NAME
 // =====================================================
 
 const fileName =
@@ -394,7 +410,7 @@ const filePath =
 
 
 // =====================================================
-// CHECK FOR DUPLICATE
+// DUPLICATE CHECK
 // =====================================================
 
 const existingArtwork =
@@ -423,12 +439,10 @@ const artistLink =
         ? `"[[${artwork.artist}]]"`
         : "";
 
-
 const periodLink =
     artwork.period
         ? `"[[${artwork.period}]]"`
         : "";
-
 
 const institutionLink =
     artwork.institution
@@ -460,10 +474,15 @@ original_title: ${yamlString(
     artwork.originalTitle
 )}
 
+type: "Artwork"
+
+tags:
+  - artwork
+
 artist: ${artistLink}
 
-date_start: ${artwork.dateStart ?? ""}
-date_end: ${artwork.dateEnd ?? ""}
+date_start: ${artwork.dateStart}
+date_end: ${artwork.dateEnd}
 date_display: ${yamlString(
     artwork.dateDisplay
 )}
@@ -493,7 +512,29 @@ image_url: ${yamlString(
 )}
 ---
 
+# ${artwork.title}
 
+${image}
+
+## Looking
+
+### Function
+
+### Patron
+
+### Materials
+
+### Composition
+
+### Light
+
+### Precedent
+
+## My Observations
+
+## Relation to My Practice
+
+## Further Research
 `;
 
 
