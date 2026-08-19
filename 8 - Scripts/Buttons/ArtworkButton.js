@@ -1,5 +1,5 @@
 // =====================================================
-// ARTWORK BUTTON
+// RECEIVE ARTWORK
 // =====================================================
 
 const encoded =
@@ -7,7 +7,7 @@ const encoded =
 
 
 // =====================================================
-// VALIDATE ARTWORK
+// CHECK ARTWORK
 // =====================================================
 
 if (!encoded) {
@@ -31,9 +31,7 @@ try {
 
     artwork =
         JSON.parse(
-            decodeURIComponent(
-                encoded
-            )
+            decodeURIComponent(encoded)
         );
 
 }
@@ -45,12 +43,23 @@ catch (error) {
     );
 
     console.error(
+        "ArtworkButton decode error:",
         error
     );
 
     return;
 
 }
+
+
+// =====================================================
+// DEBUG
+// =====================================================
+
+console.log(
+    "Artwork received:",
+    artwork
+);
 
 
 // =====================================================
@@ -71,7 +80,7 @@ const periodFolder =
 
 
 // =====================================================
-// ENSURE FOLDER
+// ENSURE FOLDER EXISTS
 // =====================================================
 
 async function ensureFolder(path) {
@@ -93,7 +102,7 @@ async function ensureFolder(path) {
 
 
 // =====================================================
-// CREATE FOLDERS
+// CREATE REQUIRED FOLDERS
 // =====================================================
 
 await ensureFolder(
@@ -186,9 +195,7 @@ async function createLinkedNote(
 
 
     const cleanName =
-        safeFileName(
-            name
-        );
+        safeFileName(name);
 
 
     if (!cleanName) {
@@ -208,7 +215,7 @@ async function createLinkedNote(
         );
 
 
-    // Never overwrite existing notes.
+    // Never overwrite an existing note.
 
     if (existing) {
 
@@ -217,27 +224,32 @@ async function createLinkedNote(
     }
 
 
-    let content =
-        "";
+    let content = "";
 
 
     // =================================================
     // ARTIST
     // =================================================
 
-    if (
-        type === "artist"
-    ) {
+    if (type === "artist") {
 
         content =
 `---
 name: ${yamlString(name)}
 type: "Artist"
-tags:
-  - artist
 ---
 
 # ${name}
+
+## Biography
+
+## Artistic Context
+
+## Major Works
+
+## Relation to My Practice
+
+## Further Research
 `;
 
     }
@@ -247,19 +259,23 @@ tags:
     // INSTITUTION
     // =================================================
 
-    else if (
-        type === "institution"
-    ) {
+    if (type === "institution") {
 
         content =
 `---
 name: ${yamlString(name)}
 type: "Institution"
-tags:
-  - institution
 ---
 
 # ${name}
+
+## History
+
+## Collection
+
+## Significance
+
+## Further Research
 `;
 
     }
@@ -269,27 +285,31 @@ tags:
     // PERIOD
     // =================================================
 
-    else if (
-        type === "period"
-    ) {
+    if (type === "period") {
 
         content =
 `---
 name: ${yamlString(name)}
 type: "Period"
-tags:
-  - period
 ---
 
 # ${name}
+
+## Historical Context
+
+## Characteristics
+
+## Major Artists
+
+## Major Works
+
+## Relation to My Practice
+
+## Further Research
 `;
 
     }
 
-
-    // =================================================
-    // CREATE NOTE
-    // =================================================
 
     if (content) {
 
@@ -307,9 +327,7 @@ tags:
 // CREATE ARTIST NOTE
 // =====================================================
 
-if (
-    artwork.artist
-) {
+if (artwork.artist) {
 
     await createLinkedNote(
         artistFolder,
@@ -324,9 +342,7 @@ if (
 // CREATE INSTITUTION NOTE
 // =====================================================
 
-if (
-    artwork.institution
-) {
+if (artwork.institution) {
 
     await createLinkedNote(
         institutionFolder,
@@ -341,9 +357,7 @@ if (
 // CREATE PERIOD NOTE
 // =====================================================
 
-if (
-    artwork.period
-) {
+if (artwork.period) {
 
     await createLinkedNote(
         periodFolder,
@@ -355,7 +369,7 @@ if (
 
 
 // =====================================================
-// ARTWORK FILE NAME
+// ARTWORK TITLE
 // =====================================================
 
 const fileName =
@@ -380,7 +394,7 @@ const filePath =
 
 
 // =====================================================
-// DUPLICATE CHECK
+// CHECK FOR DUPLICATE
 // =====================================================
 
 const existingArtwork =
@@ -409,10 +423,12 @@ const artistLink =
         ? `"[[${artwork.artist}]]"`
         : "";
 
+
 const periodLink =
     artwork.period
         ? `"[[${artwork.period}]]"`
         : "";
+
 
 const institutionLink =
     artwork.institution
@@ -444,15 +460,10 @@ original_title: ${yamlString(
     artwork.originalTitle
 )}
 
-type: "Artwork"
-
-tags:
-  - artwork
-
 artist: ${artistLink}
 
-date_start: ${artwork.dateStart}
-date_end: ${artwork.dateEnd}
+date_start: ${artwork.dateStart ?? ""}
+date_end: ${artwork.dateEnd ?? ""}
 date_display: ${yamlString(
     artwork.dateDisplay
 )}
@@ -469,6 +480,10 @@ source: ${yamlString(
     artwork.source || "Rijksmuseum"
 )}
 
+source_id: ${yamlString(
+    artwork.objectNumber
+)}
+
 source_url: ${yamlString(
     artwork.museumURL
 )}
@@ -478,9 +493,7 @@ image_url: ${yamlString(
 )}
 ---
 
-# ${artwork.title}
 
-${image}
 `;
 
 

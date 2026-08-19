@@ -1,3 +1,4 @@
+
 module.exports = async function (searchTerm) {
 
     // =====================================================
@@ -31,13 +32,14 @@ module.exports = async function (searchTerm) {
 
     try {
 
+        // =================================================
+        // COLLECT ALL RESULTS
+        // =================================================
+
         const items = [];
+
         let page = 1;
 
-
-        // =================================================
-        // COLLECT SEARCH RESULTS
-        // =================================================
 
         while (nextURL) {
 
@@ -45,18 +47,26 @@ module.exports = async function (searchTerm) {
                 `Rijksmuseum: loading search page ${page}`
             );
 
+
             const response =
                 await requestUrl({
                     url: nextURL,
                     method: "GET"
                 });
 
+
             const data =
                 response.json;
 
 
+            // =============================================
+            // ADD RESULTS
+            // =============================================
+
             if (
-                Array.isArray(data.orderedItems)
+                Array.isArray(
+                    data.orderedItems
+                )
             ) {
 
                 items.push(
@@ -65,6 +75,10 @@ module.exports = async function (searchTerm) {
 
             }
 
+
+            // =============================================
+            // NEXT PAGE
+            // =============================================
 
             nextURL =
                 data.next?.id || null;
@@ -103,150 +117,7 @@ module.exports = async function (searchTerm) {
 
 
         // =================================================
-        // HELPER — EXTRACT TEXT
-        // =================================================
-
-        function extractText(value) {
-
-            if (!value) {
-                return "";
-            }
-
-            if (typeof value === "string") {
-                return value;
-            }
-
-            return (
-                value.content ||
-                value.name ||
-                value.label ||
-                value._label ||
-                value.value ||
-                value["@value"] ||
-                ""
-            );
-
-        }
-
-
-        // =================================================
-        // HELPER — NORMALISE MEDIUM
-        // =================================================
-
-        function normaliseMedium(value) {
-
-            let text =
-                extractText(value);
-
-            if (!text) {
-                return "";
-            }
-
-
-            const replacements = [
-
-                [
-                    /\bolieverf op doek\b/gi,
-                    "Oil on canvas"
-                ],
-
-                [
-                    /\bolieverf op paneel\b/gi,
-                    "Oil on panel"
-                ],
-
-                [
-                    /\bolieverf op hout\b/gi,
-                    "Oil on wood"
-                ],
-
-                [
-                    /\bolieverf op papier\b/gi,
-                    "Oil on paper"
-                ],
-
-                [
-                    /\bolieverf\b/gi,
-                    "Oil paint"
-                ],
-
-                [
-                    /\baquarel op papier\b/gi,
-                    "Watercolour on paper"
-                ],
-
-                [
-                    /\baquarel\b/gi,
-                    "Watercolour"
-                ],
-
-                [
-                    /\btempera op paneel\b/gi,
-                    "Tempera on panel"
-                ],
-
-                [
-                    /\btempera\b/gi,
-                    "Tempera"
-                ],
-
-                [
-                    /\binkt op papier\b/gi,
-                    "Ink on paper"
-                ],
-
-                [
-                    /\bpotlood op papier\b/gi,
-                    "Pencil on paper"
-                ],
-
-                [
-                    /\bkrijt op papier\b/gi,
-                    "Chalk on paper"
-                ],
-
-                [
-                    /\bhoutskool op papier\b/gi,
-                    "Charcoal on paper"
-                ],
-
-                [
-                    /\bets\b/gi,
-                    "Etching"
-                ],
-
-                [
-                    /\bgravure\b/gi,
-                    "Engraving"
-                ]
-
-            ];
-
-
-            for (
-                const [
-                    pattern,
-                    replacement
-                ]
-                of replacements
-            ) {
-
-                text =
-                    text.replace(
-                        pattern,
-                        replacement
-                    );
-
-            }
-
-
-            return text.trim();
-
-        }
-
-
-        // =================================================
-        // PROCESS EVERY ARTWORK
+        // PROCESS EVERY RESULT
         // =================================================
 
         for (
@@ -266,9 +137,9 @@ module.exports = async function (searchTerm) {
                 );
 
 
-                // =================================================
+                // =========================================
                 // OBJECT RECORD
-                // =================================================
+                // =========================================
 
                 const objectURL =
                     item.id +
@@ -286,19 +157,24 @@ module.exports = async function (searchTerm) {
                     objectResponse.json;
 
 
-                // =================================================
+                // =========================================
                 // IDENTIFIERS
-                // =================================================
+                // =========================================
 
                 const identifiedBy =
-                    Array.isArray(object.identified_by)
+                    Array.isArray(
+                        object.identified_by
+                    )
                         ? object.identified_by
                         : [];
 
 
-                // =================================================
-                // ORIGINAL / DUTCH TITLE
-                // =================================================
+                // =========================================
+                // TITLE
+                // =========================================
+
+                let title =
+                    "Untitled";
 
                 let originalTitle =
                     "Untitled";
@@ -306,8 +182,8 @@ module.exports = async function (searchTerm) {
 
                 const titleObject =
                     identifiedBy.find(
-                        value =>
-                            value?.type === "Name"
+                        x =>
+                            x.type === "Name"
                     );
 
 
@@ -315,294 +191,18 @@ module.exports = async function (searchTerm) {
                     titleObject?.content
                 ) {
 
+                    title =
+                        titleObject.content;
+
                     originalTitle =
                         titleObject.content;
 
                 }
 
 
-                // =================================================
-                // OBJECT NUMBER
-                // =================================================
-
-                let objectNumber =
-                    "";
-
-
-                for (
-                    const identifier
-                    of identifiedBy
-                ) {
-
-                    if (
-                        identifier?.type === "Identifier" &&
-                        identifier.content
-                    ) {
-
-                        objectNumber =
-                            identifier.content;
-
-                        break;
-
-                    }
-
-                }
-
-
-                // =================================================
-                // ENGLISH TITLE
-                //
-                // IMPORTANT:
-                // We deliberately use the English Rijksmuseum
-                // webpage rather than guessing from Linked Art.
-                // =================================================
-
-                let englishTitle =
-                    "";
-
-
-                if (objectNumber) {
-
-                    try {
-
-                        const englishPageURL =
-                            "https://www.rijksmuseum.nl/en/collection/" +
-                            encodeURIComponent(
-                                objectNumber
-                            );
-
-
-                        console.log(
-                            `Rijksmuseum: reading English page for ${objectNumber}`
-                        );
-
-
-                        const pageResponse =
-                            await requestUrl({
-
-                                url:
-                                    englishPageURL,
-
-                                method:
-                                    "GET"
-
-                            });
-
-
-                        const html =
-                            pageResponse.text;
-
-
-                        // -----------------------------------------
-                        // Try JSON-LD first
-                        // -----------------------------------------
-
-                        const jsonLdMatches =
-                            html.match(
-                                /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi
-                            );
-
-
-                        if (
-                            jsonLdMatches
-                        ) {
-
-                            for (
-                                const block
-                                of jsonLdMatches
-                            ) {
-
-                                const jsonText =
-                                    block
-                                        .replace(
-                                            /<script[^>]*>/i,
-                                            ""
-                                        )
-                                        .replace(
-                                            /<\/script>/i,
-                                            ""
-                                        )
-                                        .trim();
-
-
-                                try {
-
-                                    const json =
-                                        JSON.parse(
-                                            jsonText
-                                        );
-
-
-                                    const possibleTitle =
-                                        json.name;
-
-
-                                    if (
-                                        possibleTitle &&
-                                        typeof possibleTitle === "string"
-                                    ) {
-
-                                        englishTitle =
-                                            possibleTitle.trim();
-
-                                        break;
-
-                                    }
-
-                                }
-
-                                catch (
-                                    ignored
-                                ) {
-
-                                    // Continue searching.
-
-                                }
-
-                            }
-
-                        }
-
-
-                        // -----------------------------------------
-                        // Try page heading
-                        // -----------------------------------------
-
-                        if (!englishTitle) {
-
-                            const h1Match =
-                                html.match(
-                                    /<h1[^>]*>([\s\S]*?)<\/h1>/i
-                                );
-
-
-                            if (
-                                h1Match?.[1]
-                            ) {
-
-                                englishTitle =
-                                    h1Match[1]
-                                        .replace(
-                                            /<[^>]+>/g,
-                                            ""
-                                        )
-                                        .replace(
-                                            /&amp;/g,
-                                            "&"
-                                        )
-                                        .replace(
-                                            /&quot;/g,
-                                            '"'
-                                        )
-                                        .replace(
-                                            /&#39;/g,
-                                            "'"
-                                        )
-                                        .replace(
-                                            /&#x27;/g,
-                                            "'"
-                                        )
-                                        .trim();
-
-                            }
-
-                        }
-
-
-                        // -----------------------------------------
-                        // Try page title
-                        // -----------------------------------------
-
-                        if (!englishTitle) {
-
-                            const titleMatch =
-                                html.match(
-                                    /<title[^>]*>([\s\S]*?)<\/title>/i
-                                );
-
-
-                            if (
-                                titleMatch?.[1]
-                            ) {
-
-                                let candidate =
-                                    titleMatch[1]
-                                        .replace(
-                                            /<[^>]+>/g,
-                                            ""
-                                        )
-                                        .replace(
-                                            /&amp;/g,
-                                            "&"
-                                        )
-                                        .replace(
-                                            /&quot;/g,
-                                            '"'
-                                        )
-                                        .replace(
-                                            /&#39;/g,
-                                            "'"
-                                        )
-                                        .trim();
-
-
-                                candidate =
-                                    candidate.replace(
-                                        /\s*[-|]\s*Rijksmuseum.*$/i,
-                                        ""
-                                    );
-
-
-                                if (candidate) {
-
-                                    englishTitle =
-                                        candidate;
-
-                                }
-
-                            }
-
-                        }
-
-                    }
-
-                    catch (error) {
-
-                        console.warn(
-                            `Could not retrieve English title for ${objectNumber}:`,
-                            error
-                        );
-
-                    }
-
-                }
-
-
-                // =================================================
-                // MAIN TITLE
-                // =================================================
-
-                const title =
-                    englishTitle ||
-                    originalTitle;
-
-
-                console.log(
-                    `Original title: ${originalTitle}`
-                );
-
-                console.log(
-                    `English title: ${englishTitle || "(not found)"}`
-                );
-
-                console.log(
-                    `Main title: ${title}`
-                );
-
-
-                // =================================================
+                // =========================================
                 // ARTIST
-                // =================================================
+                // =========================================
 
                 let artist =
                     searchTerm;
@@ -664,18 +264,69 @@ module.exports = async function (searchTerm) {
                     artistObject
                 ) {
 
-                    artist =
-                        extractText(
-                            artistObject
-                        ) ||
-                        artist;
+                    if (
+                        artistObject.name
+                    ) {
+
+                        artist =
+                            artistObject.name;
+
+                    }
+
+                    else if (
+                        Array.isArray(
+                            artistObject.identified_by
+                        )
+                    ) {
+
+                        const artistName =
+                            artistObject.identified_by.find(
+                                x =>
+                                    x.type === "Name"
+                            );
+
+
+                        if (
+                            artistName?.content
+                        ) {
+
+                            artist =
+                                artistName.content;
+
+                        }
+
+                    }
+
+                    else if (
+                        Array.isArray(
+                            artistObject.notation
+                        )
+                    ) {
+
+                        const notation =
+                            artistObject.notation.find(
+                                x =>
+                                    x["@value"]
+                            );
+
+
+                        if (
+                            notation?.["@value"]
+                        ) {
+
+                            artist =
+                                notation["@value"];
+
+                        }
+
+                    }
 
                 }
 
 
-                // =================================================
+                // =========================================
                 // ARTIST NORMALISATION
-                // =================================================
+                // =========================================
 
                 const artistNames = {
 
@@ -701,9 +352,9 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // =================================================
+                // =========================================
                 // DATE
-                // =================================================
+                // =========================================
 
                 let dateStart =
                     null;
@@ -727,28 +378,30 @@ module.exports = async function (searchTerm) {
 
                     const dateName =
                         timespan.identified_by.find(
-                            value =>
-                                value?.type === "Name"
+                            x =>
+                                x.type === "Name"
                         );
 
 
-                    if (dateName) {
+                    if (
+                        dateName?.content
+                    ) {
 
                         dateDisplay =
-                            extractText(
-                                dateName
-                            );
+                            dateName.content;
 
                     }
 
                 }
 
 
-                // =================================================
+                // =========================================
                 // EXTRACT YEARS
-                // =================================================
+                // =========================================
 
-                if (dateDisplay) {
+                if (
+                    dateDisplay
+                ) {
 
                     const years =
                         dateDisplay.match(
@@ -769,7 +422,9 @@ module.exports = async function (searchTerm) {
 
                         dateEnd =
                             years.length > 1
-                                ? parseInt(years[1])
+                                ? parseInt(
+                                    years[1]
+                                )
                                 : dateStart;
 
                     }
@@ -777,9 +432,9 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // =================================================
-                // DATE FALLBACK
-                // =================================================
+                // =========================================
+                // MACHINE DATE FALLBACK
+                // =========================================
 
                 if (
                     dateStart === null &&
@@ -794,7 +449,9 @@ module.exports = async function (searchTerm) {
                         );
 
 
-                    if (!isNaN(year)) {
+                    if (
+                        !isNaN(year)
+                    ) {
 
                         dateStart =
                             year;
@@ -810,167 +467,9 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // =================================================
-                // PHYSICAL DESCRIPTION
-                // =================================================
-
-                let physicalDescription =
-                    "";
-
-
-                const statements =
-                    Array.isArray(object.referred_to_by)
-                        ? object.referred_to_by
-                        : [];
-
-
-                for (
-                    const statement
-                    of statements
-                ) {
-
-                    const text =
-                        extractText(
-                            statement
-                        );
-
-
-                    if (!text) {
-                        continue;
-                    }
-
-
-                    const lower =
-                        text.toLowerCase();
-
-
-                    if (
-                        lower.includes("fysieke kenmerken") ||
-                        lower.includes("physical characteristics") ||
-                        lower.includes("olieverf") ||
-                        lower.includes("oil on") ||
-                        lower.includes("oil paint")
-                    ) {
-
-                        physicalDescription =
-                            text;
-
-                        break;
-
-                    }
-
-                }
-
-
-                // =================================================
-                // MEDIUM
-                // =================================================
-
-                let medium =
-                    "";
-
-
-                if (
-                    physicalDescription
-                ) {
-
-                    medium =
-                        normaliseMedium(
-                            physicalDescription
-                        );
-
-                }
-
-
-                // -------------------------------------------------
-                // FALLBACK
-                // -------------------------------------------------
-
-                if (!medium) {
-
-                    const mediumSources = [
-
-                        object.made_of,
-                        object.material,
-                        object.materials,
-                        production?.technique
-
-                    ];
-
-
-                    const mediumValues = [];
-
-
-                    for (
-                        const source
-                        of mediumSources
-                    ) {
-
-                        if (
-                            Array.isArray(source)
-                        ) {
-
-                            for (
-                                const value
-                                of source
-                            ) {
-
-                                const text =
-                                    normaliseMedium(
-                                        value
-                                    );
-
-
-                                if (
-                                    text &&
-                                    !mediumValues.includes(text)
-                                ) {
-
-                                    mediumValues.push(
-                                        text
-                                    );
-
-                                }
-
-                            }
-
-                        }
-
-                        else {
-
-                            const text =
-                                normaliseMedium(
-                                    source
-                                );
-
-
-                            if (
-                                text &&
-                                !mediumValues.includes(text)
-                            ) {
-
-                                mediumValues.push(
-                                    text
-                                );
-
-                            }
-
-                        }
-
-                    }
-
-
-                    medium =
-                        mediumValues.join(
-                            ", "
-                        );
-
-                }
-
-
-                // =================================================
+                // =========================================
                 // PERIOD
-                // =================================================
+                // =========================================
 
                 let period =
                     "";
@@ -979,6 +478,7 @@ module.exports = async function (searchTerm) {
                 const periodSources = [
 
                     object.classified_as,
+
                     object.about
 
                 ];
@@ -992,7 +492,9 @@ module.exports = async function (searchTerm) {
                     if (
                         !Array.isArray(source)
                     ) {
+
                         continue;
+
                     }
 
 
@@ -1002,14 +504,16 @@ module.exports = async function (searchTerm) {
                     ) {
 
                         const text =
-                            extractText(
-                                value
-                            );
+                            value?.name ||
+                            value?.content ||
+                            value?.label ||
+                            "";
 
 
                         if (
                             typeof text === "string" &&
-                            /golden age|baroque|renaissance|rococo|romantic|impression|realism|modern|gouden eeuw|barok|renaissance|romantiek|impressionisme|realisme/i.test(text)
+                            /golden age|baroque|renaissance|rococo|romantic|impression|realism|modern/i
+                                .test(text)
                         ) {
 
                             period =
@@ -1022,16 +526,20 @@ module.exports = async function (searchTerm) {
                     }
 
 
-                    if (period) {
+                    if (
+                        period
+                    ) {
+
                         break;
+
                     }
 
                 }
 
 
-                // =================================================
-                // VERMEER FALLBACK
-                // =================================================
+                // =========================================
+                // VERMEER PERIOD FALLBACK
+                // =========================================
 
                 if (
                     !period &&
@@ -1044,17 +552,178 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // =================================================
+                // =========================================
+                // MEDIUM
+                // =========================================
+
+                let medium =
+                    "";
+
+
+                function extractName(value) {
+
+                    if (
+                        !value
+                    ) {
+
+                        return "";
+
+                    }
+
+
+                    if (
+                        typeof value === "string"
+                    ) {
+
+                        return value;
+
+                    }
+
+
+                    return (
+                        value.name ||
+                        value.content ||
+                        value.label ||
+                        ""
+                    );
+
+                }
+
+
+                function collectMedium(source) {
+
+                    if (
+                        !source
+                    ) {
+
+                        return [];
+
+                    }
+
+
+                    if (
+                        Array.isArray(source)
+                    ) {
+
+                        return source
+                            .map(
+                                extractName
+                            )
+                            .filter(Boolean);
+
+                    }
+
+
+                    const value =
+                        extractName(source);
+
+
+                    return value
+                        ? [value]
+                        : [];
+
+                }
+
+
+                const mediumValues = [];
+
+
+                const mediumSources = [
+
+                    production?.technique,
+
+                    production?.used_specific_object,
+
+                    object.made_of,
+
+                    object.material,
+
+                    object.materials,
+
+                    object.medium
+
+                ];
+
+
+                for (
+                    const source
+                    of mediumSources
+                ) {
+
+                    const values =
+                        collectMedium(
+                            source
+                        );
+
+
+                    for (
+                        const value
+                        of values
+                    ) {
+
+                        if (
+                            !mediumValues.includes(
+                                value
+                            )
+                        ) {
+
+                            mediumValues.push(
+                                value
+                            );
+
+                        }
+
+                    }
+
+                }
+
+
+                medium =
+                    mediumValues.join(
+                        ", "
+                    );
+
+
+                // =========================================
+                // OBJECT NUMBER
+                // =========================================
+
+                let objectNumber =
+                    "";
+
+
+                for (
+                    const identifier
+                    of identifiedBy
+                ) {
+
+                    if (
+                        identifier.type ===
+                            "Identifier" &&
+                        identifier.content
+                    ) {
+
+                        objectNumber =
+                            identifier.content;
+
+                        break;
+
+                    }
+
+                }
+
+
+                // =========================================
                 // INSTITUTION
-                // =================================================
+                // =========================================
 
                 const institution =
                     "Rijksmuseum";
 
 
-                // =================================================
+                // =========================================
                 // IMAGE
-                // =================================================
+                // =========================================
 
                 let imageURL =
                     "";
@@ -1077,14 +746,10 @@ module.exports = async function (searchTerm) {
 
                     const visualResponse =
                         await requestUrl({
-
                             url:
                                 visualURL +
                                 "?_profile=la-framed",
-
-                            method:
-                                "GET"
-
+                            method: "GET"
                         });
 
 
@@ -1109,14 +774,10 @@ module.exports = async function (searchTerm) {
 
                         const digitalResponse =
                             await requestUrl({
-
                                 url:
                                     digitalURL +
                                     "?_profile=la-framed",
-
-                                method:
-                                    "GET"
-
+                                method: "GET"
                             });
 
 
@@ -1126,9 +787,9 @@ module.exports = async function (searchTerm) {
 
                         const accessPoint =
                             digital.access_point?.find(
-                                value =>
-                                    value?.id &&
-                                    value.id.includes(
+                                x =>
+                                    x.id &&
+                                    x.id.includes(
                                         "iiif.micr.io"
                                     )
                             );
@@ -1156,15 +817,13 @@ module.exports = async function (searchTerm) {
                 }
 
 
-                // =================================================
+                // =========================================
                 // SAVE RESULT
-                // =================================================
+                // =========================================
 
                 results.push({
 
                     title,
-
-                    englishTitle,
 
                     originalTitle,
 
@@ -1179,8 +838,6 @@ module.exports = async function (searchTerm) {
                     period,
 
                     medium,
-
-                    physicalDescription,
 
                     institution,
 
@@ -1210,7 +867,7 @@ module.exports = async function (searchTerm) {
 
 
         // =================================================
-        // RETURN
+        // RETURN RESULTS
         // =================================================
 
         return {
@@ -1251,3 +908,4 @@ module.exports = async function (searchTerm) {
     }
 
 };
+

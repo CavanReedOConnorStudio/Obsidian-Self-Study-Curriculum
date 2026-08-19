@@ -1,12 +1,7 @@
 ---
-title: "The Milkmaid"
+title: "De melkmeid"
 
 original_title: "De melkmeid"
-
-type: "Artwork"
-
-tags:
-  - artwork
 
 artist: "[[Johannes Vermeer]]"
 
@@ -16,7 +11,7 @@ date_display: "c. 1660"
 
 period: "[[Dutch Golden Age]]"
 
-medium: "Oil on canvas"
+medium: 
 
 institution: "[[Rijksmuseum]]"
 
@@ -29,9 +24,9 @@ source_url: "https://id.rijksmuseum.nl/200108369"
 image_url: "https://iiif.micr.io/QkOGy/full/800,/0/default.jpg"
 ---
 
-# The Milkmaid
+# De melkmeid
 
-![The Milkmaid](https://iiif.micr.io/QkOGy/full/800,/0/default.jpg)
+![De melkmeid](https://iiif.micr.io/QkOGy/full/800,/0/default.jpg)
 
 ## Looking
 
