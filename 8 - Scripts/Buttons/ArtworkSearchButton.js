@@ -1,12 +1,10 @@
-
-
 // =====================================================
 // ARTWORK SEARCH BUTTON
 // =====================================================
 
 const template =
     app.vault.getAbstractFileByPath(
-        "7 - Templates/RijksSearch.md"
+        "7 - Templates/ArtworkSearch.md"
     );
 
 
