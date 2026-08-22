@@ -1,12 +1,12 @@
-
+new Notice("National Gallery button loaded");
 
 // =====================================================
-// ARTWORK SEARCH BUTTON
+// NATIONAL GALLERY SEARCH BUTTON
 // =====================================================
 
 const template =
     app.vault.getAbstractFileByPath(
-        "7 - Templates/RijksSearch.md"
+        "7 - Templates/NationalGallerySearch.md"
     );
 
 
@@ -17,7 +17,7 @@ const template =
 if (!template) {
 
     new Notice(
-        "ArtworkSearch template not found."
+        "NationalGallerySearch template not found."
     );
 
     return;
@@ -62,12 +62,12 @@ try {
 catch (error) {
 
     console.error(
-        "Artwork Search failed:",
+        "National Gallery Search failed:",
         error
     );
 
     new Notice(
-        "Artwork Search failed. Check the console."
+        "National Gallery Search failed. Check the console."
     );
 
 }

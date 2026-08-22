@@ -1,25 +1,25 @@
 ---
-title: "National Galleries Scotland Index"
+title: "National Gallery Index"
 type: "Institution Index"
-institution: "[[National Galleries Scotland]]"
+institution: "[[National Gallery]]"
 tags:
   - institution
-  - ngs
+  - national-gallery
 ---
 
-# National Galleries Scotland Index
+# National Gallery
 
-National collection of Scottish and international art, spanning from the early Renaissance to the present day.
+The National Gallery in London, housing a collection of Western European paintings from the 13th to the 20th century.
 
 ## Search
 
 ```meta-bind-button
-label: SEARCH NGS
+label: SEARCH NATIONAL GALLERY
 style: primary
-action:
-  type: js
-  file: "8 - Scripts/Buttons/NGSSearchButton.js"
-```
+actions:
+  - type: js
+    file: "8 - Scripts/Buttons/NationalGallerySearchButton.js"
+````
 
 ## Saved Artworks
 
@@ -33,7 +33,7 @@ TABLE WITHOUT ID
     medium AS "Medium"
 FROM "4 - Appendix/Artworks"
 WHERE type = "Artwork"
-AND contains(institution, "National Galleries Scotland")
+AND contains(institution, "National Gallery")
 SORT artist ASC, date_start ASC
 ```
 
@@ -47,11 +47,11 @@ const artists = dv.pages('"4 - Appendix/Artists"')
 const artworks = dv.pages('"4 - Appendix/Artworks"')
     .where(p =>
         String(p.institution).includes(
-            "National Galleries Scotland"
+            "National Gallery"
         )
     );
 
-const ngsArtists = artists.filter(artist =>
+const nationalGalleryArtists = artists.filter(artist =>
     artworks.some(artwork =>
         String(artwork.artist).includes(
             artist.file.name
@@ -61,7 +61,7 @@ const ngsArtists = artists.filter(artist =>
 
 dv.table(
     ["Artist", "Saved Works"],
-    ngsArtists.map(artist => {
+    nationalGalleryArtists.map(artist => {
 
         const works = artworks.filter(
             artwork =>
@@ -88,11 +88,11 @@ const periods = dv.pages('"4 - Appendix/Periods"')
 const artworks = dv.pages('"4 - Appendix/Artworks"')
     .where(p =>
         String(p.institution).includes(
-            "National Galleries Scotland"
+            "National Gallery"
         )
     );
 
-const ngsPeriods = periods.filter(period =>
+const nationalGalleryPeriods = periods.filter(period =>
     artworks.some(artwork =>
         String(artwork.period).includes(
             period.file.name
@@ -102,7 +102,7 @@ const ngsPeriods = periods.filter(period =>
 
 dv.table(
     ["Period", "Saved Works"],
-    ngsPeriods.map(period => {
+    nationalGalleryPeriods.map(period => {
 
         const count = artworks.filter(
             artwork =>
