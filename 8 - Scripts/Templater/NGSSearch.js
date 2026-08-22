@@ -1,5 +1,9 @@
 module.exports = async function (searchTerm) {
 
+    // =====================================================
+    // VALIDATE
+    // =====================================================
+
     if (!searchTerm || !searchTerm.trim()) {
 
         return {
@@ -12,11 +16,21 @@ module.exports = async function (searchTerm) {
 
     searchTerm = searchTerm.trim();
 
+
+    // =====================================================
+    // SETTINGS
+    // =====================================================
+
     const MAX_RESULTS = 30;
 
     const searchURL =
         "https://www.nationalgalleries.org/search-all/" +
         encodeURIComponent(searchTerm);
+
+
+    // =====================================================
+    // HELPERS
+    // =====================================================
 
     function cleanText(value) {
 
@@ -30,10 +44,15 @@ module.exports = async function (searchTerm) {
             .replace(/&amp;/gi, "&")
             .replace(/&#39;/gi, "'")
             .replace(/&quot;/gi, '"')
+            .replace(/&#x27;/gi, "'")
+            .replace(/&#x2F;/gi, "/")
+            .replace(/&lt;/gi, "<")
+            .replace(/&gt;/gi, ">")
             .replace(/\s+/g, " ")
             .trim();
 
     }
+
 
     function decodeHTML(value) {
 
@@ -53,6 +72,7 @@ module.exports = async function (searchTerm) {
 
     }
 
+
     function absoluteURL(value) {
 
         if (!value) {
@@ -63,9 +83,13 @@ module.exports = async function (searchTerm) {
             return value;
         }
 
-        return "https://www.nationalgalleries.org" + value;
+        return (
+            "https://www.nationalgalleries.org" +
+            value
+        );
 
     }
+
 
     function extractMeta(html, property) {
 
@@ -104,7 +128,7 @@ module.exports = async function (searchTerm) {
             const match =
                 html.match(pattern);
 
-            if (match && match[1]) {
+            if (match?.[1]) {
 
                 return decodeHTML(
                     match[1]
@@ -118,51 +142,195 @@ module.exports = async function (searchTerm) {
 
     }
 
-    function extractField(
-        text,
-        label,
-        nextLabels
-    ) {
 
-        const escapedLabel =
-            label.replace(
-                /[.*+?^${}()|[\]\\]/g,
-                "\\$&"
+    // =====================================================
+    // EXTRACT NGS ARTWORK METADATA
+    // =====================================================
+
+    function extractArtworkMetadata(html) {
+
+        const metadata = {
+
+            artist: "",
+            title: "",
+            dateDisplay: "",
+            medium: "",
+            objectType: "",
+            objectNumber: "",
+            gallery: "",
+            description: ""
+
+        };
+
+
+        // -------------------------------------------------
+        // ARTIST
+        // -------------------------------------------------
+
+        const artistMatch =
+            html.match(
+                /Artist:\s*([^<]+?)(?:\s*\([^)]+\))?\s*(?=Scottish|English|British|French|Dutch|Italian|American|German|Irish|Danish|Welsh|Title:)/i
             );
 
-        const escapedNext =
-            nextLabels
-                .map(
-                    value =>
-                        value.replace(
-                            /[.*+?^${}()|[\]\\]/g,
-                            "\\$&"
-                        )
-                )
-                .join("|");
 
-        const pattern =
-            new RegExp(
-                escapedLabel +
-                "\\s*:?\\s*(.*?)" +
-                "(?=" +
-                escapedNext +
-                "|$)",
-                "i"
-            );
+        if (artistMatch?.[1]) {
 
-        const match =
-            text.match(pattern);
+            metadata.artist =
+                cleanText(
+                    artistMatch[1]
+                );
 
-        if (!match || !match[1]) {
-            return "";
         }
 
-        return cleanText(
-            match[1]
-        );
+
+        // -------------------------------------------------
+        // TITLE
+        // -------------------------------------------------
+
+        const titleMatch =
+            html.match(
+                /Title:\s*([^<]+?)\s*(?=Date:)/i
+            );
+
+
+        if (titleMatch?.[1]) {
+
+            metadata.title =
+                cleanText(
+                    titleMatch[1]
+                );
+
+        }
+
+
+        // -------------------------------------------------
+        // DATE
+        // -------------------------------------------------
+
+        const dateMatch =
+            html.match(
+                /Date:\s*([^<]+?)\s*(?=Materials:)/i
+            );
+
+
+        if (dateMatch?.[1]) {
+
+            metadata.dateDisplay =
+                cleanText(
+                    dateMatch[1]
+                );
+
+        }
+
+
+        // -------------------------------------------------
+        // MATERIALS
+        // -------------------------------------------------
+
+        const materialsMatch =
+            html.match(
+                /Materials:\s*([^<]+?)\s*(?=Measurements:)/i
+            );
+
+
+        if (materialsMatch?.[1]) {
+
+            metadata.medium =
+                cleanText(
+                    materialsMatch[1]
+                );
+
+        }
+
+
+        // -------------------------------------------------
+        // OBJECT TYPE
+        // -------------------------------------------------
+
+        const objectTypeMatch =
+            html.match(
+                /Object type:\s*([^<]+?)\s*(?=Credit line:)/i
+            );
+
+
+        if (objectTypeMatch?.[1]) {
+
+            metadata.objectType =
+                cleanText(
+                    objectTypeMatch[1]
+                );
+
+        }
+
+
+        // -------------------------------------------------
+        // ACCESSION NUMBER
+        // -------------------------------------------------
+
+        const accessionMatch =
+            html.match(
+                /Accession number:\s*([^<]+?)\s*(?=Gallery:)/i
+            );
+
+
+        if (accessionMatch?.[1]) {
+
+            metadata.objectNumber =
+                cleanText(
+                    accessionMatch[1]
+                );
+
+        }
+
+
+        // -------------------------------------------------
+        // GALLERY
+        // -------------------------------------------------
+
+        const galleryMatch =
+            html.match(
+                /Gallery:\s*([^<]+?)\s*(?=Depicted:|Subjects:|Artwork photographed by:|Does this text)/i
+            );
+
+
+        if (galleryMatch?.[1]) {
+
+            metadata.gallery =
+                cleanText(
+                    galleryMatch[1]
+                );
+
+        }
+
+
+        // -------------------------------------------------
+        // DESCRIPTION
+        // -------------------------------------------------
+
+        const aboutMatch =
+            html.match(
+                /About this artwork([\s\S]*?)Updated before 2020/i
+            );
+
+
+        if (aboutMatch?.[1]) {
+
+            metadata.description =
+                cleanText(
+                    aboutMatch[1]
+                );
+
+        }
+
+
+        return metadata;
 
     }
+
+
+    // =====================================================
+    // SEARCH NGS
+    // =====================================================
 
     try {
 
@@ -171,27 +339,41 @@ module.exports = async function (searchTerm) {
             4000
         );
 
+
         const response =
             await requestUrl({
 
-                url: searchURL,
-                method: "GET"
+                url:
+                    searchURL,
+
+                method:
+                    "GET"
 
             });
+
 
         const html =
             response.text;
 
+
+        // =================================================
+        // FIND ARTWORK LINKS
+        // =================================================
+
         const artworkRegex =
             /href=["'](\/art-and-artists\/(\d+))["'][^>]*>/gi;
+
 
         const found =
             new Map();
 
+
         let match;
 
+
         while (
-            (match = artworkRegex.exec(html)) !== null
+            (match =
+                artworkRegex.exec(html)) !== null
         ) {
 
             const path =
@@ -200,7 +382,10 @@ module.exports = async function (searchTerm) {
             const id =
                 match[2];
 
-            if (!found.has(id)) {
+
+            if (
+                !found.has(id)
+            ) {
 
                 found.set(
                     id,
@@ -208,6 +393,7 @@ module.exports = async function (searchTerm) {
                 );
 
             }
+
 
             if (
                 found.size >= MAX_RESULTS
@@ -219,6 +405,11 @@ module.exports = async function (searchTerm) {
 
         }
 
+
+        // =================================================
+        // NO RESULTS
+        // =================================================
+
         if (
             found.size === 0
         ) {
@@ -226,24 +417,38 @@ module.exports = async function (searchTerm) {
             return {
 
                 success: true,
+
                 searchTerm,
+
                 total: 0,
+
                 results: []
 
             };
 
         }
 
+
+        // =================================================
+        // GET ARTWORK RECORDS
+        // =================================================
+
         const results = [];
+
 
         let index = 0;
 
+
         for (
-            const [id, path]
+            const [
+                id,
+                path
+            ]
             of found
         ) {
 
             index++;
+
 
             try {
 
@@ -252,30 +457,50 @@ module.exports = async function (searchTerm) {
                     2500
                 );
 
+
                 const artworkURL =
-                    absoluteURL(path);
+                    absoluteURL(
+                        path
+                    );
+
 
                 const artworkResponse =
                     await requestUrl({
 
-                        url: artworkURL,
-                        method: "GET"
+                        url:
+                            artworkURL,
+
+                        method:
+                            "GET"
 
                     });
+
 
                 const artworkHTML =
                     artworkResponse.text;
 
-                const pageText =
-                    cleanText(
+
+                // =========================================
+                // METADATA
+                // =========================================
+
+                const metadata =
+                    extractArtworkMetadata(
                         artworkHTML
                     );
 
+
+                // =========================================
+                // TITLE FALLBACK
+                // =========================================
+
                 let title =
+                    metadata.title ||
                     extractMeta(
                         artworkHTML,
                         "og:title"
                     );
+
 
                 title =
                     title
@@ -285,145 +510,80 @@ module.exports = async function (searchTerm) {
                         )
                         .trim();
 
+
+                title =
+                    title
+                        .replace(
+                            /\s+by\s+[^|]+$/i,
+                            ""
+                        )
+                        .trim();
+
+
+                // =========================================
+                // IMAGE
+                // =========================================
+
                 const imageURL =
                     extractMeta(
                         artworkHTML,
                         "og:image"
                     );
 
-                const artist =
-                    extractField(
-                        pageText,
-                        "Artist",
-                        [
-                            "Title",
-                            "Date",
-                            "Materials",
-                            "Measurements",
-                            "Object type",
-                            "Credit line",
-                            "Accession number",
-                            "Gallery",
-                            "Subjects"
-                        ]
-                    );
 
-                const dateDisplay =
-                    extractField(
-                        pageText,
-                        "Date",
-                        [
-                            "Materials",
-                            "Measurements",
-                            "Object type",
-                            "Credit line",
-                            "Accession number",
-                            "Gallery",
-                            "Subjects"
-                        ]
-                    );
-
-                const medium =
-                    extractField(
-                        pageText,
-                        "Materials",
-                        [
-                            "Measurements",
-                            "Object type",
-                            "Credit line",
-                            "Accession number",
-                            "Gallery",
-                            "Subjects"
-                        ]
-                    );
-
-                const objectType =
-                    extractField(
-                        pageText,
-                        "Object type",
-                        [
-                            "Credit line",
-                            "Accession number",
-                            "Gallery",
-                            "Subjects"
-                        ]
-                    );
-
-                const accessionNumber =
-                    extractField(
-                        pageText,
-                        "Accession number",
-                        [
-                            "Gallery",
-                            "Subjects"
-                        ]
-                    );
-
-                const gallery =
-                    extractField(
-                        pageText,
-                        "Gallery",
-                        [
-                            "Subjects",
-                            "Does this text"
-                        ]
-                    );
-
-                let description = "";
-
-                const aboutMatch =
-                    artworkHTML.match(
-                        /<h[1-6][^>]*>\s*About this artwork\s*<\/h[1-6]>([\s\S]*?)(?:<h[1-6]|<\/main>|<\/article>)/i
-                    );
-
-                if (
-                    aboutMatch &&
-                    aboutMatch[1]
-                ) {
-
-                    description =
-                        cleanText(
-                            aboutMatch[1]
-                        );
-
-                }
+                // =========================================
+                // SAVE RESULT
+                // =========================================
 
                 results.push({
 
                     title,
 
-                    artist,
+                    artist:
+                        metadata.artist,
 
-                    dateStart: null,
+                    dateStart:
+                        null,
 
-                    dateEnd: null,
+                    dateEnd:
+                        null,
 
-                    dateDisplay,
+                    dateDisplay:
+                        metadata.dateDisplay,
 
-                    period: "",
+                    period:
+                        "",
 
-                    medium,
+                    medium:
+                        metadata.medium,
 
                     institution:
                         "National Galleries Scotland",
 
+                    source:
+                        "National Galleries Scotland",
+
                     objectNumber:
-                        accessionNumber,
+                        metadata.objectNumber,
 
                     museumURL:
                         artworkURL,
 
                     imageURL,
 
-                    objectType,
+                    objectType:
+                        metadata.objectType,
 
-                    gallery,
+                    gallery:
+                        metadata.gallery,
 
-                    description
+                    description:
+                        metadata.description
 
                 });
 
             }
+
 
             catch (error) {
 
@@ -436,6 +596,11 @@ module.exports = async function (searchTerm) {
             }
 
         }
+
+
+        // =================================================
+        // RETURN
+        // =================================================
 
         return {
 
@@ -452,6 +617,7 @@ module.exports = async function (searchTerm) {
 
     }
 
+
     catch (error) {
 
         console.error(
@@ -459,9 +625,11 @@ module.exports = async function (searchTerm) {
             error
         );
 
+
         new Notice(
             "NGS search failed. Check the console."
         );
+
 
         return {
 
