@@ -1,0 +1,1 @@
+The [Red Army Faction](https://en.wikipedia.org/wiki/Red_Army_Faction), commonly known as the Baader-Meinhof Group, was a far-left West German militant organization. Founded in 1970 by Andreas Baader, Ulrike Meinhof, Gudrun Ensslin, and others, the group waged a violent anti-imperialist campaign of bombings, bank robberies, and assassinations before officially disbanding in 1998
