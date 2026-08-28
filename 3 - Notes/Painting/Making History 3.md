@@ -33,7 +33,7 @@ Dark underbelly of german 20th century history
 
 ---
 
-1970s, [[Robert Colescott]] prevalence of racism in main stream american culture - recasting iconic works of art with racial stereotypes. He adopted a cartoon like aesthitc underscores satirical nature of appropriated imagery. Serve as correctives to the narratives then propagated in textbooks of American history, which minimised or excluded the contributions of black Americans. An example is George Washington carver - a agricultural scientist. (Page from a American History Textbook 1970 ) This George Washington occupies the place of  Americas first future president in the parody of Leutze painting Washington crossing the delaware. Reproductions of which then proliferated American textbooks. 
+1970s, [[Robert Colescott]] prevalence of racism in main stream american culture - recasting iconic works of art with racial stereotypes. He adopted a cartoon like aesthitc underscores satirical nature of appropriated imagery. Serve as correctives to the narratives then propagated in textbooks of American history, which minimised or excluded the contributions of black Americans. An example is George Washington carver - a agricultural scientist. ([[Page from a American History Textbook]] 1970 ) This George Washington occupies the place of  Americas first future president in the parody of Leutze painting Washington crossing the delaware. Reproductions of which then proliferated American textbooks. 
 
 1980 Moved away from old master appropriations. Some after thoughts of discovery - Critical view of European colonist expansion. Evokes European exploration and transatlantic slave trade. alluding to recent history - there is a man being lynched. History of Columbus.
 

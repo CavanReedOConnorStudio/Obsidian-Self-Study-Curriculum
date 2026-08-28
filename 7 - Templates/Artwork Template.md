@@ -1,12 +1,15 @@
 ---
 title:
 original_title:
+type:
+tags:
 artist:
 date_start:
 date_end:
 date_display:
 period:
 medium:
+dimensions:
 institution:
 source:
 source_id:
