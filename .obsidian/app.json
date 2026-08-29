@@ -3,5 +3,6 @@
   "attachmentFolderPath": "+",
   "newFileLocation": "current",
   "promptDelete": false,
-  "propertiesInDocument": "visible"
+  "propertiesInDocument": "visible",
+  "openBehavior": "daily"
 }
