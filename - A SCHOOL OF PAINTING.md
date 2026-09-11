@@ -131,7 +131,7 @@ Leonardo, Michelangelo and Raphael brought [[The Early Renaissance]] experiments
 
 #### KEY FIGURES
 
-[[Leonardo da Vinci]]; [[Michelangelo]] [[Buonarroti]]; [[Raphael]] Sanzio; [[Giorgione]]; [[Titian]].
+[[Leonardo da Vinci]]; [[Michelangelo]] [[Buonarroti]]; [[Raphael]] Sanzio; [[Giorgione]]; [[5 - Tags/Titian]].
 
 ##### WHAT TO LOOK FOR
 
@@ -261,7 +261,7 @@ Since the 1960s, painting has repeatedly been declared dead and repeatedly retur
 
 #### WHAT TO LOOK FOR
 
-How [[contemporary]] painters quote, rework, and answer earlier periods in this handbook — a Freud nude in dialogue with [[Titian]], a Doig landscape in dialogue with Gauguin and Munch. This is where your own painting joins the conversation.
+How [[contemporary]] painters quote, rework, and answer earlier periods in this handbook — a Freud nude in dialogue with [[5 - Tags/Titian]], a Doig landscape in dialogue with Gauguin and Munch. This is where your own painting joins the conversation.
 
 ## 14. [[East Meets West]]: Cross-Currents in the Canon
 
@@ -625,7 +625,7 @@ Read these alongside the corresponding period in Part I, not as a separate track
 | [[The Ancient World]]        | [[Egyptian Book of the Dead]] papyri (British Museum); [[Parthenon Marbles]]; [[Pompeii frescoes]], Naples            |
 | [[Medieval]] / [[Byzantine]] | [[Hagia Sophia mosaics]], [[Istanbul]]; [[the Book of Kells]], [[Dublin]]; [[Chartres Cathedral]] glass and sculpture |
 | [[The Early Renaissance]]    | [[Giotto]], [[Arena Chapel]], [[Padua]]; [[Masaccio]], [[Brancacci Chapel]], [[Florence]]                             |
-| [[The High Renaissance]]     | [[Michelangelo]], [[Sistine Chapel]]; [[Titian]], major Venetian altarpieces                                          |
+| [[The High Renaissance]]     | [[Michelangelo]], [[Sistine Chapel]]; [[5 - Tags/Titian]], major Venetian altarpieces                                          |
 | [[The Northern Renaissance]] | Van Eyck, [[Ghent Altarpiece]]; [[Pieter Bruegel the Elder]], [[Kunsthistorisches Museum]], [[Vienna]]                |
 | [[The Baroque]]              | [[Caravaggio]], Rome church cycles; [[Johannes Vermeer]], [[Rijksmuseum]] and [[Mauritshuis]]                         |
 | [[Romanticism]]              | Turner, [[Tate Britain]]; [[Caspar David Friedrich]], [[Alte Nationalgalerie]], [[Berlin]]                            |
