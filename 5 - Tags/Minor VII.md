@@ -1,1 +1,1 @@
-## [[Minor VII]] — [[1 - Study/Literature/Theology]]
+## [[Minor VII]] — [[Theology]]

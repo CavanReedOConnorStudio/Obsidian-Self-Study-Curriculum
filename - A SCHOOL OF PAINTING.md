@@ -12,7 +12,7 @@ The History of Art as a Major, with Nine Supporting Minors
 
 A Personal Curriculum & Study Handbook
 
-[[Philosophy]] · [[Literature]] · [[History]] · [[Geography]] · [[Ecology]] · [[Biology]] · [[1 - Study/Literature/Theology]] · [[Astrology]] · [[5 - Tags/Language]]
+[[Philosophy]] · [[Literature]] · [[History]] · [[Geography]] · [[Ecology]] · [[Biology]] · [[Theology]] · [[Astrology]] · [[Language]]
 
 ## Contents
 
@@ -24,9 +24,9 @@ Every subject in this handbook exists to answer one question: why did [[Artists.
 
 This handbook is not a study plan in the ordinary sense. It is the outline of a private liberal arts education — your own [[School of Painting]] — in which every subject is chosen because it changes how you see, and therefore how you paint. A study plan lists tasks to complete. An education changes the mind doing the looking.
 
-Painting has never existed in isolation. A panel by [[Giotto]] cannot be separated from the [[1 - Study/Literature/Theology]] of [[Assisi]]. A canvas by [[Turner]] cannot be separated from the [[geology]] and [[weather]] of the [[English coast]]. A print by [[Hokusai]] reached [[Paris]] and rearranged the eye of every [[Impressionist]] who saw it. To understand painting is to understand the world that produced it — its beliefs, its books, its politics, its landscapes, its sciences, and its gods.
+Painting has never existed in isolation. A panel by [[Giotto]] cannot be separated from the [[Theology]] of [[Assisi]]. A canvas by [[Turner]] cannot be separated from the [[geology]] and [[weather]] of the [[English coast]]. A print by [[Hokusai]] reached [[Paris]] and rearranged the eye of every [[Impressionist]] who saw it. To understand painting is to understand the world that produced it — its beliefs, its books, its politics, its landscapes, its sciences, and its gods.
 
-This handbook therefore treats [[Art History]] as the spine of the course — the Major, occupying the majority of your attention — and surrounds it with nine Minors: [[Philosophy]], [[Literature]], [[History]], [[Geography]], [[Ecology]], [[Biology]] and [[Anatomy]], [[1 - Study/Literature/Theology]] [[Astrology]], and [[5 - Tags/Language]]. None of these is decorative. Each answers a specific question a painter eventually asks.
+This handbook therefore treats [[Art History]] as the spine of the course — the Major, occupying the majority of your attention — and surrounds it with nine Minors: [[Philosophy]], [[Literature]], [[History]], [[Geography]], [[Ecology]], [[Biology]] and [[Anatomy]], [[Theology]] [[Astrology]], and [[Language]]. None of these is decorative. Each answers a specific question a painter eventually asks.
 
 
 > *We do not see with the eye alone, but with the whole apparatus of the mind behind it.*
@@ -55,13 +55,13 @@ A single reading and viewing spine — the books, and a note on the Eastern curr
 
 A suggested weekly rhythm and a four-year plan for working through the whole handbook without losing momentum.
 
-There is no correct order beyond the chronology of the Major itself. Read a period of art history, then read the minor that illuminates it — [[1 - Study/Literature/Theology]] alongside [[Giotto]] [[Astrology]] alongside the [[Renaissance court]], ecology alongside the [[Barbizon painters]], [[Japanese art]] alongside [[Impressionism]]. The subjects are cross-referenced throughout for this reason.
+There is no correct order beyond the chronology of the Major itself. Read a period of art history, then read the minor that illuminates it — [[Theology]] alongside [[Giotto]] [[Astrology]] alongside the [[Renaissance court]], ecology alongside the [[Barbizon painters]], [[Japanese art]] alongside [[Impressionism]]. The subjects are cross-referenced throughout for this reason.
 
 # Part I — The Major: The History of Art
 
 Roughly 60–70% of total study. Everything else in this handbook exists to support this spine.
 
-The Major is arranged chronologically. Each period is treated the same way: the historical situation that produced the work, the artists who defined it, and — most importantly — what to actually look for when standing in front of a painting from that period. Read each chapter alongside the minor subjects flagged within it; art history alone explains what changed, but [[Philosophy]], [[1 - Study/Literature/Theology]], [[Geography]] and the rest explain why it changed.
+The Major is arranged chronologically. Each period is treated the same way: the historical situation that produced the work, the artists who defined it, and — most importantly — what to actually look for when standing in front of a painting from that period. Read each chapter alongside the minor subjects flagged within it; art history alone explains what changed, but [[Philosophy]], [[Theology]], [[Geography]] and the rest explain why it changed.
 
 ## On How to Look at a Painting
 
@@ -81,7 +81,7 @@ Before working through the chronology, it is worth fixing a method for looking, 
 
 Return to this list throughout Part I. Applied consistently, it turns the difference between periods into a set of specific, comparable answers rather than a vague sense of 'style.'
 
-## 1. [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/1- The Ancient World/The Ancient World]]
+## 1. [[The Ancient World]]
 
 c. 3000 BCE – 400 CE — [[Egypt]], [[Greece]], [[Rome]]
 
@@ -93,7 +93,7 @@ c. 3000 BCE – 400 CE — [[Egypt]], [[Greece]], [[Rome]]
 
 ##### WHAT TO LOOK FOR
 
-The relationship between a picture's formula and its purpose. Ask what a work was for — [[worship]], [[memory]], [[status]], [[decoration]] — before asking whether it looks 'real'. Read alongside Minor VII, [[1 - Study/Literature/Theology]], and Minor IX, [[Astrology]], for the cosmology behind [[Egyptian]] and [[Greco-Roman]] imagery.
+The relationship between a picture's formula and its purpose. Ask what a work was for — [[worship]], [[memory]], [[status]], [[decoration]] — before asking whether it looks 'real'. Read alongside Minor VII, [[Theology]], and Minor IX, [[Astrology]], for the cosmology behind [[Egyptian]] and [[Greco-Roman]] imagery.
 
 ## 2. [[Byzantium and the Medieval World]]
 
@@ -107,9 +107,9 @@ With the decline of [[Rome]], the image became almost entirely a vehicle for doc
 
 ##### WHAT TO LOOK FOR
 
-Gold as light rather than decoration, [[inverse perspective]] as [[1 - Study/Literature/Theology]] rather than error, and the total absence of a 'wrong' angle — every element is [[symbolic]]. Essential reading alongside Minor VII, Theology.
+Gold as light rather than decoration, [[inverse perspective]] as [[Theology]] rather than error, and the total absence of a 'wrong' angle — every element is [[symbolic]]. Essential reading alongside Minor VII, Theology.
 
-## 3. [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/3- The Early Renaissance/The Early Renaissance]]
+## 3. [[The Early Renaissance]]
 
 c. 1300 – 1450 — [[Florence]], Siena
 
@@ -123,11 +123,11 @@ c. 1300 – 1450 — [[Florence]], Siena
 
 [[The vanishing point]], the modelling of drapery to suggest a body beneath it, and the new interest in individual, recognisable human faces even in religious scenes. Read alongside Minor IV, Geography — why [[Florence]], specifically, produced this — and Minor I, Philosophy, for humanism.
 
-## 4. [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/4- The High Renaissance/The High Renaissance]]
+## 4. [[The High Renaissance]]
 
 c. 1450 – 1520 — [[Florence]], [[Rome]], [[Venice]]
 
-Leonardo, Michelangelo and Raphael brought [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/3- The Early Renaissance/The Early Renaissance]] experiments to a [[classical synthesis]]: [[anatomical precision]], [[atmospheric perspective]], and [[idealised composition]] balanced against individual [[psychological]] presence. In [[Venice]], a parallel tradition under [[Bellini]], Giorgione and Titian prized [[colour]] and [[5 - Tags/Light]]— [[colorito]] — over the Florentine emphasis on [[line]] and [[drawing]] — [[disegno]], a debate that would echo for three centuries.
+Leonardo, Michelangelo and Raphael brought [[The Early Renaissance]] experiments to a [[classical synthesis]]: [[anatomical precision]], [[atmospheric perspective]], and [[idealised composition]] balanced against individual [[psychological]] presence. In [[Venice]], a parallel tradition under [[Bellini]], Giorgione and Titian prized [[colour]] and [[5 - Tags/Light]]— [[colorito]] — over the Florentine emphasis on [[line]] and [[drawing]] — [[disegno]], a debate that would echo for three centuries.
 
 #### KEY FIGURES
 
@@ -137,7 +137,7 @@ Leonardo, Michelangelo and Raphael brought [[1 - Study/Art History/2 - Subjects/
 
 [[Sfumato]] and the disappearance of hard outlines in Leonardo; the muscular, sculptural bodies of Michelangelo even in paint; the [[disegno]]–[[colorito]] debate, essential background for every later argument between drawing-led and colour-led painting. Read alongside Minor VI, Biology & Anatomy, and Minor IX, Astrology, for the [[Neoplatonic]] cosmology behind works like [[Botticelli]]'s [[Primavera]].
 
-## 5. [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/5- The Northern Renaissance/The Northern Renaissance]]
+## 5. [[The Northern Renaissance]]
 
 c. 1400 – 1550 — [[Flanders]], [[Germany]], [[the Netherlands]]
 
@@ -163,7 +163,7 @@ c. 1600 – 1720 — [[Italy]], [[Spain]], [[Flanders]], the [[Dutch]] Republic
 
 ##### WHAT TO LOOK FOR
 
-[[Tenebrism]] and [[directional light]] as drama; the rise of [[genre painting]] and [[still life]] as subjects worthy of art in their own right, tied directly to a new Protestant, commercial society. Read alongside Minor III, History, for the [[Reformation]] and [[Counter-Reformation]], and Minor VII, [[1 - Study/Literature/Theology]]
+[[Tenebrism]] and [[directional light]] as drama; the rise of [[genre painting]] and [[still life]] as subjects worthy of art in their own right, tied directly to a new Protestant, commercial society. Read alongside Minor III, History, for the [[Reformation]] and [[Counter-Reformation]], and Minor VII, [[Theology]]
 
 ## 7. [[Rococo and Neoclassicism]]
 
@@ -495,7 +495,7 @@ CORE TOPICS
 
 Draw the same hand from life six times in a single sitting, from six different angles, without reference to a photograph — until the underlying bone structure, not the surface skin, becomes what you are actually drawing.
 
-## [[Minor VII]] — [[1 - Study/Literature/Theology]]
+## [[Minor VII]] — [[Theology]]
 
 Possibly the most overlooked subject by artists today, and one of the most necessary. [[Giotto]], [[Fra Angelico]], [[Michelangelo]], [[Raphael]], [[Rembrandt]] and [[El Greco]] cannot be understood without [[Christian doctrine]], and [[Buddhism]], [[Shinto]] and [[Islam]] shaped visual culture just as decisively wherever they took root.
 
@@ -555,7 +555,7 @@ SUGGESTED READING & STUDY
 
 Research the astrological attributes of your own birth month as they appear in Renaissance manuscript tradition, then design a small symbolic composition using only period-accurate imagery for it.
 
-## [[Minor IX]] — [[5 - Tags/Language]]
+## [[Minor IX]] — [[Language]]
 
 Primarily [[Danish]], [[English]] and [[Gaelic]], but the deeper aim is [[etymology]] — understanding why words mean what they do, since so much art vocabulary ([[fresco]], [[chiaroscuro]], [[Sfumato]], [[ukiyo-e]], [[disegno]]) only fully makes sense in its original tongue.
 
@@ -622,11 +622,11 @@ Read these alongside the corresponding period in Part I, not as a separate track
 |                              |                                                                                                                       |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | Period                       | Anchor Works to See in Person, in Order of Priority                                                                   |
-| [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/1- The Ancient World/The Ancient World]]        | [[Egyptian Book of the Dead]] papyri (British Museum); [[Parthenon Marbles]]; [[Pompeii frescoes]], Naples            |
+| [[The Ancient World]]        | [[Egyptian Book of the Dead]] papyri (British Museum); [[Parthenon Marbles]]; [[Pompeii frescoes]], Naples            |
 | [[Medieval]] / [[Byzantine]] | [[Hagia Sophia mosaics]], [[Istanbul]]; [[the Book of Kells]], [[Dublin]]; [[Chartres Cathedral]] glass and sculpture |
-| [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/3- The Early Renaissance/The Early Renaissance]]    | [[Giotto]], [[Arena Chapel]], [[Padua]]; [[Masaccio]], [[Brancacci Chapel]], [[Florence]]                             |
-| [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/4- The High Renaissance/The High Renaissance]]     | [[Michelangelo]], [[Sistine Chapel]]; [[5 - Tags/Titian]], major Venetian altarpieces                                          |
-| [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/5- The Northern Renaissance/The Northern Renaissance]] | Van Eyck, [[Ghent Altarpiece]]; [[Pieter Bruegel the Elder]], [[Kunsthistorisches Museum]], [[Vienna]]                |
+| [[The Early Renaissance]]    | [[Giotto]], [[Arena Chapel]], [[Padua]]; [[Masaccio]], [[Brancacci Chapel]], [[Florence]]                             |
+| [[The High Renaissance]]     | [[Michelangelo]], [[Sistine Chapel]]; [[5 - Tags/Titian]], major Venetian altarpieces                                          |
+| [[The Northern Renaissance]] | Van Eyck, [[Ghent Altarpiece]]; [[Pieter Bruegel the Elder]], [[Kunsthistorisches Museum]], [[Vienna]]                |
 | [[The Baroque]]              | [[Caravaggio]], Rome church cycles; [[Johannes Vermeer]], [[Rijksmuseum]] and [[Mauritshuis]]                         |
 | [[Romanticism]]              | Turner, [[Tate Britain]]; [[Caspar David Friedrich]], [[Alte Nationalgalerie]], [[Berlin]]                            |
 | [[Impressionism]]            | [[Musée d'Orsay]], [[Paris]]; Monet's [[Water Lilies]], [[Musée de l'Orangerie]]                                      |
@@ -650,10 +650,10 @@ Read these alongside the corresponding period in Part I, not as a separate track
 |      |                                                                   |                                                        |
 | ---- | ----------------------------------------------------------------- | ------------------------------------------------------ |
 | Year | Major Focus                                                       | Paired Minors                                          |
-| 1    | [[Ancient World through the Northern Renaissance]]                | [[1 - Study/Literature/Theology]], [[Astrology]], [[Biology]] & [[Anatomy]] |
+| 1    | [[Ancient World through the Northern Renaissance]]                | [[Theology]], [[Astrology]], [[Biology]] & [[Anatomy]] |
 | 2    | [[Baroque through Romanticism]]                                   | [[History]], [[Geography]], [[Ecology]]                |
-| 3    | [[1 - Study/Art History/2 - Subjects/Realism through to Post-Impressionism 1/Realism through Post-Impressionism, including East Meets West]] | [[5 - Tags/Language]], [[Ecology]], [[Literature]]              |
-| 4    | [[1 - Study/Art History/2 - Subjects/Moderism through to Contemporary Art 1/Modernism through Contemporary art]]                            | [[Philosophy]], [[Literature]]                         |
+| 3    | [[Realism through Post-Impressionism, including East Meets West]] | [[Language]], [[Ecology]], [[Literature]]              |
+| 4    | [[Modernism through Contemporary art]]                            | [[Philosophy]], [[Literature]]                         |
 
 
 # Appendix — [[Glossary of Core Terms]]
