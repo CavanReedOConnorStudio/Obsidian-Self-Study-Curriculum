@@ -18,7 +18,7 @@ Focus:
 
 ---
 
-## [[Religion of Eygpt]]
+## [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance/1- The Ancient World/Egypt and the Ancient Near East/The World of Egypt/Religion of Eygpt]]
 
 [[The Egyptian Book of the Dead]]
 

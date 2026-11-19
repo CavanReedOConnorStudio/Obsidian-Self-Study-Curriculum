@@ -22,11 +22,11 @@ In this course, I will explore issues of meaing and interpretation with specific
 
 # Content
 
-## - [[1 - A New State A New Art]]
-## - [[2 - Realism and art-for-arts sake]]
-## - [[3 - Dutch History Painting]]
-## - [[4 - Disguised symbolism and seeming realism]]
-## - [[5 - To Instruct and Delight]]
-## - [[6 - Landscape painting and the limitations of the iconological approach]]
-## - [[7 - The Role of Conventions]]
+## - [[1 - Study/Art History/2 - Subjects/Baroque Through to Romanticism 1/The Dutch Golden Age/OpenLearn - Dutch Painting of the Golden Age/1 - A New State A New Art]]
+## - [[1 - Study/Art History/2 - Subjects/Baroque Through to Romanticism 1/The Dutch Golden Age/OpenLearn - Dutch Painting of the Golden Age/2 - Realism and art-for-arts sake]]
+## - [[1 - Study/Art History/2 - Subjects/Baroque Through to Romanticism 1/The Dutch Golden Age/OpenLearn - Dutch Painting of the Golden Age/3 - Dutch History Painting]]
+## - [[1 - Study/Art History/2 - Subjects/Baroque Through to Romanticism 1/The Dutch Golden Age/OpenLearn - Dutch Painting of the Golden Age/4 - Disguised symbolism and seeming realism]]
+## - [[1 - Study/Art History/2 - Subjects/Baroque Through to Romanticism 1/The Dutch Golden Age/OpenLearn - Dutch Painting of the Golden Age/5 - To Instruct and Delight]]
+## - [[1 - Study/Art History/2 - Subjects/Baroque Through to Romanticism 1/The Dutch Golden Age/OpenLearn - Dutch Painting of the Golden Age/6 - Landscape painting and the limitations of the iconological approach]]
+## - [[1 - Study/Art History/2 - Subjects/Baroque Through to Romanticism 1/The Dutch Golden Age/OpenLearn - Dutch Painting of the Golden Age/7 - The Role of Conventions]]
 ## - [[8 - Realism Reconsidered]]

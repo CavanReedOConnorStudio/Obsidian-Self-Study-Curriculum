@@ -3,15 +3,15 @@
 ---
 # **Contents**
 
-## [[The Ancient World]] 
+## [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance/1- The Ancient World/The Ancient World]] 
 
 ## [[Byzantium and the Medieval World]]
 
-## [[The Early Renaissance]]
+## [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance/3- The Early Renaissance/The Early Renaissance]]
 
-## [[The High Renaissance]]
+## [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance/4- The High Renaissance/The High Renaissance]]
 
-## [[The Northern Renaissance]]
+## [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance/5- The Northern Renaissance/The Northern Renaissance]]
 
 
 ## The Foundations of Western Painting

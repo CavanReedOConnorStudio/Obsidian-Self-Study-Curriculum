@@ -81,7 +81,7 @@ Before working through the chronology, it is worth fixing a method for looking, 
 
 Return to this list throughout Part I. Applied consistently, it turns the difference between periods into a set of specific, comparable answers rather than a vague sense of 'style.'
 
-## 1. [[The Ancient World]]
+## 1. [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/1- The Ancient World/The Ancient World]]
 
 c. 3000 BCE – 400 CE — [[Egypt]], [[Greece]], [[Rome]]
 
@@ -109,7 +109,7 @@ With the decline of [[Rome]], the image became almost entirely a vehicle for doc
 
 Gold as light rather than decoration, [[inverse perspective]] as [[Theology]] rather than error, and the total absence of a 'wrong' angle — every element is [[symbolic]]. Essential reading alongside Minor VII, Theology.
 
-## 3. [[The Early Renaissance]]
+## 3. [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/3- The Early Renaissance/The Early Renaissance]]
 
 c. 1300 – 1450 — [[Florence]], Siena
 
@@ -123,11 +123,11 @@ c. 1300 – 1450 — [[Florence]], Siena
 
 [[The vanishing point]], the modelling of drapery to suggest a body beneath it, and the new interest in individual, recognisable human faces even in religious scenes. Read alongside Minor IV, Geography — why [[Florence]], specifically, produced this — and Minor I, Philosophy, for humanism.
 
-## 4. [[The High Renaissance]]
+## 4. [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/4- The High Renaissance/The High Renaissance]]
 
 c. 1450 – 1520 — [[Florence]], [[Rome]], [[Venice]]
 
-Leonardo, Michelangelo and Raphael brought [[The Early Renaissance]] experiments to a [[classical synthesis]]: [[anatomical precision]], [[atmospheric perspective]], and [[idealised composition]] balanced against individual [[psychological]] presence. In [[Venice]], a parallel tradition under [[Bellini]], Giorgione and Titian prized [[colour]] and [[5 - Tags/Light]]— [[colorito]] — over the Florentine emphasis on [[line]] and [[drawing]] — [[disegno]], a debate that would echo for three centuries.
+Leonardo, Michelangelo and Raphael brought [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/3- The Early Renaissance/The Early Renaissance]] experiments to a [[classical synthesis]]: [[anatomical precision]], [[atmospheric perspective]], and [[idealised composition]] balanced against individual [[psychological]] presence. In [[Venice]], a parallel tradition under [[Bellini]], Giorgione and Titian prized [[colour]] and [[5 - Tags/Light]]— [[colorito]] — over the Florentine emphasis on [[line]] and [[drawing]] — [[disegno]], a debate that would echo for three centuries.
 
 #### KEY FIGURES
 
@@ -137,7 +137,7 @@ Leonardo, Michelangelo and Raphael brought [[The Early Renaissance]] experiments
 
 [[Sfumato]] and the disappearance of hard outlines in Leonardo; the muscular, sculptural bodies of Michelangelo even in paint; the [[disegno]]–[[colorito]] debate, essential background for every later argument between drawing-led and colour-led painting. Read alongside Minor VI, Biology & Anatomy, and Minor IX, Astrology, for the [[Neoplatonic]] cosmology behind works like [[Botticelli]]'s [[Primavera]].
 
-## 5. [[The Northern Renaissance]]
+## 5. [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/5- The Northern Renaissance/The Northern Renaissance]]
 
 c. 1400 – 1550 — [[Flanders]], [[Germany]], [[the Netherlands]]
 
@@ -622,11 +622,11 @@ Read these alongside the corresponding period in Part I, not as a separate track
 |                              |                                                                                                                       |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | Period                       | Anchor Works to See in Person, in Order of Priority                                                                   |
-| [[The Ancient World]]        | [[Egyptian Book of the Dead]] papyri (British Museum); [[Parthenon Marbles]]; [[Pompeii frescoes]], Naples            |
+| [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/1- The Ancient World/The Ancient World]]        | [[Egyptian Book of the Dead]] papyri (British Museum); [[Parthenon Marbles]]; [[Pompeii frescoes]], Naples            |
 | [[Medieval]] / [[Byzantine]] | [[Hagia Sophia mosaics]], [[Istanbul]]; [[the Book of Kells]], [[Dublin]]; [[Chartres Cathedral]] glass and sculpture |
-| [[The Early Renaissance]]    | [[Giotto]], [[Arena Chapel]], [[Padua]]; [[Masaccio]], [[Brancacci Chapel]], [[Florence]]                             |
-| [[The High Renaissance]]     | [[Michelangelo]], [[Sistine Chapel]]; [[5 - Tags/Titian]], major Venetian altarpieces                                          |
-| [[The Northern Renaissance]] | Van Eyck, [[Ghent Altarpiece]]; [[Pieter Bruegel the Elder]], [[Kunsthistorisches Museum]], [[Vienna]]                |
+| [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/3- The Early Renaissance/The Early Renaissance]]    | [[Giotto]], [[Arena Chapel]], [[Padua]]; [[Masaccio]], [[Brancacci Chapel]], [[Florence]]                             |
+| [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/4- The High Renaissance/The High Renaissance]]     | [[Michelangelo]], [[Sistine Chapel]]; [[5 - Tags/Titian]], major Venetian altarpieces                                          |
+| [[1 - Study/Art History/2 - Subjects/Ancient World through the Northern Renaissance 1/5- The Northern Renaissance/The Northern Renaissance]] | Van Eyck, [[Ghent Altarpiece]]; [[Pieter Bruegel the Elder]], [[Kunsthistorisches Museum]], [[Vienna]]                |
 | [[The Baroque]]              | [[Caravaggio]], Rome church cycles; [[Johannes Vermeer]], [[Rijksmuseum]] and [[Mauritshuis]]                         |
 | [[Romanticism]]              | Turner, [[Tate Britain]]; [[Caspar David Friedrich]], [[Alte Nationalgalerie]], [[Berlin]]                            |
 | [[Impressionism]]            | [[Musée d'Orsay]], [[Paris]]; Monet's [[Water Lilies]], [[Musée de l'Orangerie]]                                      |
@@ -652,8 +652,8 @@ Read these alongside the corresponding period in Part I, not as a separate track
 | Year | Major Focus                                                       | Paired Minors                                          |
 | 1    | [[Ancient World through the Northern Renaissance]]                | [[Theology]], [[Astrology]], [[Biology]] & [[Anatomy]] |
 | 2    | [[Baroque through Romanticism]]                                   | [[History]], [[Geography]], [[Ecology]]                |
-| 3    | [[Realism through Post-Impressionism, including East Meets West]] | [[5 - Tags/Language]], [[Ecology]], [[Literature]]              |
-| 4    | [[Modernism through Contemporary art]]                            | [[Philosophy]], [[Literature]]                         |
+| 3    | [[1 - Study/Art History/2 - Subjects/Realism through to Post-Impressionism 1/Realism through Post-Impressionism, including East Meets West]] | [[5 - Tags/Language]], [[Ecology]], [[Literature]]              |
+| 4    | [[1 - Study/Art History/2 - Subjects/Moderism through to Contemporary Art 1/Modernism through Contemporary art]]                            | [[Philosophy]], [[Literature]]                         |
 
 
 # Appendix — [[Glossary of Core Terms]]
