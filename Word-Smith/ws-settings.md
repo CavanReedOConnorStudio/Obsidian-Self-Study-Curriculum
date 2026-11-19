@@ -6,7 +6,7 @@ reinstall — or a vault restored from a backup that kept the notes and
 not the plugin folder — can get everything back.
 
 - vault: Obsidian - Study Folder
-- written: 2026-11-19 05:01:58
+- written: 2026-11-19 05:03:15
 
 ```json
 {
@@ -77,8 +77,8 @@ not the plugin folder — can get everything back.
   "numberExclude": null,
   "zenMode": true,
   "fullscreen": false,
-  "leftSidebar": true,
-  "rightSidebar": true,
+  "leftSidebar": false,
+  "rightSidebar": false,
   "hideProperties": true,
   "hideInlineTitle": true,
   "zenHideWindowTitle": true,
@@ -194,7 +194,7 @@ not the plugin folder — can get everything back.
     "video",
     "other"
   ],
-  "historySeen": false,
+  "historySeen": true,
   "settingsMirror": true,
   "settingsMirrorPath": "Word-Smith/ws-settings.md",
   "fileGoals": {},
@@ -261,16 +261,16 @@ not the plugin folder — can get everything back.
   "syntaxStyle": "text",
   "checksEnabled": false,
   "checkStyle": "line",
-  "checkFiller": true,
+  "checkFiller": false,
   "checkFillerSoft": false,
   "checkFillerColor": "#8a7fd1",
-  "checkPassive": true,
+  "checkPassive": false,
   "checkPassiveColor": "#c2544d",
-  "checkIllusion": true,
+  "checkIllusion": false,
   "checkIllusionColor": "#d98cc4",
-  "checkMisused": true,
+  "checkMisused": false,
   "checkMisusedColor": "#e0913a",
-  "checkPronoun": true,
+  "checkPronoun": false,
   "checkPronounColor": "#4f9dde",
   "checkCliche": false,
   "checkClicheColor": "#e0b90f",
@@ -293,7 +293,7 @@ not the plugin folder — can get everything back.
   "checkRhythmLongWords": 25,
   "checkRhythmVeryLongWords": 40,
   "checkRhythmShortWords": 8,
-  "checkRepetition": true,
+  "checkRepetition": false,
   "checkRepetitionColor": "#4caf7d",
   "repetitionWindow": 50,
   "repetitionMinLength": 5,
@@ -618,7 +618,9 @@ not the plugin folder — can get everything back.
   "historyFilePath": "Word-Smith/ws-history.md",
   "historyPerFile": true,
   "historyCountPasted": false,
-  "historyBaselines": {},
+  "historyBaselines": {
+    "1 - Study/Art History/1 - Painting Notes/Making History 3.md": 623
+  },
   "exportOpts": {
     "format": "docx",
     "titlePage": true,
