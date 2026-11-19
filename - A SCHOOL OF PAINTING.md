@@ -12,7 +12,7 @@ The History of Art as a Major, with Nine Supporting Minors
 
 A Personal Curriculum & Study Handbook
 
-[[Philosophy]] · [[Literature]] · [[History]] · [[Geography]] · [[Ecology]] · [[Biology]] · [[Theology]] · [[Astrology]] · [[Language]]
+[[Philosophy]] · [[Literature]] · [[History]] · [[Geography]] · [[Ecology]] · [[Biology]] · [[Theology]] · [[Astrology]] · [[5 - Tags/Language]]
 
 ## Contents
 
@@ -26,7 +26,7 @@ This handbook is not a study plan in the ordinary sense. It is the outline of a 
 
 Painting has never existed in isolation. A panel by [[Giotto]] cannot be separated from the [[Theology]] of [[Assisi]]. A canvas by [[Turner]] cannot be separated from the [[geology]] and [[weather]] of the [[English coast]]. A print by [[Hokusai]] reached [[Paris]] and rearranged the eye of every [[Impressionist]] who saw it. To understand painting is to understand the world that produced it — its beliefs, its books, its politics, its landscapes, its sciences, and its gods.
 
-This handbook therefore treats [[Art History]] as the spine of the course — the Major, occupying the majority of your attention — and surrounds it with nine Minors: [[Philosophy]], [[Literature]], [[History]], [[Geography]], [[Ecology]], [[Biology]] and [[Anatomy]], [[Theology]] [[Astrology]], and [[Language]]. None of these is decorative. Each answers a specific question a painter eventually asks.
+This handbook therefore treats [[Art History]] as the spine of the course — the Major, occupying the majority of your attention — and surrounds it with nine Minors: [[Philosophy]], [[Literature]], [[History]], [[Geography]], [[Ecology]], [[Biology]] and [[Anatomy]], [[Theology]] [[Astrology]], and [[5 - Tags/Language]]. None of these is decorative. Each answers a specific question a painter eventually asks.
 
 
 > *We do not see with the eye alone, but with the whole apparatus of the mind behind it.*
@@ -555,7 +555,7 @@ SUGGESTED READING & STUDY
 
 Research the astrological attributes of your own birth month as they appear in Renaissance manuscript tradition, then design a small symbolic composition using only period-accurate imagery for it.
 
-## [[Minor IX]] — [[Language]]
+## [[Minor IX]] — [[5 - Tags/Language]]
 
 Primarily [[Danish]], [[English]] and [[Gaelic]], but the deeper aim is [[etymology]] — understanding why words mean what they do, since so much art vocabulary ([[fresco]], [[chiaroscuro]], [[Sfumato]], [[ukiyo-e]], [[disegno]]) only fully makes sense in its original tongue.
 
@@ -652,7 +652,7 @@ Read these alongside the corresponding period in Part I, not as a separate track
 | Year | Major Focus                                                       | Paired Minors                                          |
 | 1    | [[Ancient World through the Northern Renaissance]]                | [[Theology]], [[Astrology]], [[Biology]] & [[Anatomy]] |
 | 2    | [[Baroque through Romanticism]]                                   | [[History]], [[Geography]], [[Ecology]]                |
-| 3    | [[Realism through Post-Impressionism, including East Meets West]] | [[Language]], [[Ecology]], [[Literature]]              |
+| 3    | [[Realism through Post-Impressionism, including East Meets West]] | [[5 - Tags/Language]], [[Ecology]], [[Literature]]              |
 | 4    | [[Modernism through Contemporary art]]                            | [[Philosophy]], [[Literature]]                         |
 
 
