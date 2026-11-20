@@ -4,5 +4,11 @@
   "newFileLocation": "current",
   "promptDelete": false,
   "propertiesInDocument": "visible",
-  "openBehavior": "daily"
+  "openBehavior": "daily",
+  "readableLineLength": true,
+  "showInlineTitle": true,
+  "showLineNumber": false,
+  "showIndentGuide": true,
+  "rightToLeft": false,
+  "tabSize": 3
 }

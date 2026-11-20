@@ -1,5 +1,8 @@
 {
   "cssTheme": "Primary",
   "theme": "moonstone",
-  "showRibbon": true
+  "showRibbon": true,
+  "showViewHeader": true,
+  "interfaceFontFamily": "",
+  "textFontFamily": "Courier New"
 }
